@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Don't use --passphrase, cf.
+# <http://unix.stackexchange.com/questions/60213/gpg-asks-for-password-even-with-passphrase>.
+cat "${HOME}/.gpg-pw" | gpg --batch --passphrase-fd 0 "$@"
