@@ -10,5 +10,5 @@
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
-		-DCMAKE_C_COMPILER=mpicc \
-		-DCMAKE_Fortran_COMPILER=mpif90
+	  -DCMAKE_C_COMPILER=mpicc \
+	  -DCMAKE_Fortran_COMPILER=mpif90
