@@ -1,11 +1,10 @@
 #!/bin/sh
 
 ./launchpad-submitter \
-  --name netcdfc \
+  --name netcdff \
   --resubmission 1 \
-  --git-dir "$HOME/software/netcdf-c/dev/source/" \
+  --git-dir "$HOME/software/netcdf-fortran/source/" \
   --ubuntu-releases precise quantal saucy trusty \
-  --ppas nschloe/netcdf-nightly nschloe/trilinos-nightly \
+  --ppas nschloe/netcdf-nightly \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
-  --slot 1 \
   --submit

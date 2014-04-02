@@ -1,0 +1,203 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+Automatically create tarball and submit it to launchpad.
+'''
+
+import os
+import subprocess
+import datetime
+import pytz
+import shutil
+
+
+def _main():
+    args = _parse_cmd_arguments()
+
+    # Retrieve the directory of this script, cf.
+    basedir = os.path.dirname(os.path.realpath(__file__))
+
+    os.chdir(args.git_dir)
+    print('Fetching updates...')
+    ierr = subprocess.call(['git', 'pull'])
+    assert(ierr == 0)
+    print('done.')
+
+    submit_id = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
+
+    # File to store the HEAD command of the last push.
+    id_file = os.path.join(os.path.expanduser('~'),
+                           '.%s-submit-unstable' % args.name
+                           )
+
+    # Check if there was an update.
+    # TODO remove ID_FILE, test the next line
+    is_uptodate = False
+    if os.path.isfile(id_file):
+        # read file
+        with open(id_file, 'r') as f:
+            first_line = f.readline()
+        is_uptodate = (first_line == submit_id)
+
+    if is_uptodate:
+        print('Latest version already submitted to launchpad.')
+        return 0
+
+    # Actually quite dangerous. The user may inject malicious code here.
+    package_version = subprocess.check_output(args.version_getter,
+                                              shell=True
+                                              ).strip()
+
+    # Create a version number of the form 4.3.1.2~20121123.
+    today = datetime.date.today()
+    version = package_version + '~' + today.strftime('%Y%m%d')
+
+    # Create the tarball.
+    tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
+    prefix = args.name + '-' + version
+    print('Creating new archive %s...' % tarball_path)
+    if os.path.isfile(tarball_path):
+        os.remove(tarball_path)
+    # Append the "/" to $PREFIX, otherwise this may be interpreted as an
+    # ordinary filename-prefix.
+    ierr = subprocess.call(['git', 'archive',
+                            'master',
+                            '--prefix=%s/' % prefix,
+                            '--format=tar.gz',
+                            '--output=%s' % tarball_path
+                            ])
+    assert(ierr == 0)
+    print('done.')
+
+    for ppa in args.ppas:
+        for ubuntu_release in args.ubuntu_releases:
+            deb_dir = os.path.join('/tmp',
+                                   args.name,
+                                   'deb',
+                                   ubuntu_release
+                                   )
+            if os.path.exists(deb_dir):
+                shutil.rmtree(deb_dir)
+            os.mkdir(deb_dir)
+
+            tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
+            shutil.copy2(tarball_path, os.path.join(deb_dir, tarball_name))
+            os.chdir(deb_dir)
+            subprocess.call(['tar', 'xf', tarball_name])
+            # Copy over the debian folder.
+            # Look for either
+            #     debian-packagename/
+            # or
+            #     debian-packagename-releasename/.
+            #
+            path0 = os.path.join(basedir, 'debian-%s' % args.name)
+            path1 = os.path.join(basedir,
+                                 'debian-%s-%s' % (args.name, ubuntu_release)
+                                 )
+            if os.path.isdir(path0):
+                shutil.copytree(path0, os.path.join(prefix, 'debian'))
+            elif os.path.isdir(path1):
+                shutil.copytree(path1, os.path.join(prefix, 'debian'))
+            else:
+                raise RuntimeError('Could not find debian folder.')
+
+            # Use the `-` as a separator (instead of `~` as it's often used) to
+            # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
+            # makes it possible to increment `x` and have launchpad recognize
+            # it as a new version.
+            full_version = version + '-' + ubuntu_release + args.resubmission
+            if args.slot:
+                chlog_version = args.slot + ':' + full_version
+            else:
+                chlog_version = full_version
+
+            # Override changelog.
+            utcnow = datetime.datetime.now(pytz.utc)
+            changelog = open(os.path.join(prefix, 'debian/changelog'), 'w')
+            changelog.write('''%s (%s) %s; urgency=low
+
+  * Initial release
+
+ -- Nico Schlömer <nico.schloemer@gmail.com>  %s''' \
+            % (args.name, chlog_version,
+               ubuntu_release, utcnow.strftime('%a, %d %b %Y %T %z')
+               ))
+            changelog.close()
+
+            # Call debuild, the actual workhorse.
+            os.chdir(prefix)
+            subprocess.call(['debuild',
+                             '-p%s' % os.path.join(basedir, 'mygpg'),
+                             '-S'
+                             ])
+            # Submit to launchpad.
+            if args.submit:
+                os.chdir(os.pardir)
+                subprocess.call(['dput',
+                                 'ppa:%s' % ppa,
+                                 '%s_%s_source.changes' \
+                                     % (args.name, full_version)
+                                 ])
+
+    if args.submit:
+        # Store which revision we're pushing so we don't do it twice.
+        id_file_handle = open(id_file, 'w')
+        id_file_handle.write(submit_id)
+    return
+
+
+def _parse_cmd_arguments():
+    import argparse
+    parser = argparse.ArgumentParser(description='Submit builds to launchpad.')
+    parser.add_argument(
+        '-n', '--name',
+        type=str,
+        required=True,
+        help='package name'
+        )
+    parser.add_argument(
+        '-r', '--resubmission',
+        default=1,
+        help='resubmission index (default: 1)'
+        )
+    parser.add_argument(
+        '-d', '--git-dir',
+        required=True,
+        help='Git directory'
+        )
+    parser.add_argument(
+        '-u', '--ubuntu-releases',
+        help='Ubuntu releases to build for',
+        required=True,
+        nargs='+'
+        )
+    parser.add_argument(
+        '-p', '--ppas',
+        help='PPAs to submit to',
+        type=str,
+        nargs='+',
+        required=True
+        )
+    parser.add_argument(
+        '-v', '--version-getter',
+        help='Shell command for extracting the version number',
+        type=str,
+        required=True
+        )
+    parser.add_argument(
+        '-x', '--submit',
+        help='Actually the build to launchpad (default: False)',
+        action='store_true',
+        default=False
+        )
+    parser.add_argument(
+        '-s', '--slot',
+        help='Slot for the package (default: None)',
+        default=None,
+        type=str
+        )
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    _main()
