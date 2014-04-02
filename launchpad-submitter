@@ -101,6 +101,16 @@ def _main():
             else:
                 raise RuntimeError('Could not find debian folder.')
 
+            # Optionally add patches folder.
+            if args.patches_dir:
+                if os.path.isabs(args.patches_dir):
+                    source = args.patches_dir
+                else:
+                    source = os.path.join(basedir, args.patches_dir)
+                shutil.copytree(source,
+                                os.path.join(prefix, 'debian', 'patches')
+                                )
+
             # Use the `-` as a separator (instead of `~` as it's often used) to
             # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
             # makes it possible to increment `x` and have launchpad recognize
@@ -193,6 +203,12 @@ def _parse_cmd_arguments():
     parser.add_argument(
         '-s', '--slot',
         help='Slot for the package (default: None)',
+        default=None,
+        type=str
+        )
+    parser.add_argument(
+        '-a', '--patches-dir',
+        help='Optional extra patches directory (default: None)',
         default=None,
         type=str
         )

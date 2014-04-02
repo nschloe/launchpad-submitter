@@ -1,0 +1,3 @@
+version=3
+
+http://trilinos.sandia.gov/download/files/trilinos-(.*)-Source.tar.gz

@@ -1,0 +1,19 @@
+Description: Put python files in dist-packages instead of site-package
+Author: Nico Schlömer <nico.schloemer@gmail.com>
+Forwarded: no
+Last-Update: 2014-03-08
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+diff --git a/packages/PyTrilinos/src/CMakeLists.txt b/packages/PyTrilinos/src/CMakeLists.txt
+index 931b81e..023a46c 100644
+--- a/packages/PyTrilinos/src/CMakeLists.txt
++++ b/packages/PyTrilinos/src/CMakeLists.txt
+@@ -217,7 +217,7 @@ EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print sys.version[:
+   OUTPUT_STRIP_TRAILING_WHITESPACE
+ )
+ SET(PyTrilinos_INSTALL_DIR
+-  ${PyTrilinos_INSTALL_PREFIX}/lib/python${PYTHON_VERSION}/site-packages/PyTrilinos
++  ${PyTrilinos_INSTALL_PREFIX}/lib/python${PYTHON_VERSION}/dist-packages/PyTrilinos
+   CACHE PATH "The path where PyTrilinos will be installed"
+   )
+ MESSAGE(STATUS "PyTrilinos installation path: ${PyTrilinos_INSTALL_DIR}")

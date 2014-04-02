@@ -1,0 +1,81 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# Export CC and CXX here already.
+# It would also be possible to set the compilers by
+#   -DCMAKE_C_COMPILER=mpicc
+#   -DCMAKE_CXX_COMPILER=mpicxx
+# in the DEB_CMAKE_EXTRA_FLAGS below, but is slightly unclean
+# since /usr/share/cdbs/1/class/cmake.mk already provides
+#   -DCMAKE_C_COMPILER:FILEPATH="$(CC)"
+#   -DCMAKE_CXX_COMPILER:FILEPATH="$(CXX)"
+#
+export CC=mpicc
+export CXX=mpicxx
+export F90=mpif90
+
+# Default stuff for everything.
+%:
+	dh $@
+
+# Note that, since this is a compat=9 package, the CPPFLAGS
+# don't have to be manually added to CFLAGS, CXXFLAGS;
+# cf. http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=653916,
+# http://wiki.debian.org/Hardening#Notes_for_packages_using_CMake.
+
+# Build most PS (primary-stable) and SS (secondary-stable) packages.
+# Add Trilinos_ASSERT_MISSING_PACKAGES=OFF for builds from the public
+# Git repository.
+#
+# Reasons for exclusion from build:
+#   * Optika: get rid of Qt dependency
+#   * TriKota: needs Dakota
+#   * Matio: We need Matio >= 1.5.0 for this which is not
+#     yet available in Ubuntu.
+#   * PyTrilinos: py4mpiy and `--with python2` functionality missing from lucid.
+#
+# In similar packages, the headers are installed in the directory
+# /usr/include/<name of the package>/ rather than /usr/include/.
+# Historically, however, Trilinos uses this generic directory.
+# Trilinos' bug #5789 (cf. https://software.sandia.gov/bugzilla/show_bug.cgi?id=5789)
+# discusses this.
+#
+# Don't bother with tests. Most of them are mpiexec-based and will fail on
+# Ubuntu's build servers with errors of the kind
+# `[gumiho:05034] [[INVALID],INVALID] ORTE_ERROR_LOG: Not found in file ../../../../../../orte/mca/ess/hnp/ess_hnp_module.c at line 161`.
+#
+# Disabling the Trilinos_ENABLE_DEVELOPMENT_MODE results in
+# cleaner compile flags.
+#
+# Disable ParMETIS for its prohibitive licensing.
+#
+override_dh_auto_configure:
+	dh_auto_configure -- \
+   -DBUILD_SHARED_LIBS:BOOL=ON \
+   -DCMAKE_SKIP_RPATH:BOOL=ON \
+   -DTrilinos_INSTALL_INCLUDE_DIR:PATH=include/trilinos/ \
+   -DTrilinos_ENABLE_DEVELOPMENT_MODE:BOOL=OFF \
+   -DTrilinos_ENABLE_ALL_PACKAGES:BOOL=ON \
+   -DTrilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
+   -DTrilinos_ASSERT_MISSING_PACKAGES:BOOL=OFF \
+   -DTrilinos_ENABLE_FEI:BOOL=OFF \
+   -DTrilinos_ENABLE_MueLu:BOOL=OFF \
+   -DTrilinos_ENABLE_Optika:BOOL=OFF \
+   -DTrilinos_ENABLE_TriKota:BOOL=OFF \
+   -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
+   -DTrilinos_ENABLE_SEACAS:BOOL=OFF \
+   -DTrilinos_ENABLE_EXAMPLES:BOOL=OFF \
+   -DTrilinos_ENABLE_TESTS:BOOL=OFF \
+   -DTPL_ENABLE_BinUtils:BOOL=ON \
+   -DTPL_ENABLE_Boost:BOOL=ON \
+   -DTPL_ENABLE_MATLAB:BOOL=OFF \
+   -DTPL_ENABLE_Matio:BOOL=OFF \
+   -DTPL_ENABLE_MPI:BOOL=ON \
+   -DTPL_ENABLE_MUMPS:BOOL=ON \
+   -DTPL_ENABLE_ParMETIS:BOOL=OFF \
+   -DTPL_ENABLE_TBB:BOOL=ON \
+   -DTPL_ENABLE_X11:BOOL=OFF \
+   -DTPL_ENABLE_Zlib:BOOL=ON
