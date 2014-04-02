@@ -6,6 +6,7 @@ Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.
 Uploaders: Nico Schlömer <nico.schloemer@gmail.com>
 Build-Depends: debhelper (>= 9),
  cmake,
+ gfortran,
  libopenmpi-dev,
  libnetcdfc-dev
 Standards-Version: 3.9.5
