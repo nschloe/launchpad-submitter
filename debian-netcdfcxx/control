@@ -5,7 +5,7 @@ Priority: extra
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Nico Schlömer <nico.schloemer@gmail.com>
 Build-Depends: debhelper (>= 9),
- autoconf,
+ dh-autoreconf,
  libnetcdfc-dev
 Standards-Version: 3.9.5
 #Vcs-Git: git://git.debian.org/collab-maint/trilinos.git
