@@ -62,6 +62,7 @@ configure-stamp:
    -DTrilinos_ASSERT_MISSING_PACKAGES:BOOL=OFF \
    -DTrilinos_ENABLE_MueLu:BOOL=OFF \
    -DTrilinos_ENABLE_Optika:BOOL=OFF \
+   -DTrilinos_ENABLE_Panzer:BOOL=OFF \
    -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
    -DTrilinos_ENABLE_TriKota:BOOL=OFF \
    -DTrilinos_ENABLE_EXAMPLES:BOOL=OFF \

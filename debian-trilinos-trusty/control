@@ -566,20 +566,6 @@ Description: object-oriented framework for large-scale problems
  These libraries are built with debug symbols. They are useful to debug
  programs which use Trilinos. These must be used also at build/link time.
 
-Package: python-pytrilinos
-Section: python
-Architecture: any
-X-Python-Version: >= 2.2
-Depends: python-numpy, ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
-Description: object-oriented framework for large-scale problems
- The Trilinos Project is an effort to develop algorithms and enabling
- technologies within an object-oriented software framework for the
- solution of large-scale, complex multi-physics engineering and
- scientific problems. A unique design feature of Trilinos is its
- focus on packages.
- .
- This package contains the Python bindings for Trilinos.
-
 Package: trilinos-doc
 Homepage: http://trilinos.sandia.gov/documentation.html
 Architecture: all
