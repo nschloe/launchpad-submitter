@@ -1,6 +1,8 @@
 #!/bin/sh
 
-./launchpad-submitter \
+THIS_DIR=`dirname $0`
+
+$THIS_DIR/launchpad-submitter \
   --name netcdfcxx \
   --resubmission 1 \
   --git-dir "$HOME/software/netcdf-cxx/source/" \
