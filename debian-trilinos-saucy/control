@@ -25,10 +25,10 @@ Standards-Version: 3.9.5
 Vcs-Git: git://git.debian.org/debian-science/trilinos.git
 Vcs-Browser: http://git.debian.org/?p=debian-science/trilinos.git;a=summary
 
-Package: libtrilinos
+Package: trilinos-dev
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${mydevpackages}
 Suggests: libtrilinos-doc
 Description: object-oriented framework for large-scale problems
  The Trilinos Project is an effort to develop algorithms and enabling
@@ -37,7 +37,7 @@ Description: object-oriented framework for large-scale problems
  scientific problems. A unique design feature of Trilinos is its
  focus on packages.
  .
- This package contains the dynamic libraries.
+ This package contains the development header and some makefile templates.
 
 Package: libamesos
 Architecture: any
