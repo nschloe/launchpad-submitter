@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Set SSH agent variables.
+eval $(cat $HOME/.ssh/agent/info)
+
 THIS_DIR=`dirname $0`
 
 $THIS_DIR/launchpad-submitter \

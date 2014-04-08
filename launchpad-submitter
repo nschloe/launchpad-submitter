@@ -51,6 +51,7 @@ def _main():
     # Create a version number of the form 4.3.1.2~20121123.
     today = datetime.date.today()
     version = package_version + '~' + today.strftime('%Y%m%d')
+    #version = package_version + '~' + '20140409'
 
     # Create the tarball.
     tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
