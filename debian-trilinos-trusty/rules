@@ -93,6 +93,7 @@ auto_install-stamp:
 	  $(MAKE) -C $(BUILDDIR)/packages/$$i install DESTDIR=$(CURDIR)/debian/tmp_$$i || exit 1; \
 	done
 	$(MAKE) -C $(BUILDDIR)/packages/ThreadPool install DESTDIR=$(CURDIR)/debian/tmp_tpi
+	$(MAKE) -C $(BUILDDIR) install/local DESTDIR=$(CURDIR)/debian/tmp_trilinos-dev
 	touch $@
 
 override_dh_install: install-stamp
@@ -101,9 +102,14 @@ install-stamp: auto_install-stamp
 	  dh_install --sourcedir=debian/tmp_$$i -plib$$i usr/lib/*.so.* || exit 1; \
 	  dh_install --sourcedir=debian/tmp_$$i -plib$$i-dev --autodest usr/include usr/lib/*.so usr/lib/cmake || exit 1; \
 	done
+	dh_install --sourcedir=debian/tmp_trilinos-dev -ptrilinos-dev --autodest usr/include usr/lib/cmake -V foo=bar
 	# BUG in galeri
 	rm debian/libgaleri-dev/usr/include/trilinos/iohb.h
 	touch $@
+
+override_dh_prep:
+	dh_prep
+	echo mydevpackages=$(LIB_PACKAGES:%=lib%-dev,) libtpi-dev > debian/trilinos-dev.substvars
 
 override_dh_strip:
 	dh_strip -a --dbg-package=trilinos-dbg
