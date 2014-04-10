@@ -17,12 +17,16 @@ def _main():
     # Retrieve the directory of this script, cf.
     basedir = os.path.dirname(os.path.realpath(__file__))
 
-    os.chdir(args.git_dir)
     print('Fetching updates...')
+    os.chdir(args.source_dir)
+    ierr = subprocess.call(['git', 'pull'])
+    assert(ierr == 0)
+    os.chdir(args.debian_dir)
     ierr = subprocess.call(['git', 'pull'])
     assert(ierr == 0)
     print('done.')
 
+    os.chdir(args.source_dir)
     submit_id = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
 
     # File to store the HEAD command of the last push.
@@ -86,31 +90,27 @@ def _main():
             os.chdir(deb_dir)
             subprocess.call(['tar', 'xf', tarball_name])
             # Copy over the debian folder.
-            # Look for either
-            #     debian-packagename/
-            # or
-            #     debian-packagename-releasename/.
-            #
-            path0 = os.path.join(basedir, 'debian-%s' % args.name)
-            path1 = os.path.join(basedir,
-                                 'debian-%s-%s' % (args.name, ubuntu_release)
-                                 )
-            if os.path.isdir(path0):
-                shutil.copytree(path0, os.path.join(prefix, 'debian'))
-            elif os.path.isdir(path1):
-                shutil.copytree(path1, os.path.join(prefix, 'debian'))
-            else:
-                raise RuntimeError('Could not find debian folder.')
+            #path0 = os.path.join(basedir, 'debian-%s' % args.name)
+            #path1 = os.path.join(basedir,
+            #                     'debian-%s-%s' % (args.name, ubuntu_release)
+            #                     )
+            #if os.path.isdir(path0):
+            #    shutil.copytree(path0, os.path.join(prefix, 'debian'))
+            #elif os.path.isdir(path1):
+            #    shutil.copytree(path1, os.path.join(prefix, 'debian'))
+            #else:
+            #    raise RuntimeError('Could not find debian folder.')
+            shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
 
-            # Optionally add patches folder.
-            if args.patches_dir:
-                if os.path.isabs(args.patches_dir):
-                    source = args.patches_dir
-                else:
-                    source = os.path.join(basedir, args.patches_dir)
-                shutil.copytree(source,
-                                os.path.join(prefix, 'debian', 'patches')
-                                )
+            ## Optionally add patches folder.
+            #if args.patches_dir:
+            #    if os.path.isabs(args.patches_dir):
+            #        source = args.patches_dir
+            #    else:
+            #        source = os.path.join(basedir, args.patches_dir)
+            #    shutil.copytree(source,
+            #                    os.path.join(prefix, 'debian', 'patches')
+            #                    )
 
             # Use the `-` as a separator (instead of `~` as it's often used) to
             # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
@@ -172,9 +172,14 @@ def _parse_cmd_arguments():
         help='resubmission index (default: 1)'
         )
     parser.add_argument(
-        '-d', '--git-dir',
+        '-s', '--source-dir',
         required=True,
-        help='Git directory'
+        help='Directory of the package source'
+        )
+    parser.add_argument(
+        '-d', '--debian-dir',
+        required=True,
+        help='Directory of the debian/ source'
         )
     parser.add_argument(
         '-u', '--ubuntu-releases',
@@ -202,7 +207,7 @@ def _parse_cmd_arguments():
         default=False
         )
     parser.add_argument(
-        '-s', '--slot',
+        '-l', '--slot',
         help='Slot for the package (default: None)',
         default=None,
         type=str
