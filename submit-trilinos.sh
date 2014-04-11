@@ -13,6 +13,6 @@ $THIS_DIR/launchpad-submitter \
   --ubuntu-releases saucy trusty \
   --ppas nschloe/trilinos-nightly \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
-  --extra-patches-dir patches-trilinos #\
-  #--submit
+  --extra-patches-dir patches-trilinos \
+  --submit
   #--ubuntu-releases precise quantal saucy trusty \
