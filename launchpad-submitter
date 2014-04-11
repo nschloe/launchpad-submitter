@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
 Automatically create tarball and submit it to launchpad.
@@ -7,8 +7,8 @@ Automatically create tarball and submit it to launchpad.
 import os
 import subprocess
 import datetime
-import pytz
 import shutil
+import glob
 
 
 def _main():
@@ -48,14 +48,12 @@ def _main():
         return 0
 
     # Actually quite dangerous. The user may inject malicious code here.
-    package_version = subprocess.check_output(args.version_getter,
-                                              shell=True
-                                              ).strip()
+    package_version = subprocess.getoutput(args.version_getter).strip()
 
     # Create a version number of the form 4.3.1.2~20121123.
-    today = datetime.date.today()
-    version = package_version + '~' + today.strftime('%Y%m%d')
-    #version = package_version + '~' + '20140409'
+    today_str = datetime.date.today().strftime('%Y%m%d')
+    #today_str = '20140409'
+    version = package_version + '~' + today_str
 
     # Create the tarball.
     tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
@@ -76,41 +74,51 @@ def _main():
 
     for ppa in args.ppas:
         for ubuntu_release in args.ubuntu_releases:
-            deb_dir = os.path.join('/tmp',
-                                   args.name,
-                                   'deb',
-                                   ubuntu_release
-                                   )
+            deb_dir = os.path.join('/tmp', args.name, ubuntu_release)
             if os.path.exists(deb_dir):
                 shutil.rmtree(deb_dir)
-            os.mkdir(deb_dir)
+            # Use Python3's makedirs for recursive creation
+            os.makedirs(deb_dir, exist_ok=True)
 
             tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
             shutil.copy2(tarball_path, os.path.join(deb_dir, tarball_name))
             os.chdir(deb_dir)
             subprocess.call(['tar', 'xf', tarball_name])
+
             # Copy over the debian folder.
-            #path0 = os.path.join(basedir, 'debian-%s' % args.name)
-            #path1 = os.path.join(basedir,
-            #                     'debian-%s-%s' % (args.name, ubuntu_release)
-            #                     )
-            #if os.path.isdir(path0):
-            #    shutil.copytree(path0, os.path.join(prefix, 'debian'))
-            #elif os.path.isdir(path1):
-            #    shutil.copytree(path1, os.path.join(prefix, 'debian'))
-            #else:
-            #    raise RuntimeError('Could not find debian folder.')
             shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
 
-            ## Optionally add patches folder.
-            #if args.patches_dir:
-            #    if os.path.isabs(args.patches_dir):
-            #        source = args.patches_dir
-            #    else:
-            #        source = os.path.join(basedir, args.patches_dir)
-            #    shutil.copytree(source,
-            #                    os.path.join(prefix, 'debian', 'patches')
-            #                    )
+            # Check if we need to patch the
+            patch_file = os.path.join(basedir,
+                                      args.name + '-ubuntu-backports',
+                                      ubuntu_release + '.patch'
+                                      )
+
+            if os.path.isfile(patch_file):
+                os.chdir(prefix)
+                ierr = subprocess.call('patch -p1 < ' + patch_file, shell=True)
+                assert(ierr == 0)
+
+            # Optionally add extra patches.
+            if args.extra_patches_dir:
+                if os.path.isabs(args.extra_patches_dir):
+                    source_dir = args.extra_patches_dir
+                else:
+                    source_dir = os.path.join(basedir, args.extra_patches_dir)
+                os.chdir(deb_dir)
+                dest_dir = os.path.join(prefix, 'debian', 'patches/')
+                print(dest_dir)
+                assert(os.path.isdir(dest_dir))
+                files = glob.iglob(os.path.join(source_dir, "*.patch"))
+                for file in files:
+                    if os.path.isfile(file):
+                        shutil.copy2(file, dest_dir)
+                # Concatenate the series files
+                source_file = os.path.join(source_dir, 'series')
+                dest_file = os.path.join(dest_dir, 'series')
+                with open(dest_file, 'a') as outfile:
+                    with open(source_file) as infile:
+                        outfile.write(infile.read())
 
             # Use the `-` as a separator (instead of `~` as it's often used) to
             # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
@@ -123,7 +131,8 @@ def _main():
                 chlog_version = full_version
 
             # Override changelog.
-            utcnow = datetime.datetime.now(pytz.utc)
+            utcnow = datetime.datetime.utcnow()
+            print(utcnow)
             changelog = open(os.path.join(prefix, 'debian/changelog'), 'w')
             changelog.write('''%s (%s) %s; urgency=low
 
@@ -131,7 +140,7 @@ def _main():
 
  -- Nico Schlömer <nico.schloemer@gmail.com>  %s''' \
             % (args.name, chlog_version,
-               ubuntu_release, utcnow.strftime('%a, %d %b %Y %T %z')
+               ubuntu_release, utcnow.strftime('%a, %d %b %Y %T +0000')
                ))
             changelog.close()
 
@@ -213,8 +222,15 @@ def _parse_cmd_arguments():
         type=str
         )
     parser.add_argument(
-        '-a', '--patches-dir',
+        '-a', '--extra-patches-dir',
         help='Optional extra patches directory (default: None)',
+        default=None,
+        type=str
+        )
+    parser.add_argument(
+        '-b', '--backports-dir',
+        help=('Directory that contains patches for older Ubuntu versions '
+              '(default: None)'),
         default=None,
         type=str
         )

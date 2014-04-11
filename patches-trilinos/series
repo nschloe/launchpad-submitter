@@ -1,11 +1,7 @@
-dist-packages.patch
-export.patch
-link-boost.patch
 #dont-link-libpython.patch
-#use-system-findswig.patch
-#pytrilinos-no-soname.patch
 epetraext-string-to-char.patch
 galeri-string-to-char.patch
-triutils-string-to-char.patch
-tribits-escape-cxx-flags.patch
 intrepid-remove-bak-files.patch
+#pytrilinos-no-soname.patch
+triutils-string-to-char.patch
+#use-system-findswig.patch
