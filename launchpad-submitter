@@ -30,7 +30,10 @@ def _main():
     print('done.')
 
     os.chdir(args.source_dir)
-    submit_id = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
+    submit_id = subprocess.check_output(['git',
+                                         'rev-parse',
+                                         'HEAD'
+                                         ]).decode("utf-8")
 
     # File to store the HEAD command of the last push.
     id_file = os.path.join(os.path.expanduser('~'),
