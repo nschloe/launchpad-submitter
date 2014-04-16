@@ -23,7 +23,10 @@ def _main():
     assert(ierr == 0)
     os.chdir(args.debian_dir)
     ierr = subprocess.call(['git', 'pull'])
-    assert(ierr == 0)
+    if ierr != 0:
+        raise RuntimeError('Failed to update debian directory \'%s\'.'
+                           % args.debian_dir
+                           )
     print('done.')
 
     os.chdir(args.source_dir)
@@ -132,7 +135,6 @@ def _main():
 
             # Override changelog.
             utcnow = datetime.datetime.utcnow()
-            print(utcnow)
             changelog = open(os.path.join(prefix, 'debian/changelog'), 'w')
             changelog.write('''%s (%s) %s; urgency=low
 
