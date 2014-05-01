@@ -67,6 +67,7 @@ def _main():
         return 0
 
     # Actually quite dangerous. The user may inject malicious code here.
+    os.chdir(args.source_dir)
     package_version = subprocess.getoutput(args.version_getter).strip()
 
     # Create a version number of the form 4.3.1.2~20121123.
