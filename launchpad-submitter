@@ -9,6 +9,7 @@ import subprocess
 import datetime
 import shutil
 import glob
+import yaml
 
 
 def _main():
@@ -20,7 +21,10 @@ def _main():
     print('Fetching updates...')
     os.chdir(args.source_dir)
     ierr = subprocess.call(['git', 'pull'])
-    assert(ierr == 0)
+    if ierr != 0:
+        raise RuntimeError('Failed to update source directory \'%s\'.'
+                           % args.debian_dir
+                           )
     os.chdir(args.debian_dir)
     ierr = subprocess.call(['git', 'pull'])
     if ierr != 0:
@@ -30,24 +34,33 @@ def _main():
     print('done.')
 
     os.chdir(args.source_dir)
-    submit_id = subprocess.check_output(['git',
-                                         'rev-parse',
-                                         'HEAD'
-                                         ]).decode("utf-8")
+    source_revision = subprocess.check_output(['git',
+                                               'rev-parse',
+                                               'HEAD'
+                                               ]).decode('utf-8').strip()
+
+    os.chdir(args.debian_dir)
+    debian_revision = subprocess.check_output(['git',
+                                               'rev-parse',
+                                               'HEAD'
+                                               ]).decode('utf-8').strip()
 
     # File to store the HEAD command of the last push.
-    id_file = os.path.join(os.path.expanduser('~'),
+    revision_file = os.path.join(os.path.expanduser('~'),
                            '.%s-submit-unstable' % args.name
                            )
-
-    # Check if there was an update.
-    # TODO remove ID_FILE, test the next line
-    is_uptodate = False
-    if os.path.isfile(id_file):
-        # read file
-        with open(id_file, 'r') as f:
-            first_line = f.readline()
-        is_uptodate = (first_line == submit_id)
+    try:
+        revision_data = yaml.load_all(open(revision_file, 'r'))
+        revision_dicts = []
+        for doc in revision_data:
+            revision_dicts.append(doc)
+        is_uptodate = (
+            source_revision == revision_dicts[0]['source revision']
+            and debian_revision == revision_dicts[0]['debian revision']
+            )
+    except IOError:
+        # If no file is found, assume that we are not up-to-date.
+        is_uptodate = False
 
     if is_uptodate:
         print('Latest version already submitted to launchpad.')
@@ -58,7 +71,7 @@ def _main():
 
     # Create a version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20140409'
+    #today_str = '20140419'
     version = package_version + '~' + today_str
 
     # Create the tarball.
@@ -166,8 +179,13 @@ def _main():
 
     if args.submit:
         # Store which revision we're pushing so we don't do it twice.
-        id_file_handle = open(id_file, 'w')
-        id_file_handle.write(submit_id)
+        data = {
+            'source revision': source_revision,
+            'debian revision': debian_revision
+            }
+        with open(revision_file, 'w') as outfile:
+            outfile.write(yaml.dump(data, default_flow_style=False))
+
     return
 
 
