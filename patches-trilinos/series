@@ -1,5 +1,5 @@
 #dont-link-libpython.patch
-epetraext-string-to-char.patch
+#epetraext-string-to-char.patch
 galeri-string-to-char.patch
 intrepid-remove-bak-files.patch
 #pytrilinos-no-soname.patch
