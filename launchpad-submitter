@@ -20,17 +20,9 @@ def _main():
 
     print('Fetching updates...')
     os.chdir(args.source_dir)
-    ierr = subprocess.call(['git', 'pull'])
-    if ierr != 0:
-        raise RuntimeError('Failed to update source directory \'%s\'.'
-                           % args.debian_dir
-                           )
+    subprocess.check_call(['git', 'pull'])
     os.chdir(args.debian_dir)
-    ierr = subprocess.call(['git', 'pull'])
-    if ierr != 0:
-        raise RuntimeError('Failed to update debian directory \'%s\'.'
-                           % args.debian_dir
-                           )
+    subprocess.check_call(['git', 'pull'])
     print('done.')
 
     os.chdir(args.source_dir)
@@ -72,7 +64,7 @@ def _main():
 
     # Create a version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20140419'
+    #today_str = '20140508'
     version = package_version + '~' + today_str
 
     # Create the tarball.
@@ -83,13 +75,12 @@ def _main():
         os.remove(tarball_path)
     # Append the "/" to $PREFIX, otherwise this may be interpreted as an
     # ordinary filename-prefix.
-    ierr = subprocess.call(['git', 'archive',
-                            'master',
-                            '--prefix=%s/' % prefix,
-                            '--format=tar.gz',
-                            '--output=%s' % tarball_path
-                            ])
-    assert(ierr == 0)
+    subprocess.check_call(['git', 'archive',
+                           'master',
+                           '--prefix=%s/' % prefix,
+                           '--format=tar.gz',
+                           '--output=%s' % tarball_path
+                           ])
     print('done.')
 
     for ppa in args.ppas:
@@ -103,7 +94,7 @@ def _main():
             tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
             shutil.copy2(tarball_path, os.path.join(deb_dir, tarball_name))
             os.chdir(deb_dir)
-            subprocess.call(['tar', 'xf', tarball_name])
+            subprocess.check_call(['tar', 'xf', tarball_name])
 
             # Copy over the debian folder.
             shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
@@ -116,8 +107,7 @@ def _main():
 
             if os.path.isfile(patch_file):
                 os.chdir(prefix)
-                ierr = subprocess.call('patch -p1 < ' + patch_file, shell=True)
-                assert(ierr == 0)
+                subprocess.check_call('patch -p1 < ' + patch_file, shell=True)
 
             # Optionally add extra patches.
             if args.extra_patches_dir:
@@ -127,7 +117,6 @@ def _main():
                     source_dir = os.path.join(basedir, args.extra_patches_dir)
                 os.chdir(deb_dir)
                 dest_dir = os.path.join(prefix, 'debian', 'patches/')
-                print(dest_dir)
                 assert(os.path.isdir(dest_dir))
                 files = glob.iglob(os.path.join(source_dir, "*.patch"))
                 for file in files:
@@ -165,18 +154,19 @@ def _main():
 
             # Call debuild, the actual workhorse.
             os.chdir(prefix)
-            subprocess.call(['debuild',
-                             '-p%s' % os.path.join(basedir, 'mygpg'),
-                             '-S'
-                             ])
+            subprocess.check_call(['debuild',
+                                   '-p%s' % os.path.join(basedir, 'mygpg'),
+                                   '-S'
+                                   ])
+
             # Submit to launchpad.
             if args.submit:
                 os.chdir(os.pardir)
-                subprocess.call(['dput',
-                                 'ppa:%s' % ppa,
-                                 '%s_%s_source.changes' \
-                                     % (args.name, full_version)
-                                 ])
+                subprocess.check_call(['dput',
+                                       'ppa:%s' % ppa,
+                                       '%s_%s_source.changes' \
+                                           % (args.name, full_version)
+                                       ])
 
     if args.submit:
         # Store which revision we're pushing so we don't do it twice.
