@@ -38,7 +38,8 @@ def _main():
                                                ]).decode('utf-8').strip()
 
     # File to store the HEAD command of the last push.
-    revision_file = os.path.join(os.path.expanduser('~'),
+    revision_file = os.path.join(
+                           os.path.expanduser('~'),
                            '.%s-submit-unstable' % args.name
                            )
     try:
