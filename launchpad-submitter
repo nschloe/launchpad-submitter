@@ -86,18 +86,24 @@ def _main():
 
     for ppa in args.ppas:
         for ubuntu_release in args.ubuntu_releases:
-            deb_dir = os.path.join('/tmp', args.name, ubuntu_release)
-            if os.path.exists(deb_dir):
-                shutil.rmtree(deb_dir)
+            release_dir = os.path.join('/tmp', args.name, ubuntu_release)
+            if os.path.exists(release_dir):
+                shutil.rmtree(release_dir)
             # Use Python3's makedirs for recursive creation
-            os.makedirs(deb_dir, exist_ok=True)
+            os.makedirs(release_dir, exist_ok=True)
 
             tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
-            shutil.copy2(tarball_path, os.path.join(deb_dir, tarball_name))
-            os.chdir(deb_dir)
+            shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
+            os.chdir(release_dir)
             subprocess.check_call(['tar', 'xf', tarball_name])
 
+            # Cleaning Debian directory to avoid copy errors with invalid
+            # symlinks.
+            os.chdir(args.debian_dir)
+            subprocess.check_call(['git', 'clean', '-f', '-d'])
+
             # Copy over the debian folder.
+            os.chdir(release_dir)
             shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
 
             # Check if we need to patch the
@@ -116,7 +122,7 @@ def _main():
                     source_dir = args.extra_patches_dir
                 else:
                     source_dir = os.path.join(basedir, args.extra_patches_dir)
-                os.chdir(deb_dir)
+                os.chdir(release_dir)
                 dest_dir = os.path.join(prefix, 'debian', 'patches/')
                 assert(os.path.isdir(dest_dir))
                 files = glob.iglob(os.path.join(source_dir, "*.patch"))
