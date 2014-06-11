@@ -7,8 +7,8 @@ THIS_DIR=`dirname $0`
 
 $THIS_DIR/launchpad-submitter \
   --name netcdf \
-  --resubmission 5 \
-  --source-dir "$HOME/software/netcdf/dev/source-nschloe/" \
+  --resubmission 1 \
+  --source-dir "$HOME/software/netcdf/dev/source/" \
   --debian-dir "$HOME/rcs/debian-netcdf-official/debian/" \
   --ubuntu-releases precise saucy trusty utopic \
   --ppas nschloe/netcdf-nightly nschloe/trilinos-nightly \
