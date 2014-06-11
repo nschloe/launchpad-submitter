@@ -10,7 +10,7 @@ $THIS_DIR/launchpad-submitter \
   --resubmission 1 \
   --source-dir "$HOME/software/netcdf-fortran/source/" \
   --debian-dir "$HOME/rcs/debian-netcdff/" \
-  --ubuntu-releases precise quantal saucy trusty utopic \
+  --ubuntu-releases precise saucy trusty utopic \
   --ppas nschloe/netcdf-nightly \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --submit
