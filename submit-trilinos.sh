@@ -10,7 +10,7 @@ $THIS_DIR/launchpad-submitter \
   --resubmission 1 \
   --source-dir "$HOME/software/trilinos/dev/github/" \
   --debian-dir "$HOME/rcs/debian-trilinos/debian/" \
-  --ubuntu-releases saucy trusty utopic \
+  --ubuntu-releases trusty utopic \
   --ppas nschloe/trilinos-nightly \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --extra-patches-dir patches-trilinos \
