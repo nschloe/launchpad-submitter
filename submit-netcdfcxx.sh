@@ -13,5 +13,5 @@ $THIS_DIR/launchpad-submitter \
   --ubuntu-releases precise saucy trusty utopic \
   --ppas nschloe/netcdf-nightly \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/"' \
-  --slot 1 \
   --submit
+#  --slot 1 \
