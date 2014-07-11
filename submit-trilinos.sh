@@ -8,7 +8,7 @@ THIS_DIR=`dirname $0`
 $THIS_DIR/launchpad-submitter \
   --name trilinos \
   --resubmission 1 \
-  --source-dir "$HOME/software/trilinos/dev/github/" \
+  --source-dir "$HOME/software/trilinos/github/" \
   --debian-dir "$HOME/rcs/debian-trilinos/debian/" \
   --ubuntu-releases trusty utopic \
   --ppas nschloe/trilinos-nightly \
