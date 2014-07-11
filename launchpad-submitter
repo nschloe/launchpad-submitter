@@ -39,9 +39,9 @@ def _main():
 
     # File to store the HEAD command of the last push.
     revision_file = os.path.join(
-                           os.path.expanduser('~'),
-                           '.%s-submit-unstable' % args.name
-                           )
+        os.path.expanduser('~'),
+        '.%s-submit-unstable' % args.name
+        )
     try:
         revision_data = yaml.load_all(open(revision_file, 'r'))
         revision_dicts = []
@@ -153,10 +153,11 @@ def _main():
 
   * Initial release
 
- -- Nico Schlömer <nico.schloemer@gmail.com>  %s''' \
-            % (args.name, chlog_version,
-               ubuntu_release, utcnow.strftime('%a, %d %b %Y %T +0000')
-               ))
+ -- Nico Schlömer <nico.schloemer@gmail.com>  %s'''
+                            % (args.name, chlog_version,
+                               ubuntu_release,
+                               utcnow.strftime('%a, %d %b %Y %T +0000')
+                               ))
             changelog.close()
 
             # Call debuild, the actual workhorse.
@@ -169,11 +170,11 @@ def _main():
             # Submit to launchpad.
             if args.submit:
                 os.chdir(os.pardir)
-                subprocess.check_call(['dput',
-                                       'ppa:%s' % ppa,
-                                       '%s_%s_source.changes' \
-                                           % (args.name, full_version)
-                                       ])
+                subprocess.check_call([
+                    'dput',
+                    'ppa:%s' % ppa,
+                    '%s_%s_source.changes' % (args.name, full_version)
+                    ])
 
     if args.submit:
         # Store which revision we're pushing so we don't do it twice.
