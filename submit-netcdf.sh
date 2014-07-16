@@ -10,7 +10,7 @@ $THIS_DIR/launchpad-submitter \
   --resubmission 1 \
   --source-dir "$HOME/software/netcdf/dev/source/" \
   --debian-dir "$HOME/rcs/debian-netcdf-official/debian/" \
-  --ubuntu-releases precise saucy trusty utopic \
+  --ubuntu-releases trusty utopic \
   --ppas nschloe/netcdf-nightly nschloe/trilinos-nightly \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --slot 1 \
