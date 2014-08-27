@@ -15,7 +15,7 @@ import yaml
 def _main():
     args = _parse_cmd_arguments()
 
-    # Retrieve the directory of this script, cf.
+    # Retrieve the directory of this script
     basedir = os.path.dirname(os.path.realpath(__file__))
 
     print('Fetching updates...')
@@ -59,11 +59,12 @@ def _main():
         print('Latest version already submitted to launchpad.')
         return 0
 
+    # Get package version.
     # Actually quite dangerous. The user may inject malicious code here.
     os.chdir(args.source_dir)
     package_version = subprocess.getoutput(args.version_getter).strip()
 
-    # Create a version number of the form 4.3.1.2~20121123.
+    # Create a day-to-day version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
     #today_str = '20140508'
     version = package_version + '~' + today_str
@@ -86,32 +87,38 @@ def _main():
 
     for ppa in args.ppas:
         for ubuntu_release in args.ubuntu_releases:
+            # Create empty directory of the form
+            #     /tmp/trilinos/trusty/
             release_dir = os.path.join('/tmp', args.name, ubuntu_release)
             if os.path.exists(release_dir):
                 shutil.rmtree(release_dir)
             # Use Python3's makedirs for recursive creation
             os.makedirs(release_dir, exist_ok=True)
 
+            # Copy source tarball to
+            #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123.tar.gz
             tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
             shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
+            # Unpack the tarball
             os.chdir(release_dir)
             subprocess.check_call(['tar', 'xf', tarball_name])
 
-            # Cleaning Debian directory to avoid copy errors with invalid
-            # symlinks.
-            os.chdir(args.debian_dir)
-            subprocess.check_call(['git', 'clean', '-f', '-d'])
+            ## Cleaning Debian directory to avoid copy errors with invalid
+            ## symlinks.
+            # TODO don't clean to make sure not to accidentally delete patches
+            #os.chdir(args.debian_dir)
+            #subprocess.check_call(['git', 'clean', '-f', '-d'])
 
-            # Copy over the debian folder.
+            # Copy over the debian folder to
+            #     /tmp/trilinos/trusty/debian/
             os.chdir(release_dir)
             shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
 
-            # Check if we need to patch the
+            # Patch the sources if necessary
             patch_file = os.path.join(basedir,
                                       args.name + '-ubuntu-backports',
                                       ubuntu_release + '.patch'
                                       )
-
             if os.path.isfile(patch_file):
                 os.chdir(prefix)
                 subprocess.check_call('patch -p1 < ' + patch_file, shell=True)
@@ -146,7 +153,7 @@ def _main():
             else:
                 chlog_version = full_version
 
-            # Override changelog.
+            # Override changelog
             utcnow = datetime.datetime.utcnow()
             changelog = open(os.path.join(prefix, 'debian/changelog'), 'w')
             changelog.write('''%s (%s) %s; urgency=low
@@ -160,7 +167,7 @@ def _main():
                                ))
             changelog.close()
 
-            # Call debuild, the actual workhorse.
+            # Call debuild, the actual workhorse
             os.chdir(prefix)
             subprocess.check_call(['debuild',
                                    '-p%s' % os.path.join(basedir, 'mygpg'),
