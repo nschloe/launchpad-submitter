@@ -85,103 +85,110 @@ def _main():
                            ])
     print('done.')
 
-    for ppa in args.ppas:
-        for ubuntu_release in args.ubuntu_releases:
-            # Create empty directory of the form
-            #     /tmp/trilinos/trusty/
-            release_dir = os.path.join('/tmp', args.name, ubuntu_release)
-            if os.path.exists(release_dir):
-                shutil.rmtree(release_dir)
-            # Use Python3's makedirs for recursive creation
-            os.makedirs(release_dir, exist_ok=True)
+    for ubuntu_release in args.ubuntu_releases:
+        # Create empty directory of the form
+        #     /tmp/trilinos/trusty/
+        release_dir = os.path.join('/tmp', args.name, ubuntu_release)
+        if os.path.exists(release_dir):
+            shutil.rmtree(release_dir)
+        # Use Python3's makedirs for recursive creation
+        os.makedirs(release_dir, exist_ok=True)
 
-            # Copy source tarball to
-            #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123.tar.gz
-            tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
-            shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
-            # Unpack the tarball
-            os.chdir(release_dir)
-            subprocess.check_call(['tar', 'xf', tarball_name])
+        # Copy source tarball to
+        #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123.tar.gz
+        tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
+        shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
+        # Unpack the tarball
+        os.chdir(release_dir)
+        subprocess.check_call(['tar', 'xf', tarball_name])
 
-            ## Cleaning Debian directory to avoid copy errors with invalid
-            ## symlinks.
-            # TODO don't clean to make sure not to accidentally delete patches
-            #os.chdir(args.debian_dir)
-            #subprocess.check_call(['git', 'clean', '-f', '-d'])
+        ## Cleaning Debian directory to avoid copy errors with invalid
+        ## symlinks.
+        # TODO don't clean to make sure not to accidentally delete patches
+        #os.chdir(args.debian_dir)
+        #subprocess.check_call(['git', 'clean', '-f', '-d'])
 
-            # Copy over the debian folder to
-            #     /tmp/trilinos/trusty/debian/
-            os.chdir(release_dir)
-            shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
+        # Copy over the debian folder to
+        #     /tmp/trilinos/trusty/debian/
+        os.chdir(release_dir)
+        shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
 
-            # Patch the sources if necessary
-            patch_file = os.path.join(basedir,
-                                      args.name + '-ubuntu-backports',
-                                      ubuntu_release + '.patch'
-                                      )
-            if os.path.isfile(patch_file):
-                os.chdir(prefix)
-                subprocess.check_call('patch -p1 < ' + patch_file, shell=True)
+        # Patch the sources if necessary
+        patch_file = os.path.join(basedir,
+                                  args.name + '-ubuntu-backports',
+                                  ubuntu_release + '.patch'
+                                  )
+        if os.path.isfile(patch_file):
+            os.chdir(prefix)
+            subprocess.check_call('patch -p1 < ' + patch_file, shell=True)
 
-            # Optionally add extra patches.
-            if args.extra_patches_dir:
-                if os.path.isabs(args.extra_patches_dir):
-                    source_dir = args.extra_patches_dir
-                else:
-                    source_dir = os.path.join(basedir, args.extra_patches_dir)
-                os.chdir(release_dir)
-                dest_dir = os.path.join(prefix, 'debian', 'patches/')
-                assert(os.path.isdir(dest_dir))
-                files = glob.iglob(os.path.join(source_dir, "*.patch"))
-                for file in files:
-                    if os.path.isfile(file):
-                        shutil.copy2(file, dest_dir)
-                # Concatenate the series files
-                source_file = os.path.join(source_dir, 'series')
-                dest_file = os.path.join(dest_dir, 'series')
-                with open(dest_file, 'a') as outfile:
-                    with open(source_file) as infile:
-                        outfile.write(infile.read())
-
-            # Use the `-` as a separator (instead of `~` as it's often used) to
-            # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
-            # makes it possible to increment `x` and have launchpad recognize
-            # it as a new version.
-            full_version = version + '-' + ubuntu_release + args.resubmission
-            if args.slot:
-                chlog_version = args.slot + ':' + full_version
+        # Optionally add extra patches.
+        if args.extra_patches_dir:
+            if os.path.isabs(args.extra_patches_dir):
+                source_dir = args.extra_patches_dir
             else:
-                chlog_version = full_version
+                source_dir = os.path.join(basedir, args.extra_patches_dir)
+            os.chdir(release_dir)
+            dest_dir = os.path.join(prefix, 'debian', 'patches/')
+            assert(os.path.isdir(dest_dir))
+            files = glob.iglob(os.path.join(source_dir, "*.patch"))
+            for file in files:
+                if os.path.isfile(file):
+                    shutil.copy2(file, dest_dir)
+            # Concatenate the series files
+            source_file = os.path.join(source_dir, 'series')
+            dest_file = os.path.join(dest_dir, 'series')
+            with open(dest_file, 'a') as outfile:
+                with open(source_file) as infile:
+                    outfile.write(infile.read())
 
-            # Override changelog
-            utcnow = datetime.datetime.utcnow()
-            changelog = open(os.path.join(prefix, 'debian/changelog'), 'w')
-            changelog.write('''%s (%s) %s; urgency=low
+        # Use the `-` as a separator (instead of `~` as it's often used) to
+        # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
+        # makes it possible to increment `x` and have launchpad recognize
+        # it as a new version.
+        full_version = version + '-' + ubuntu_release + args.resubmission
+        if args.slot:
+            chlog_version = args.slot + ':' + full_version
+        else:
+            chlog_version = full_version
+
+        # Override changelog
+        utcnow = datetime.datetime.utcnow()
+        changelog = open(os.path.join(prefix, 'debian/changelog'), 'w')
+        changelog.write('''%s (%s) %s; urgency=low
 
   * Initial release
 
  -- Nico Schlömer <nico.schloemer@gmail.com>  %s'''
-                            % (args.name, chlog_version,
-                               ubuntu_release,
-                               utcnow.strftime('%a, %d %b %Y %T +0000')
-                               ))
-            changelog.close()
+                        % (args.name, chlog_version,
+                           ubuntu_release,
+                           utcnow.strftime('%a, %d %b %Y %T +0000')
+                           ))
+        changelog.close()
 
-            # Call debuild, the actual workhorse
-            os.chdir(prefix)
-            subprocess.check_call(['debuild',
-                                   '-p%s' % os.path.join(basedir, 'mygpg'),
-                                   '-S'
-                                   ])
+        # Call debuild, the actual workhorse
+        os.chdir(prefix)
+        subprocess.check_call(['debuild',
+                               '-p%s' % os.path.join(basedir, 'mygpg'),
+                               '-S'
+                               ])
 
-            # Submit to launchpad.
-            if args.submit:
-                os.chdir(os.pardir)
+        # Submit to launchpad.
+        if args.submit:
+            os.chdir(os.pardir)
+            for ppa in args.ppas:
+                print()
+                print('Uploading to PPA %s...' % ppa)
+                print()
                 subprocess.check_call([
                     'dput',
                     'ppa:%s' % ppa,
                     '%s_%s_source.changes' % (args.name, full_version)
                     ])
+                # Remove the upload file so we can upload again to another ppa
+                os.remove('%s_%s_source.ppa.upload'
+                          % (args.name, full_version)
+                          )
 
     if args.submit:
         # Store which revision we're pushing so we don't do it twice.
