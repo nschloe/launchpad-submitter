@@ -11,7 +11,6 @@ $THIS_DIR/launchpad-submitter \
   --source-dir "$HOME/software/netcdf-cxx/source/" \
   --debian-dir "$HOME/rcs/debian-netcdfcxx/" \
   --ubuntu-releases trusty utopic \
-  --ppas nschloe/netcdf-nightly \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/"' \
-  --submit
+  --ppas nschloe/netcdf-nightly
 #  --slot 1 \

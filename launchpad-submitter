@@ -174,23 +174,22 @@ def _main():
                                ])
 
         # Submit to launchpad.
-        if args.submit:
-            os.chdir(os.pardir)
-            for ppa in args.ppas:
-                print()
-                print('Uploading to PPA %s...' % ppa)
-                print()
-                subprocess.check_call([
-                    'dput',
-                    'ppa:%s' % ppa,
-                    '%s_%s_source.changes' % (args.name, full_version)
-                    ])
-                # Remove the upload file so we can upload again to another ppa
-                os.remove('%s_%s_source.ppa.upload'
-                          % (args.name, full_version)
-                          )
+        os.chdir(os.pardir)
+        for ppa in args.ppas:
+            print()
+            print('Uploading to PPA %s...' % ppa)
+            print()
+            subprocess.check_call([
+                'dput',
+                'ppa:%s' % ppa,
+                '%s_%s_source.changes' % (args.name, full_version)
+                ])
+            # Remove the upload file so we can upload again to another ppa
+            os.remove('%s_%s_source.ppa.upload'
+                      % (args.name, full_version)
+                      )
 
-    if args.submit:
+    if args.ppas:
         # Store which revision we're pushing so we don't do it twice.
         data = {
             'source revision': source_revision,
@@ -244,12 +243,6 @@ def _parse_cmd_arguments():
         help='Shell command for extracting the version number',
         type=str,
         required=True
-        )
-    parser.add_argument(
-        '-x', '--submit',
-        help='Actually the build to launchpad (default: False)',
-        action='store_true',
-        default=False
         )
     parser.add_argument(
         '-l', '--slot',

@@ -11,6 +11,5 @@ $THIS_DIR/launchpad-submitter \
   --source-dir "$HOME/software/netcdf-fortran/source/" \
   --debian-dir "$HOME/rcs/debian-netcdff/" \
   --ubuntu-releases trusty utopic \
-  --ppas nschloe/netcdf-nightly \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
-  --submit
+  --ppas nschloe/netcdf-nightly
