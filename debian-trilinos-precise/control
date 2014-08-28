@@ -601,7 +601,7 @@ Description: next generation multilevel preconditioner capabilities
 Package: libmuelu-dev
 Architecture: any
 Section: libdevel
-Depends: libmuelu (= ${binary:Version}), ${misc:Depends}
+Depends: libmuelu11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: next generation multilevel preconditioner capabilities
  .
