@@ -1,0 +1,888 @@
+diff --git a/packages/seacas/applications/algebra/CMakeLists.txt b/packages/seacas/applications/algebra/CMakeLists.txt
+index 6c35fcd..dab7b2d 100644
+--- a/packages/seacas/applications/algebra/CMakeLists.txt
++++ b/packages/seacas/applications/algebra/CMakeLists.txt
+@@ -10,7 +10,16 @@ INCLUDE_DIRECTORIES(
+ 
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+-TRIBITS_ADD_EXECUTABLE(algebra NOEXEPREFIX NOEXESUFFIX HEADERS ${HEADERS} LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  algebra
++  NOEXEPREFIX
++  NOEXESUFFIX
++  HEADERS ${HEADERS}
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ install_executable(algebra)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/aprepro/CMakeLists.txt b/packages/seacas/applications/aprepro/CMakeLists.txt
+index 1e0ffc8..7de476f 100644
+--- a/packages/seacas/applications/aprepro/CMakeLists.txt
++++ b/packages/seacas/applications/aprepro/CMakeLists.txt
+@@ -14,7 +14,14 @@ SET(HEADERS "")
+ SET(SOURCES ap_builtin.c  ap_stat.c  y.tab.c  ap_util.c  ap_init.c
+ 	    ap_hash.c     ap_liballoc.c  ap_units.c      ap_aprepro.c ap_array.c)
+ 
+-TRIBITS_ADD_EXECUTABLE(aprepro NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES} DEPLIBS suplib m COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  aprepro
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_suplib m
++  COMM serial mpi
++  )
+ install_executable(aprepro)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/blot/CMakeLists.txt b/packages/seacas/applications/blot/CMakeLists.txt
+index 0b2992e..989f73d 100644
+--- a/packages/seacas/applications/blot/CMakeLists.txt
++++ b/packages/seacas/applications/blot/CMakeLists.txt
+@@ -17,20 +17,20 @@ TRIBITS_ADD_LIBRARY(
+ 	blotlib
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS supes suplib exodus_for plt
++	DEPLIBS seacas_supes seacas_suplib seacas_exodus_for seacas_plt
+ )
+ 
+ TRIBITS_ADD_EXECUTABLE(blot_x11 NOEXEPREFIX NOEXESUFFIX
+ 				LINKER_LANGUAGE Fortran
+ 			        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/blot.f
+-			        DEPLIBS blotlib svdi_cgi_x11 
++			        DEPLIBS blotlib svdi_cgi_x11
+ 			        COMM serial mpi)
+ install_executable(blot_x11)
+ 
+ TRIBITS_ADD_EXECUTABLE(blot_xcps NOEXEPREFIX NOEXESUFFIX
+ 				LINKER_LANGUAGE Fortran
+ 			        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/blot.f
+-			        DEPLIBS blotlib vdx11cps vdicps_dual 
++			        DEPLIBS blotlib vdx11cps vdicps_dual
+ 			        COMM serial mpi)
+ install_executable(blot_xcps)
+ 
+diff --git a/packages/seacas/applications/conjoin/CMakeLists.txt b/packages/seacas/applications/conjoin/CMakeLists.txt
+index 6d64777..7aa29e0 100644
+--- a/packages/seacas/applications/conjoin/CMakeLists.txt
++++ b/packages/seacas/applications/conjoin/CMakeLists.txt
+@@ -12,7 +12,14 @@ SET(CODE conjoin)
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+ 
+-TRIBITS_ADD_EXECUTABLE(${CODE} NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES} DEPLIBS exodus suplib COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  ${CODE}
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_exodus seacas_suplib
++  COMM serial mpi
++  )
+ install_executable(${CODE})
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/ejoin/CMakeLists.txt b/packages/seacas/applications/ejoin/CMakeLists.txt
+index ac08d79..79df987 100644
+--- a/packages/seacas/applications/ejoin/CMakeLists.txt
++++ b/packages/seacas/applications/ejoin/CMakeLists.txt
+@@ -10,7 +10,15 @@ INCLUDE_DIRECTORIES(
+ 
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+-TRIBITS_ADD_EXECUTABLE(ejoin NOEXEPREFIX NOEXESUFFIX HEADERS ${HEADERS} SOURCES ${SOURCES} DEPLIBS Ioss exodus suplib COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  ejoin
++  NOEXEPREFIX
++  NOEXESUFFIX
++  HEADERS ${HEADERS}
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_ioss seacas_exodus seacas_suplib
++  COMM serial mpi
++  )
+ install_executable(ejoin)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/epu/CMakeLists.txt b/packages/seacas/applications/epu/CMakeLists.txt
+index f942cb0..a7b9794 100644
+--- a/packages/seacas/applications/epu/CMakeLists.txt
++++ b/packages/seacas/applications/epu/CMakeLists.txt
+@@ -15,7 +15,14 @@ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+ #this error only seems to manifest on pgi 11.1, however, the version of the compiler
+ #is not given for pgi compilers unfortunately so we can't be more specific
+ IF(NOT __LINUX_COMPILER_PGI)
+-  TRIBITS_ADD_EXECUTABLE(epu NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES} DEPLIBS suplib exodus COMM serial mpi)
++  TRIBITS_ADD_EXECUTABLE(
++    epu
++    NOEXEPREFIX
++    NOEXESUFFIX
++    SOURCES ${SOURCES}
++    DEPLIBS seacas_suplib seacas_exodus
++    COMM serial mpi
++    )
+   install_executable(epu)
+ ENDIF()
+ 
+diff --git a/packages/seacas/applications/exo2mat/CMakeLists.txt b/packages/seacas/applications/exo2mat/CMakeLists.txt
+index 9d2cce3..7b13c5c 100644
+--- a/packages/seacas/applications/exo2mat/CMakeLists.txt
++++ b/packages/seacas/applications/exo2mat/CMakeLists.txt
+@@ -13,7 +13,14 @@ INCLUDE_DIRECTORIES(
+ SET(CODE exo2mat)
+ SET(HEADERS "")
+ 
+-TRIBITS_ADD_EXECUTABLE(${CODE} NOEXEPREFIX NOEXESUFFIX SOURCES exo2mat.c DEPLIBS suplib exodus COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  ${CODE}
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES exo2mat.c
++  DEPLIBS seacas_suplib seacas_exodus
++  COMM serial mpi
++  )
+ install_executable(${CODE})
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/exodiff/CMakeLists.txt b/packages/seacas/applications/exodiff/CMakeLists.txt
+index a222af8..e081633 100644
+--- a/packages/seacas/applications/exodiff/CMakeLists.txt
++++ b/packages/seacas/applications/exodiff/CMakeLists.txt
+@@ -10,7 +10,14 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+ 
+-TRIBITS_ADD_EXECUTABLE(exodiff NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES}  DEPLIBS exodus suplib COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  exodiff
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_exodus seacas_suplib
++  COMM serial mpi
++  )
+ install_executable(exodiff)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/exomatlab/CMakeLists.txt b/packages/seacas/applications/exomatlab/CMakeLists.txt
+index ec1b827..0807d85 100644
+--- a/packages/seacas/applications/exomatlab/CMakeLists.txt
++++ b/packages/seacas/applications/exomatlab/CMakeLists.txt
+@@ -11,7 +11,14 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+ 
+-TRIBITS_ADD_EXECUTABLE(exomatlab NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES} DEPLIBS Ioss suplib COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  exomatlab
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_ioss seacas_suplib
++  COMM serial mpi
++  )
+ install_executable(exomatlab)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/exotxt/CMakeLists.txt b/packages/seacas/applications/exotxt/CMakeLists.txt
+index cf0888f..f5ef12a 100644
+--- a/packages/seacas/applications/exotxt/CMakeLists.txt
++++ b/packages/seacas/applications/exotxt/CMakeLists.txt
+@@ -10,7 +10,15 @@ INCLUDE_DIRECTORIES(
+ 
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+-TRIBITS_ADD_EXECUTABLE(exotxt NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  exotxt
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ install_executable(exotxt)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/fastq/CMakeLists.txt b/packages/seacas/applications/fastq/CMakeLists.txt
+index 0cbbef9..75a5942 100644
+--- a/packages/seacas/applications/fastq/CMakeLists.txt
++++ b/packages/seacas/applications/fastq/CMakeLists.txt
+@@ -17,20 +17,20 @@ TRIBITS_ADD_LIBRARY(
+ 	fastqlib
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS supes suplib exodus_for plt
++	DEPLIBS seacas_supes seacas_suplib seacas_exodus_for seacas_plt
+ )
+ 
+ TRIBITS_ADD_EXECUTABLE(fastq_x11 NOEXEPREFIX NOEXESUFFIX
+ 				LINKER_LANGUAGE Fortran
+ 			        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/fastq.f
+-			        DEPLIBS fastqlib svdi_cgi_x11 
++			        DEPLIBS fastqlib svdi_cgi_x11
+ 			        COMM serial mpi)
+ install_executable(fastq_x11)
+ 
+ TRIBITS_ADD_EXECUTABLE(fastq_xcps NOEXEPREFIX NOEXESUFFIX
+ 				LINKER_LANGUAGE Fortran
+ 			        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/fastq.f
+-			        DEPLIBS fastqlib vdx11cps vdicps_dual 
++			        DEPLIBS fastqlib vdx11cps vdicps_dual
+ 			        COMM serial mpi)
+ install_executable(fastq_xcps)
+ 
+diff --git a/packages/seacas/applications/gen3d/CMakeLists.txt b/packages/seacas/applications/gen3d/CMakeLists.txt
+index 1227059..32cfff1 100644
+--- a/packages/seacas/applications/gen3d/CMakeLists.txt
++++ b/packages/seacas/applications/gen3d/CMakeLists.txt
+@@ -11,7 +11,15 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ 
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+-TRIBITS_ADD_EXECUTABLE(gen3d NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  gen3d
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ 
+ install_executable(gen3d)
+ 
+diff --git a/packages/seacas/applications/genshell/CMakeLists.txt b/packages/seacas/applications/genshell/CMakeLists.txt
+index f96efac..4b475e4 100644
+--- a/packages/seacas/applications/genshell/CMakeLists.txt
++++ b/packages/seacas/applications/genshell/CMakeLists.txt
+@@ -11,7 +11,15 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ 
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+-TRIBITS_ADD_EXECUTABLE(genshell NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  genshell
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ 
+ install_executable(genshell)
+ 
+diff --git a/packages/seacas/applications/gjoin/CMakeLists.txt b/packages/seacas/applications/gjoin/CMakeLists.txt
+index a41fb2d..6cac011 100644
+--- a/packages/seacas/applications/gjoin/CMakeLists.txt
++++ b/packages/seacas/applications/gjoin/CMakeLists.txt
+@@ -11,7 +11,15 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.F)
+-TRIBITS_ADD_EXECUTABLE(gjoin NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  gjoin
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ 
+ install_executable(gjoin)
+ 
+diff --git a/packages/seacas/applications/grepos/CMakeLists.txt b/packages/seacas/applications/grepos/CMakeLists.txt
+index adccc50..ba637b49 100644
+--- a/packages/seacas/applications/grepos/CMakeLists.txt
++++ b/packages/seacas/applications/grepos/CMakeLists.txt
+@@ -11,7 +11,15 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.F)
+-TRIBITS_ADD_EXECUTABLE(grepos NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  grepos
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ 
+ install_executable(grepos)
+ 
+diff --git a/packages/seacas/applications/grope/CMakeLists.txt b/packages/seacas/applications/grope/CMakeLists.txt
+index a54b63e..6181abf 100644
+--- a/packages/seacas/applications/grope/CMakeLists.txt
++++ b/packages/seacas/applications/grope/CMakeLists.txt
+@@ -11,7 +11,15 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+ 
+-TRIBITS_ADD_EXECUTABLE(grope NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  grope
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ 
+ install_executable(grope)
+ 
+diff --git a/packages/seacas/applications/mapvar-kd/CMakeLists.txt b/packages/seacas/applications/mapvar-kd/CMakeLists.txt
+index 6129aae..f71fb76 100644
+--- a/packages/seacas/applications/mapvar-kd/CMakeLists.txt
++++ b/packages/seacas/applications/mapvar-kd/CMakeLists.txt
+@@ -12,7 +12,15 @@ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
+ 
+-TRIBITS_ADD_EXECUTABLE(mapvar-kd NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS mapvarlib supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  mapvar-kd
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_mapvarlib seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ install_executable(mapvar-kd)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/mapvar/CMakeLists.txt b/packages/seacas/applications/mapvar/CMakeLists.txt
+index 67d9980..74dce13 100644
+--- a/packages/seacas/applications/mapvar/CMakeLists.txt
++++ b/packages/seacas/applications/mapvar/CMakeLists.txt
+@@ -10,7 +10,15 @@ INCLUDE_DIRECTORIES(
+ 
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+-TRIBITS_ADD_EXECUTABLE(mapvar NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS mapvarlib supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  mapvar
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_mapvarlib seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ install_executable(mapvar)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/mat2exo/CMakeLists.txt b/packages/seacas/applications/mat2exo/CMakeLists.txt
+index 9228f32..76ff5b8 100644
+--- a/packages/seacas/applications/mat2exo/CMakeLists.txt
++++ b/packages/seacas/applications/mat2exo/CMakeLists.txt
+@@ -14,7 +14,14 @@ INCLUDE_DIRECTORIES(
+ SET(CODE mat2exo)
+ SET(HEADERS "")
+ 
+-TRIBITS_ADD_EXECUTABLE(${CODE} NOEXEPREFIX NOEXESUFFIX SOURCES mat2exo.c DEPLIBS suplib exodus COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  ${CODE}
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES mat2exo.c
++  DEPLIBS seacas_suplib seacas_exodus
++  COMM serial mpi
++  )
+ install_executable(${CODE})
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/nem_slice/CMakeLists.txt b/packages/seacas/applications/nem_slice/CMakeLists.txt
+index 7a0c47f..ca9196b 100644
+--- a/packages/seacas/applications/nem_slice/CMakeLists.txt
++++ b/packages/seacas/applications/nem_slice/CMakeLists.txt
+@@ -17,7 +17,14 @@ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+ CHECK_INCLUDE_FILE( sys/resource.h HAS_GETRUSAGE )
+ 
+-TRIBITS_ADD_EXECUTABLE(nem_slice NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES} DEPLIBS ${ZOLTAN_DEP} exodus nemesis chaco suplib COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  nem_slice
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES ${SOURCES}
++  DEPLIBS ${ZOLTAN_DEP} seacas_exodus seacas_nemesis seacas_chaco seacas_suplib
++  COMM serial mpi
++  )
+ install_executable(nem_slice)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/nem_spread/CMakeLists.txt b/packages/seacas/applications/nem_spread/CMakeLists.txt
+index c91e587..521255e 100644
+--- a/packages/seacas/applications/nem_spread/CMakeLists.txt
++++ b/packages/seacas/applications/nem_spread/CMakeLists.txt
+@@ -11,7 +11,14 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.C)
+ 
+-TRIBITS_ADD_EXECUTABLE(nem_spread NOEXEPREFIX NOEXESUFFIX SOURCES ${SOURCES} DEPLIBS exodus nemesis suplib COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  nem_spread
++  NOEXEPREFIX
++  NOEXESUFFIX
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_exodus seacas_nemesis seacas_suplib
++  COMM serial mpi
++  )
+ install_executable(nem_spread)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/numbers/CMakeLists.txt b/packages/seacas/applications/numbers/CMakeLists.txt
+index aeb3a23..10a665e 100644
+--- a/packages/seacas/applications/numbers/CMakeLists.txt
++++ b/packages/seacas/applications/numbers/CMakeLists.txt
+@@ -10,7 +10,16 @@ INCLUDE_DIRECTORIES(
+ 
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+-TRIBITS_ADD_EXECUTABLE(numbers NOEXEPREFIX NOEXESUFFIX HEADERS ${HEADERS} LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  numbers
++  NOEXEPREFIX
++  NOEXESUFFIX
++  HEADERS ${HEADERS}
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for
++  COMM serial mpi
++  )
+ install_executable(numbers)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/applications/txtexo/CMakeLists.txt b/packages/seacas/applications/txtexo/CMakeLists.txt
+index 20db1f9..8cffbd1 100644
+--- a/packages/seacas/applications/txtexo/CMakeLists.txt
++++ b/packages/seacas/applications/txtexo/CMakeLists.txt
+@@ -11,7 +11,15 @@ INCLUDE_DIRECTORIES(
+ SET(HEADERS "")
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.f)
+ APPEND_GLOB(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.F)
+-TRIBITS_ADD_EXECUTABLE(txtexo NOEXEPREFIX NOEXESUFFIX LINKER_LANGUAGE Fortran SOURCES ${SOURCES} DEPLIBS supes suplib exodus_for exodus COMM serial mpi)
++TRIBITS_ADD_EXECUTABLE(
++  txtexo
++  NOEXEPREFIX
++  NOEXESUFFIX
++  LINKER_LANGUAGE Fortran
++  SOURCES ${SOURCES}
++  DEPLIBS seacas_supes seacas_suplib seacas_exodus_for seacas_exodus
++  COMM serial mpi
++  )
+ install_executable(txtexo)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/libraries/aprepro_lib/CMakeLists.txt b/packages/seacas/libraries/aprepro_lib/CMakeLists.txt
+index 8fdc45d..5f57ed4 100644
+--- a/packages/seacas/libraries/aprepro_lib/CMakeLists.txt
++++ b/packages/seacas/libraries/aprepro_lib/CMakeLists.txt
+@@ -23,7 +23,7 @@ SET(SOURCES
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	aprepro_lib
++	seacas_aprepro_lib
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+ )
+diff --git a/packages/seacas/libraries/chaco/CMakeLists.txt b/packages/seacas/libraries/chaco/CMakeLists.txt
+index bfe7122..fd67fe1 100644
+--- a/packages/seacas/libraries/chaco/CMakeLists.txt
++++ b/packages/seacas/libraries/chaco/CMakeLists.txt
+@@ -56,7 +56,7 @@ ENDFOREACH ( dir )
+ 
+ get_property(SOURCES GLOBAL PROPERTY chaco_SRCS)
+ TRIBITS_ADD_LIBRARY(
+-	chaco
++	seacas_chaco
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+ 	DEPLIBS m
+diff --git a/packages/seacas/libraries/exodus/cbind/CMakeLists.txt b/packages/seacas/libraries/exodus/cbind/CMakeLists.txt
+index 60794b8..681e525 100644
+--- a/packages/seacas/libraries/exodus/cbind/CMakeLists.txt
++++ b/packages/seacas/libraries/exodus/cbind/CMakeLists.txt
+@@ -282,7 +282,7 @@ SET(HEADERS
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	exodus
++	seacas_exodus
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+ )
+diff --git a/packages/seacas/libraries/exodus_for/forbind/CMakeLists.txt b/packages/seacas/libraries/exodus_for/forbind/CMakeLists.txt
+index 1149540..80b49fb 100644
+--- a/packages/seacas/libraries/exodus_for/forbind/CMakeLists.txt
++++ b/packages/seacas/libraries/exodus_for/forbind/CMakeLists.txt
+@@ -16,10 +16,10 @@ SET(HEADERS
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	exodus_for
++	seacas_exodus_for
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS exodus
++	DEPLIBS seacas_exodus
+ )
+ 
+ TRIBITS_ADD_TEST_DIRECTORIES(test)
+diff --git a/packages/seacas/libraries/ioss/src/CMakeLists.txt b/packages/seacas/libraries/ioss/src/CMakeLists.txt
+index 4c4206e..014749a 100644
+--- a/packages/seacas/libraries/ioss/src/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/CMakeLists.txt
+@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Ioss
++	seacas_ioss
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+ 	DEPLIBS ${DEPLIBS}
+diff --git a/packages/seacas/libraries/ioss/src/exodusII/CMakeLists.txt b/packages/seacas/libraries/ioss/src/exodusII/CMakeLists.txt
+index f07338b..c26048b 100644
+--- a/packages/seacas/libraries/ioss/src/exodusII/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/exodusII/CMakeLists.txt
+@@ -13,10 +13,10 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Ioex
++	seacas_ioex
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss exodus
++	DEPLIBS seacas_ioss seacas_exodus
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/generated/CMakeLists.txt b/packages/seacas/libraries/ioss/src/generated/CMakeLists.txt
+index a65fe2e..ac9f1e4 100644
+--- a/packages/seacas/libraries/ioss/src/generated/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/generated/CMakeLists.txt
+@@ -14,10 +14,10 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Iogn
++	seacas_iogn
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss
++	DEPLIBS seacas_ioss
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/heartbeat/CMakeLists.txt b/packages/seacas/libraries/ioss/src/heartbeat/CMakeLists.txt
+index 115a26f..12f1332 100644
+--- a/packages/seacas/libraries/ioss/src/heartbeat/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/heartbeat/CMakeLists.txt
+@@ -14,10 +14,10 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Iohb
++	seacas_iohb
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss
++	DEPLIBS seacas_ioss
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/init/CMakeLists.txt b/packages/seacas/libraries/ioss/src/init/CMakeLists.txt
+index a8a7dd9..ca79eb0 100644
+--- a/packages/seacas/libraries/ioss/src/init/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/init/CMakeLists.txt
+@@ -14,16 +14,16 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ IF (${PACKAGE_NAME}_ENABLE_Pamgen)
+-SET(PAMGENLIB Iopg)
++SET(PAMGENLIB seacas_iopg)
+ ELSE()
+ ADD_DEFINITIONS(-DNO_PAMGEN_SUPPORT)
+ ENDIF()
+ 
+ IF (${PACKAGE_NAME}_ENABLE_SEACASExodus)
+-  SET(EXODUSLIB Ioex)
++  SET(EXODUSLIB seacas_ioex)
+ 
+   IF (SEACASExodus_ENABLE_MPI AND ${PACKAGE_NAME}_ENABLE_Zoltan AND TPL_ENABLE_ParMETIS)
+-    SET(PAREXOLIB Iopx)
++    SET(PAREXOLIB seacas_iopx)
+   ELSE()
+     ADD_DEFINITIONS(-DNO_DOF_EXODUS_SUPPORT)
+   ENDIF()
+@@ -32,17 +32,17 @@ ADD_DEFINITIONS(-DNO_EXODUS_SUPPORT)
+ ENDIF()
+ 
+ IF (${PACKAGE_NAME}_ENABLE_ParaviewImesh)
+-SET(VISLIB Iovs)
++SET(VISLIB seacas_iovs)
+ ELSE()
+ ADD_DEFINITIONS(-DNO_PARAVIEWIMESH_SUPPORT)
+ ENDIF()
+ 
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Ionit
++	seacas_ionit
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss ${EXODUSLIB} ${PAREXOLIB} Iogn Iohb Iotr ${PAMGENLIB} ${VISLIB}
++	DEPLIBS seacas_ioss ${EXODUSLIB} ${PAREXOLIB} seacas_iogn seacas_iohb seacas_iotr ${PAMGENLIB} ${VISLIB}
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/main/CMakeLists.txt b/packages/seacas/libraries/ioss/src/main/CMakeLists.txt
+index 42475f0..69f853a 100644
+--- a/packages/seacas/libraries/ioss/src/main/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/main/CMakeLists.txt
+@@ -19,11 +19,11 @@ IF (NOT ${PACKAGE_NAME}_ENABLE_XDMF)
+ ADD_DEFINITIONS(-DNO_XDMF_SUPPORT)
+ ENDIF()
+ 
+-TRIBITS_ADD_EXECUTABLE(cth_pressure_map NOEXEPREFIX NOEXESUFFIX SOURCES cth_pressure_map.C vector3d.C DEPLIBS Ionit)
+-TRIBITS_ADD_EXECUTABLE(io_shell         NOEXEPREFIX NOEXESUFFIX SOURCES io_shell.C shell_interface.C Ioss_GetLongOpt.C DEPLIBS Ionit)
+-TRIBITS_ADD_EXECUTABLE(shell_to_hex     NOEXEPREFIX NOEXESUFFIX SOURCES shell_to_hex.C vector3d.C     DEPLIBS Ionit)
+-TRIBITS_ADD_EXECUTABLE(io_info          NOEXEPREFIX NOEXESUFFIX SOURCES io_info.C volume.C info_interface.C Ioss_GetLongOpt.C DEPLIBS Ionit)
+-TRIBITS_ADD_EXECUTABLE(sphgen           NOEXEPREFIX NOEXESUFFIX SOURCES sphgen.C           DEPLIBS Ionit)
++TRIBITS_ADD_EXECUTABLE(cth_pressure_map NOEXEPREFIX NOEXESUFFIX SOURCES cth_pressure_map.C vector3d.C DEPLIBS seacas_ionit)
++TRIBITS_ADD_EXECUTABLE(io_shell         NOEXEPREFIX NOEXESUFFIX SOURCES io_shell.C shell_interface.C Ioss_GetLongOpt.C DEPLIBS seacas_ionit)
++TRIBITS_ADD_EXECUTABLE(shell_to_hex     NOEXEPREFIX NOEXESUFFIX SOURCES shell_to_hex.C vector3d.C     DEPLIBS seacas_ionit)
++TRIBITS_ADD_EXECUTABLE(io_info          NOEXEPREFIX NOEXESUFFIX SOURCES io_info.C volume.C info_interface.C Ioss_GetLongOpt.C DEPLIBS seacas_ionit)
++TRIBITS_ADD_EXECUTABLE(sphgen           NOEXEPREFIX NOEXESUFFIX SOURCES sphgen.C           DEPLIBS seacas_ionit)
+ 
+ install_executable(cth_pressure_map)
+ install_executable(io_shell)
+diff --git a/packages/seacas/libraries/ioss/src/pamgen/CMakeLists.txt b/packages/seacas/libraries/ioss/src/pamgen/CMakeLists.txt
+index f95a5ad..d91bdbd 100644
+--- a/packages/seacas/libraries/ioss/src/pamgen/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/pamgen/CMakeLists.txt
+@@ -13,10 +13,10 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Iopg
++	seacas_iopg
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss pamgen
++	DEPLIBS seacas_ioss pamgen
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/par_exo/CMakeLists.txt b/packages/seacas/libraries/ioss/src/par_exo/CMakeLists.txt
+index 510220a..df3eca1 100644
+--- a/packages/seacas/libraries/ioss/src/par_exo/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/par_exo/CMakeLists.txt
+@@ -15,10 +15,10 @@ INCLUDE_DIRECTORIES(
+ 
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Iopx
++	seacas_iopx
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss exodus zoltan parmetis
++	DEPLIBS seacas_ioss seacas_exodus zoltan parmetis
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/transform/CMakeLists.txt b/packages/seacas/libraries/ioss/src/transform/CMakeLists.txt
+index 95d892a..dadd41c 100644
+--- a/packages/seacas/libraries/ioss/src/transform/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/transform/CMakeLists.txt
+@@ -14,10 +14,10 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Iotr
++	seacas_iotr
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss
++	DEPLIBS seacas_ioss
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/utest/CMakeLists.txt b/packages/seacas/libraries/ioss/src/utest/CMakeLists.txt
+index 6606a5b..2a3cc65 100644
+--- a/packages/seacas/libraries/ioss/src/utest/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/utest/CMakeLists.txt
+@@ -3,7 +3,7 @@ INCLUDE(TribitsAddExecutableAndTest)
+ TRIBITS_ADD_EXECUTABLE(
+  Utst_ioel
+  SOURCES Utst_ioel.C
+- DEPLIBS Ionit
++ DEPLIBS seacas_ionit
+ )
+ 
+ TRIBITS_ADD_TEST(
+@@ -16,7 +16,7 @@ IF (${PACKAGE_NAME}_ENABLE_EXODUS)
+ TRIBITS_ADD_EXECUTABLE(
+  Utst_superelement
+  SOURCES Utst_superelement.C
+- DEPLIBS Ionit
++ DEPLIBS seacas_ionit
+ )
+ 
+ TRIBITS_ADD_TEST(
+diff --git a/packages/seacas/libraries/ioss/src/visualization/CMakeLists.txt b/packages/seacas/libraries/ioss/src/visualization/CMakeLists.txt
+index 4436aea..04f8432 100644
+--- a/packages/seacas/libraries/ioss/src/visualization/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/visualization/CMakeLists.txt
+@@ -13,10 +13,10 @@ INCLUDE_DIRECTORIES(
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Iovs
++	seacas_iovs
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS Ioss paraview_imesh
++	DEPLIBS seacas_ioss paraview_imesh
+ )
+ 
+ IF (BUILD_TESTING)
+diff --git a/packages/seacas/libraries/ioss/src/xdmf/CMakeLists.txt b/packages/seacas/libraries/ioss/src/xdmf/CMakeLists.txt
+index 388b421..1f67ff0 100644
+--- a/packages/seacas/libraries/ioss/src/xdmf/CMakeLists.txt
++++ b/packages/seacas/libraries/ioss/src/xdmf/CMakeLists.txt
+@@ -13,10 +13,10 @@ INCLUDE_DIRECTORIES(
+   "${CMAKE_CURRENT_BINARY_DIR}/../"
+ )
+ 
+-SET(DEPLIBS Ioss)
++SET(DEPLIBS seacas_ioss)
+ 
+ TRIBITS_ADD_LIBRARY(
+-	Ioxf
++	seacas_ioxf
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+ 	DEPLIBS ${DEPLIBS}
+diff --git a/packages/seacas/libraries/mapvarlib/CMakeLists.txt b/packages/seacas/libraries/mapvarlib/CMakeLists.txt
+index 60e6982..82eaf8c 100644
+--- a/packages/seacas/libraries/mapvarlib/CMakeLists.txt
++++ b/packages/seacas/libraries/mapvarlib/CMakeLists.txt
+@@ -24,6 +24,6 @@ SET(SOURCES
+ 	flgrad.f intrp3.f invcon.f mke.f    mvopnfil.f rda2.f   seton0.f   shlsrc.f tetsrc.f vol.f    ininod.f
+ 	initlz.f debug.f  inielt.f sintpe.f rdinpt.f )
+ 
+-TRIBITS_ADD_LIBRARY(mapvarlib HEADERS ${HEADERS} SOURCES ${SOURCES} DEPLIBS exodus_for suplib)
++TRIBITS_ADD_LIBRARY(seacas_mapvarlib HEADERS ${HEADERS} SOURCES ${SOURCES} DEPLIBS seacas_exodus_for seacas_suplib)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/libraries/nemesis/CMakeLists.txt b/packages/seacas/libraries/nemesis/CMakeLists.txt
+index 944562c..ec721e7 100644
+--- a/packages/seacas/libraries/nemesis/CMakeLists.txt
++++ b/packages/seacas/libraries/nemesis/CMakeLists.txt
+@@ -28,10 +28,10 @@ nemesis_wrapper.c
+ )
+ 
+ TRIBITS_ADD_LIBRARY(
+-	nemesis
++	seacas_nemesis
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS exodus
++	DEPLIBS seacas_exodus
+ )
+ 
+ IF (${PACKAGE_NAME}_ENABLE_TESTS)
+diff --git a/packages/seacas/libraries/plt/CMakeLists.txt b/packages/seacas/libraries/plt/CMakeLists.txt
+index 2953d61..0c3a4a3 100644
+--- a/packages/seacas/libraries/plt/CMakeLists.txt
++++ b/packages/seacas/libraries/plt/CMakeLists.txt
+@@ -16,9 +16,9 @@ SET_AND_INC_DIRS(DIR ${CMAKE_CURRENT_SOURCE_DIR})
+ APPEND_GLOB(SOURCES ${DIR}/*.f ${DIR}/*.F ${DIR}/*.c)
+ 
+ TRIBITS_ADD_LIBRARY(
+-	plt
++	seacas_plt
+ 	SOURCES ${SOURCES}
+-	DEPLIBS svdi_cgi svdi_cdr suplib
++	DEPLIBS svdi_cgi svdi_cdr seacas_suplib
+ )
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/libraries/supes/CMakeLists.txt b/packages/seacas/libraries/supes/CMakeLists.txt
+index 9eae576..e24486c 100644
+--- a/packages/seacas/libraries/supes/CMakeLists.txt
++++ b/packages/seacas/libraries/supes/CMakeLists.txt
+@@ -19,7 +19,7 @@ SET(SOURCES
+ 	ext_lib/exmemy.c      ext_lib/extime.c      ext_lib/ixlchr.c
+ 	ext_lib/README        ext_lib/exname.c      ext_lib/exupcs.c  ext_lib/ixlnum.c
+ 	ext_lib/excpus.c      ext_lib/exparm.c      ext_lib/getline_int.c
+-	ext_lib/exdate.c      ext_lib/exread.c      
++	ext_lib/exdate.c      ext_lib/exread.c
+ 	fre_fld/ffistr.f      fre_fld/frefld.f      fre_fld/getinp.f  fre_fld/gsupev.f
+ 	fre_fld/quoted.f      fre_fld/stripb.f	    mem_mgr/mxexec.f  mem_mgr/mxlong.f	 mem_mgr/mycomp.f   mem_mgr/mymemy.f   mem_mgr/shftc.f
+ 	mem_mgr/mdinit.F      mem_mgr/mxfind.f	    mem_mgr/mxlook.f  mem_mgr/mydel.f    mem_mgr/mynsrt.f   mem_mgr/shfti.f
+@@ -28,7 +28,7 @@ SET(SOURCES
+ 	mem_mgr/mxeror.f      mem_mgr/mxlist.f	    mem_mgr/mxrsrv.f  mem_mgr/mylong.f   mem_mgr/vtable.f)
+ 
+ TRIBITS_ADD_LIBRARY(
+-	supes
++	seacas_supes
+ 	SOURCES ${SOURCES}
+ )
+ 
+@@ -36,8 +36,8 @@ ADD_EXECUTABLE(exttest exttest.f)
+ ADD_EXECUTABLE(ffrtest ffrtest.f)
+ ADD_EXECUTABLE(memtest memtest.f)
+ 
+-TARGET_LINK_LIBRARIES(exttest supes)
+-TARGET_LINK_LIBRARIES(ffrtest supes)
+-TARGET_LINK_LIBRARIES(memtest supes)
++TARGET_LINK_LIBRARIES(exttest seacas_supes)
++TARGET_LINK_LIBRARIES(ffrtest seacas_supes)
++TARGET_LINK_LIBRARIES(memtest seacas_supes)
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()
+diff --git a/packages/seacas/libraries/suplib/CMakeLists.txt b/packages/seacas/libraries/suplib/CMakeLists.txt
+index 5bbf2b5..71a8571 100644
+--- a/packages/seacas/libraries/suplib/CMakeLists.txt
++++ b/packages/seacas/libraries/suplib/CMakeLists.txt
+@@ -17,7 +17,7 @@ SET(HEADERS  argparse.inc add_to_log.h SL_tokenize.h GetLongOpt.h smart_assert.h
+ 
+ SET(SOURCES
+ 	abrstr.f    copint.f    dbpini.f    ffaddv.f    ffrrng.f    indexi.f    intadd.f    logerr.f    numeql.f    prterr.f    wrapup.f
+-	addv.f      cpuifc.f    dbpqa.f     ffchar.f    ffvrng.f    indexn.f    intstr.f    lowstr.f    numstr.f    ran1.f      
++	addv.f      cpuifc.f    dbpqa.f     ffchar.f    ffvrng.f    indexn.f    intstr.f    lowstr.f    numstr.f    ran1.f
+ 	argparse.F  cpyint.f    dbvini.f    ffexst.f    indexr.f    iowdsz.f    matstr.f    okabrt.f    scneof.f
+ 	banner.f    cpylog.f    engnot.f    ffintg.f    gslibv.f    indexx.f    ismax.f     memerr.f    opnfil.f    screrr.f
+ 	bannr2.f    cpyrea.f    engstr.f    ffmatc.f    heap_sort.f inigrd.f    ismin.f     minmax.f    packt.f     shocmd.f
+@@ -28,10 +28,10 @@ SET(SOURCES
+ 	add_to_log.c addlog.c	getline.c   GetLongOpt.C   adler.C        smart_assert.C timer.C        to_string.C    SL_tokenize.C)
+ 
+ TRIBITS_ADD_LIBRARY(
+-	suplib
++	seacas_suplib
+ 	HEADERS	${HEADERS}
+ 	SOURCES ${SOURCES}
+-	DEPLIBS supes
++	DEPLIBS seacas_supes
+ )
+ 
+ TRIBITS_SUBPACKAGE_POSTPROCESS()

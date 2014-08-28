@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+export PATH=/usr/lib/seacas:$PATH
+${0##/usr/bin/seacas-} $*

@@ -21,8 +21,8 @@ def _main():
     print('Fetching updates...')
     os.chdir(args.source_dir)
     subprocess.check_call(['git', 'pull'])
-    os.chdir(args.debian_dir)
-    subprocess.check_call(['git', 'pull'])
+    #os.chdir(args.debian_dir)
+    #subprocess.check_call(['git', 'pull'])
     print('done.')
 
     os.chdir(args.source_dir)
@@ -66,7 +66,7 @@ def _main():
 
     # Create a day-to-day version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20140508'
+    #today_str = '20140829'
     version = package_version + '~' + today_str
 
     # Create the tarball.
