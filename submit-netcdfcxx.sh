@@ -9,7 +9,7 @@ $THIS_DIR/launchpad-submitter \
   --name netcdfcxx \
   --resubmission 1 \
   --source-dir "$HOME/software/netcdf-cxx/source/" \
-  --debian-dir "$HOME/rcs/debian-netcdfcxx/" \
+  --debian-dir "$HOME/rcs/debian-packages/netcdfcxx/" \
   --ubuntu-releases trusty utopic \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/"' \
   --ppas nschloe/netcdf-nightly

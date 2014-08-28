@@ -9,7 +9,7 @@ $THIS_DIR/launchpad-submitter \
   --name netcdf \
   --resubmission 1 \
   --source-dir "$HOME/software/netcdf/dev/source/" \
-  --debian-dir "$HOME/rcs/debian-netcdf-official/debian/" \
+  --debian-dir "$HOME/rcs/debian-packages/netcdf-official/debian/" \
   --ubuntu-releases precise trusty utopic \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --slot 1 \
