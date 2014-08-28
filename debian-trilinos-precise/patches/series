@@ -1,5 +1,2 @@
 dist-packages.patch
 export.patch
-#link-boost.patch
-#seacas-prefix.patch
-#tribits-escape-cxx-flags.patch
