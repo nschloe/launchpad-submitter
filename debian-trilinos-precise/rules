@@ -89,6 +89,7 @@ configure-stamp:
    -DTrilinos_ENABLE_ALL_PACKAGES:BOOL=ON \
    -DTrilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
    -DTrilinos_ASSERT_MISSING_PACKAGES:BOOL=OFF \
+   -DTrilinos_ENABLE_Didasko:BOOL=OFF \
    -DTrilinos_ENABLE_Optika:BOOL=OFF \
    -DTrilinos_ENABLE_Panzer:BOOL=OFF \
    -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
