@@ -122,6 +122,7 @@ auto_install-stamp:
 	$(MAKE) -C $(BUILDDIR)/packages/CTrilinos install DESTDIR=$(CURDIR)/debian/tmp_ctrilinos
 	$(MAKE) -C $(BUILDDIR)/packages/Sundance install DESTDIR=$(CURDIR)/debian/tmp_sundance
 	$(MAKE) -C $(BUILDDIR)/packages/ThreadPool install DESTDIR=$(CURDIR)/debian/tmp_tpi
+	$(MAKE) -C $(BUILDDIR)/commonTools/gtest install DESTDIR=$(CURDIR)/debian/tmp_gtest
 	$(MAKE) -C $(BUILDDIR) install/local DESTDIR=$(CURDIR)/debian/tmp_trilinos-dev
 	touch $@
 
@@ -146,7 +147,7 @@ install-stamp: auto_install-stamp debian/Trilinos_version.h
 		cmd="dh_link -pseacas usr/lib/seacas/seacas usr/bin/seacas-$$i"; \
 		echo $$cmd; $$cmd; \
 	done
-	@for i in $(LIB_PACKAGES) ctrilinos sundance tpi; do \
+	@for i in $(LIB_PACKAGES) ctrilinos sundance tpi gtest; do \
 	  echo "dh_install --sourcedir=debian/tmp_$$i -plib$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.*"; \
 	  dh_install --sourcedir=debian/tmp_$$i -plib$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.* || exit 1; \
 	  echo "dh_install --sourcedir=debian/tmp_$$i -plib$$i-dev --autodest usr/include usr/lib/*/*.so usr/lib/*/cmake"; \
@@ -159,8 +160,6 @@ install-stamp: auto_install-stamp debian/Trilinos_version.h
 	done
 	# BUG in libstk/mesquite.
 	rm -f debian/libstk-dev/usr/include/trilinos/MeshUtil.hpp
-	# BUG in galeri
-	rm -f debian/libgaleri-dev/usr/include/trilinos/iohb.h
 	# BUG. get rid of Trilinos_version.h
 	-find debian/lib*-dev -name Trilinos_version.h -delete -print -printf 'deleting bogus header %p'
 	for i in `grep -l Trilinos_version\.h debian/lib*-dev/usr/include/trilinos/*ersion*`; do \

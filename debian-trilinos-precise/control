@@ -320,6 +320,23 @@ Description: 1D globalization capabilities
  .
  This package provides headers.
 
+Package: libgtest11
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: googletest interface
+ .
+ This package contains the dynamic libraries.
+
+Package: libgtest-dev
+Architecture: any
+Section: libdevel
+Depends: libgtest11 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: googletest interface
+ .
+ This package provides headers.
+
 Package: libifpack11
 Architecture: any
 Section: libs
