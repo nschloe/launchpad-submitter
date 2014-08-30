@@ -337,18 +337,10 @@ Description: googletest interface
  .
  This package provides headers.
 
-Package: libtribits11
-Architecture: any
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Trilinos build system
- .
- This package contains the dynamic libraries.
-
 Package: libtribits-dev
 Architecture: any
 Section: libdevel
-Depends: libtribits11 (= ${binary:Version}), ${misc:Depends}
+Depends: ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos build system
  .
@@ -931,7 +923,7 @@ Description: interoperability tools for PDE solving
  This package provides headers.
 
 Package: libstk11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: mesh and topology handling
