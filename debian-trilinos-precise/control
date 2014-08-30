@@ -337,6 +337,23 @@ Description: googletest interface
  .
  This package provides headers.
 
+Package: libtribits11
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos build system
+ .
+ This package contains the dynamic libraries.
+
+Package: libtribits-dev
+Architecture: any
+Section: libdevel
+Depends: libtribits11 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos build system
+ .
+ This package provides headers.
+
 Package: libifpack11
 Architecture: any
 Section: libs
