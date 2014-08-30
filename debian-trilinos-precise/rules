@@ -93,7 +93,9 @@ configure-stamp:
    -DTrilinos_ENABLE_Optika:BOOL=OFF \
    -DTrilinos_ENABLE_Panzer:BOOL=OFF \
    -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
+   -DTrilinos_ENABLE_STKDoc_tests:BOOL=OFF \
    -DTrilinos_ENABLE_STKSearch:BOOL=OFF \
+   -DTrilinos_ENABLE_STKUnit_tests:BOOL=OFF \
    -DTrilinos_ENABLE_EXAMPLES:BOOL=OFF \
    -DTrilinos_ENABLE_TESTS:BOOL=OFF \
    -DSEACASExodus_ENABLE_MPI:BOOL=OFF \
