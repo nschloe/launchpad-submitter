@@ -13,6 +13,10 @@ import yaml
 
 
 def _main():
+    # Get the directory of this script. This has to be done before any chdir
+    # command.
+    this_dir = os.path.dirname(os.path.realpath(__file__))
+
     args = _parse_cmd_arguments()
 
     # Retrieve the directory of this script
@@ -39,8 +43,8 @@ def _main():
 
     # File to store the HEAD command of the last push.
     revision_file = os.path.join(
-        os.path.expanduser('~'),
-        '.%s-submit-unstable' % args.name
+        this_dir,
+        '%s-submit-hash-unstable.dat' % args.name
         )
     try:
         revision_data = yaml.load_all(open(revision_file, 'r'))
