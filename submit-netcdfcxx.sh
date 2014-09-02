@@ -12,5 +12,5 @@ $THIS_DIR/launchpad-submitter \
   --debian-dir "$HOME/rcs/debian-packages/netcdfcxx/" \
   --ubuntu-releases trusty utopic \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/"' \
-  --ppas nschloe/netcdf-nightly
-#  --slot 1 \
+  --ppas nschloe/netcdf-nightly \
+  --store-submit-hashes "netcdfcxx-submit-hash-unstable.dat"

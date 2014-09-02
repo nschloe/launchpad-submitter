@@ -267,6 +267,12 @@ def _parse_cmd_arguments():
         default=None,
         type=str
         )
+    parser.add_argument(
+        '-z', '--store-submit-hashes',
+        help='File in which to store the submit hashes.',
+        type=str,
+        required=True
+        )
     return parser.parse_args()
 
 

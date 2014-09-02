@@ -13,7 +13,8 @@ $THIS_DIR/launchpad-submitter \
   --debian-dir "$HOME/rcs/debian-packages/trilinos/debian/" \
   --ubuntu-releases trusty utopic \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
-  --ppas nschloe/trilinos-nightly
+  --ppas nschloe/trilinos-nightly \
+  --store-submit-hashes "trilinos0-submit-hashes.dat"
 
 # use a different debian/ folder for precise
 $THIS_DIR/launchpad-submitter \
@@ -23,4 +24,5 @@ $THIS_DIR/launchpad-submitter \
   --debian-dir "$THIS_DIR/debian-trilinos-precise/" \
   --ubuntu-releases precise \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
-  --ppas nschloe/trilinos-nightly
+  --ppas nschloe/trilinos-nightly \
+  --store-submit-hashes "trilinos1-submit-hashes.dat"
