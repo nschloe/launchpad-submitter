@@ -87,18 +87,20 @@ configure-stamp:
    -DTrilinos_INSTALL_LIB_DIR:PATH=lib/$(DEB_HOST_MULTIARCH)/ \
    -DTrilinos_ENABLE_DEVELOPMENT_MODE:BOOL=OFF \
    -DTrilinos_ENABLE_ALL_PACKAGES:BOOL=ON \
-   -DTrilinos_ENABLE_SECONDARY_STABLE_CODE:BOOL=ON \
+   -DTrilinos_ENABLE_SECONDARY_TESTED_CODE:BOOL=ON \
    -DTrilinos_ASSERT_MISSING_PACKAGES:BOOL=OFF \
    -DTrilinos_ENABLE_Didasko:BOOL=OFF \
+   -DTrilinos_ENABLE_Gtest:BOOL=OFF \
    -DTrilinos_ENABLE_Optika:BOOL=OFF \
    -DTrilinos_ENABLE_Panzer:BOOL=OFF \
    -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
+   -DTrilinos_ENABLE_STKClassic:BOOL=OFF \
    -DTrilinos_ENABLE_STKDoc_tests:BOOL=OFF \
    -DTrilinos_ENABLE_STKSearch:BOOL=OFF \
    -DTrilinos_ENABLE_STKUnit_tests:BOOL=OFF \
    -DTrilinos_ENABLE_EXAMPLES:BOOL=OFF \
    -DTrilinos_ENABLE_TESTS:BOOL=OFF \
-   -DSEACASExodus_ENABLE_MPI:BOOL=OFF \
+   -DSEACASExodus_PARALLEL_AWARE:BOOL=ON \
    -DTPL_ENABLE_BinUtils:BOOL=ON \
    -DTPL_ENABLE_Boost:BOOL=ON \
    -DTPL_ENABLE_HDF5:BOOL=ON \
@@ -125,7 +127,6 @@ auto_install-stamp:
 	$(MAKE) -C $(BUILDDIR)/packages/CTrilinos install DESTDIR=$(CURDIR)/debian/tmp_ctrilinos
 	$(MAKE) -C $(BUILDDIR)/packages/Sundance install DESTDIR=$(CURDIR)/debian/tmp_sundance
 	$(MAKE) -C $(BUILDDIR)/packages/ThreadPool install DESTDIR=$(CURDIR)/debian/tmp_tpi
-	$(MAKE) -C $(BUILDDIR)/commonTools/gtest install DESTDIR=$(CURDIR)/debian/tmp_gtest
 	$(MAKE) -C $(BUILDDIR)/cmake/tribits/ install DESTDIR=$(CURDIR)/debian/tmp_tribits
 	$(MAKE) -C $(BUILDDIR) install/local DESTDIR=$(CURDIR)/debian/tmp_trilinos-dev
 	touch $@
@@ -151,7 +152,7 @@ install-stamp: auto_install-stamp debian/Trilinos_version.h
 		cmd="dh_link -pseacas usr/lib/seacas/seacas usr/bin/seacas-$$i"; \
 		echo $$cmd; $$cmd; \
 	done
-	@for i in $(LIB_PACKAGES) ctrilinos sundance tpi gtest tribits; do \
+	@for i in $(LIB_PACKAGES) ctrilinos sundance tpi tribits; do \
 	  echo "dh_install --sourcedir=debian/tmp_$$i -plib$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.*"; \
 	  dh_install --sourcedir=debian/tmp_$$i -plib$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.* || exit 1; \
 	  echo "dh_install --sourcedir=debian/tmp_$$i -plib$$i-dev --autodest usr/include usr/lib/*/*.so usr/lib/*/cmake"; \
