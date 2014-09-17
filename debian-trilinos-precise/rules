@@ -163,8 +163,6 @@ install-stamp: auto_install-stamp debian/Trilinos_version.h
 		   sed -e 's/%V/$(SOVERSION)/g' > debian/lib$${i/2/2-}$(SOVERSION)/usr/share/lintian/overrides/lib$${i/2/2-}$(SOVERSION); \
 	  fi \
 	done
-	# BUG in libstk/mesquite.
-	rm -f debian/libstk-dev/usr/include/trilinos/MeshUtil.hpp
 	# BUG. get rid of Trilinos_version.h
 	-find debian/lib*-dev -name Trilinos_version.h -delete -print -printf 'deleting bogus header %p'
 	for i in `grep -l Trilinos_version\.h debian/lib*-dev/usr/include/trilinos/*ersion*`; do \
