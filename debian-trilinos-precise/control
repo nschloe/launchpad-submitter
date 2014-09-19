@@ -320,15 +320,6 @@ Description: 1D globalization capabilities
  .
  This package provides headers.
 
-Package: libtribits-dev
-Architecture: any
-Section: libdevel
-Depends: ${misc:Depends}
-Suggests: libtrilinos-doc
-Description: Trilinos build system
- .
- This package provides headers.
-
 Package: libifpack11
 Architecture: any
 Section: libs
