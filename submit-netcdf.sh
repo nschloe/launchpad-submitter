@@ -14,4 +14,4 @@ $THIS_DIR/launchpad-submitter \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --slot 1 \
   --ppas nschloe/netcdf-nightly nschloe/trilinos-nightly \
-  --store-submit-hashes "netcdf-submit-hash-unstable.dat"
+  --submit-hashes-file "netcdf-submit-hash-unstable.dat"

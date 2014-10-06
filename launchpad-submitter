@@ -42,12 +42,8 @@ def _main():
                                                ]).decode('utf-8').strip()
 
     # File to store the HEAD command of the last push.
-    revision_file = os.path.join(
-        this_dir,
-        '%s-submit-hash-unstable.dat' % args.name
-        )
     try:
-        revision_data = yaml.load_all(open(revision_file, 'r'))
+        revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
         revision_dicts = []
         for doc in revision_data:
             revision_dicts.append(doc)
@@ -70,7 +66,7 @@ def _main():
 
     # Create a day-to-day version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20140829'
+    #today_str = '20140927'
     version = package_version + '~' + today_str
 
     # Create the tarball.
@@ -199,7 +195,7 @@ def _main():
             'source revision': source_revision,
             'debian revision': debian_revision
             }
-        with open(revision_file, 'w') as outfile:
+        with open(args.submit_hashes_file, 'w') as outfile:
             outfile.write(yaml.dump(data, default_flow_style=False))
 
     return
@@ -268,7 +264,7 @@ def _parse_cmd_arguments():
         type=str
         )
     parser.add_argument(
-        '-z', '--store-submit-hashes',
+        '-z', '--submit-hashes-file',
         help='File in which to store the submit hashes.',
         type=str,
         required=True
