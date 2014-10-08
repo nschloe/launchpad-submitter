@@ -4,7 +4,6 @@ Section: science
 Priority: extra
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Nico Schlömer <nico.schloemer@gmail.com>
-# Trilinos can use Ubuntu's serial netCDF as well.
 Build-Depends: debhelper (>= 9),
  binutils-dev,
  cmake (>= 2.8.0),
@@ -18,7 +17,7 @@ Build-Depends: debhelper (>= 9),
  libhdf5-openmpi-dev (>= 1.8.7),
  liblapack-dev,
  libmumps-dev (>= 4.7.3),
- libnetcdf-dev (>= 4.1.3),
+ libnetcdf-dev (>= 4.3.3),
  libptscotch-dev,
  libtbb-dev,
  sed (>= 4.2.1),
@@ -41,7 +40,7 @@ Description: object-oriented framework for large-scale problems
  .
  This package contains the development header and some makefile templates.
 
-Package: libamesos11
+Package: libtrilinos-amesos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -52,10 +51,10 @@ Description: direct sparse solver package
  .
  This package contains the dynamic libraries.
 
-Package: libamesos-dev
+Package: libtrilinos-amesos-dev
 Architecture: any
 Section: libdevel
-Depends: libamesos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-amesos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: direct sparse solver package
  Amesos is the Direct Sparse Solver Package in Trilinos. The goal of Amesos is
@@ -64,7 +63,7 @@ Description: direct sparse solver package
  .
  This package provides headers.
 
-Package: libamesos2-11
+Package: libtrilinos-amesos2-11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -75,10 +74,10 @@ Description: next generation direct sparse solver package
  .
  This package contains the dynamic libraries.
 
-Package: libamesos2-dev
+Package: libtrilinos-amesos2-dev
 Architecture: any
 Section: libdevel
-Depends: libamesos2-11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-amesos2-11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: next generation direct sparse solver package
  Amesos2 is a package for solving sparse linear systems using direct solvers.
@@ -87,7 +86,7 @@ Description: next generation direct sparse solver package
  .
  This package provides headers.
 
-Package: libanasazi11
+Package: libtrilinos-anasazi11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -101,10 +100,10 @@ Description: large-scale eigenvalue algorithms
  .
  This package contains the dynamic libraries.
 
-Package: libanasazi-dev
+Package: libtrilinos-anasazi-dev
 Architecture: any
 Section: libdevel
-Depends: libanasazi11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-anasazi11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: large-scale eigenvalue algorithms
  Anasazi is an extensible and interoperable framework for large-scale
@@ -116,7 +115,7 @@ Description: large-scale eigenvalue algorithms
  .
  This package provides headers.
 
-Package: libaztecoo11
+Package: libtrilinos-aztecoo11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -129,10 +128,10 @@ Description: object-oriented interface to the Aztec solver
  .
  This package contains the dynamic libraries.
 
-Package: libaztecoo-dev
+Package: libtrilinos-aztecoo-dev
 Architecture: any
 Section: libdevel
-Depends: libaztecoo11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-aztecoo11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: object-oriented interface to the Aztec solver
  AztecOO provides an object-oriented interface to the well-known Aztec solver
@@ -143,7 +142,7 @@ Description: object-oriented interface to the Aztec solver
  .
  This package provides headers.
 
-Package: libbelos11
+Package: libtrilinos-belos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -156,10 +155,10 @@ Description: iterative linear solvers
  .
  This package contains the dynamic libraries.
 
-Package: libbelos-dev
+Package: libtrilinos-belos-dev
 Architecture: any
 Section: libdevel
-Depends: libbelos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-belos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: iterative linear solvers
  Belos provides next-generation iterative linear solvers and a powerful linear
@@ -170,7 +169,7 @@ Description: iterative linear solvers
  .
  This package provides headers.
 
-Package: libctrilinos11
+Package: libtrilinos-ctrilinos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -179,17 +178,17 @@ Description: Trilinos interface for C
  .
  This package contains the dynamic libraries.
 
-Package: libctrilinos-dev
+Package: libtrilinos-ctrilinos-dev
 Architecture: any
 Section: libdevel
-Depends: libctrilinos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-ctrilinos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos interface for C
  CTrilinos provides a C interface for certain parts of Trilinos.
  .
  This package provides headers.
 
-Package: libepetra11
+Package: libtrilinos-epetra11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -200,10 +199,10 @@ Description: basis package for linear algebra
  .
  This package contains the dynamic libraries.
 
-Package: libepetra-dev
+Package: libtrilinos-epetra-dev
 Architecture: any
 Section: libdevel
-Depends: libepetra11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-epetra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: basis package for linear algebra
  Epetra provides the fundamental construction routines and services function
@@ -212,7 +211,7 @@ Description: basis package for linear algebra
  .
  This package provides headers.
 
-Package: libepetraext11
+Package: libtrilinos-epetraext11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -222,10 +221,10 @@ Description: extensions to the Epetra toolkit
  .
  This package contains the dynamic libraries.
 
-Package: libepetraext-dev
+Package: libtrilinos-epetraext-dev
 Architecture: any
 Section: libdevel
-Depends: libepetraext11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-epetraext11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: extensions to the Epetra toolkit
  EpetraExt provides tools and functions that make it easier to work with
@@ -233,7 +232,7 @@ Description: extensions to the Epetra toolkit
  .
  This package provides headers.
 
-Package: libfei11
+Package: libtrilinos-fei11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -248,10 +247,10 @@ Description: finite element interface for lineawr solvers
  .
  This package contains the dynamic libraries.
 
-Package: libfei-dev
+Package: libtrilinos-fei-dev
 Architecture: any
 Section: libdevel
-Depends: libfei11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-fei11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: finite element interface for lineawr solvers
  The Finite Element Interface to Linear Solvers (FEI) is a general interface
@@ -264,7 +263,7 @@ Description: finite element interface for lineawr solvers
  .
  This package provides headers.
 
-Package: libgaleri11
+Package: libtrilinos-galeri11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -277,10 +276,10 @@ Description: generation of distributed linear systems
  .
  This package contains the dynamic libraries.
 
-Package: libgaleri-dev
+Package: libtrilinos-galeri-dev
 Architecture: any
 Section: libdevel
-Depends: libgaleri11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-galeri11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: generation of distributed linear systems
  The Trilinos package Galeri contains a suite of utilities and classes to
@@ -291,7 +290,7 @@ Description: generation of distributed linear systems
  .
  This package provides headers.
 
-Package: libglobipack11
+Package: libtrilinos-globipack11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -305,10 +304,10 @@ Description: 1D globalization capabilities
  .
  This package contains the dynamic libraries.
 
-Package: libglobipack-dev
+Package: libtrilinos-globipack-dev
 Architecture: any
 Section: libdevel
-Depends: libglobipack11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-globipack11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: 1D globalization capabilities
  The GlobiPack package contains a set of interfaces and implementations for 1D
@@ -320,7 +319,7 @@ Description: 1D globalization capabilities
  .
  This package provides headers.
 
-Package: libifpack11
+Package: libtrilinos-ifpack11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -333,10 +332,10 @@ Description: algebraic preconditioners
  .
  This package contains the dynamic libraries.
 
-Package: libifpack-dev
+Package: libtrilinos-ifpack-dev
 Architecture: any
 Section: libdevel
-Depends: libifpack11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-ifpack11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: algebraic preconditioners
  IFPACK provides a suite of object-oriented algebraic preconditioners for the
@@ -347,7 +346,7 @@ Description: algebraic preconditioners
  .
  This package provides headers.
 
-Package: libifpack2-11
+Package: libtrilinos-ifpack2-11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -360,10 +359,10 @@ Description: next generation algebraic preconditioners
  .
  This package contains the dynamic libraries.
 
-Package: libifpack2-dev
+Package: libtrilinos-ifpack2-dev
 Architecture: any
 Section: libdevel
-Depends: libifpack2-11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-ifpack2-11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: next generation algebraic preconditioners
  Ifpack2 provides incomplete factorizations, relaxations, and domain
@@ -374,7 +373,7 @@ Description: next generation algebraic preconditioners
  .
  This package provides headers.
 
-Package: libintrepid11
+Package: libtrilinos-intrepid11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -387,10 +386,10 @@ Description: compatible discretizations of PDEs
  .
  This package contains the dynamic libraries.
 
-Package: libintrepid-dev
+Package: libtrilinos-intrepid-dev
 Architecture: any
 Section: libdevel
-Depends: libintrepid11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-intrepid11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: compatible discretizations of PDEs
  Intrepid is a library of interoperable tools for compatible discretizations of
@@ -401,7 +400,7 @@ Description: compatible discretizations of PDEs
  .
  This package provides headers.
 
-Package: libisorropia11
+Package: libtrilinos-isorropia11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -415,10 +414,10 @@ Description: partioning, load balancing, coloring of sparse matrices
  .
  This package contains the dynamic libraries.
 
-Package: libisorropia-dev
+Package: libtrilinos-isorropia-dev
 Architecture: any
 Section: libdevel
-Depends: libisorropia11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-isorropia11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: partioning, load balancing, coloring of sparse matrices
  Isorropia is a package for combinatorial scientific computing, with focus on
@@ -430,7 +429,7 @@ Description: partioning, load balancing, coloring of sparse matrices
  .
  This package provides headers.
 
-Package: libkokkos11
+Package: libtrilinos-kokkos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -439,17 +438,17 @@ Description: Trilinos core kernels
  .
  This package contains the dynamic libraries.
 
-Package: libkokkos-dev
+Package: libtrilinos-kokkos-dev
 Architecture: any
 Section: libdevel
-Depends: libkokkos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-kokkos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos core kernels
  Kokkos is a Trilinos core kernels package. 
  .
  This package provides headers.
 
-Package: libkomplex11
+Package: libtrilinos-komplex11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -459,10 +458,10 @@ Description: complex linear solver package
  .
  This package contains the dynamic libraries.
 
-Package: libkomplex-dev
+Package: libtrilinos-komplex-dev
 Architecture: any
 Section: libdevel
-Depends: libkomplex11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-komplex11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: complex linear solver package
  Komplex is a complex linear solver package. Solves complex-valued linear
@@ -470,7 +469,7 @@ Description: complex linear solver package
  .
  This package provides headers.
 
-Package: libmesquite11
+Package: libtrilinos-mesquite11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -480,10 +479,10 @@ Description: numerical mesh improvement/adaptation package
  .
  This package contains the dynamic libraries.
 
-Package: libmesquite-dev
+Package: libtrilinos-mesquite-dev
 Architecture: any
 Section: libdevel
-Depends: libmesquite11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-mesquite11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: numerical mesh improvement/adaptation package
  MESQUITE is a linkable software library that applies a variety of
@@ -491,7 +490,7 @@ Description: numerical mesh improvement/adaptation package
  .
  This package provides headers.
 
-Package: libml11
+Package: libtrilinos-ml11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -508,10 +507,10 @@ Description: multigrid preconditioning
  .
  This package contains the dynamic libraries.
 
-Package: libml-dev
+Package: libtrilinos-ml-dev
 Architecture: any
 Section: libdevel
-Depends: libml11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-ml11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: multigrid preconditioning
  ML is Sandia's main multigrid preconditioning package. ML is designed to solve
@@ -526,7 +525,7 @@ Description: multigrid preconditioning
  .
  This package provides headers.
 
-Package: libmoertel11
+Package: libtrilinos-moertel11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -543,10 +542,10 @@ Description: mortar methods package
  .
  This package contains the dynamic libraries.
 
-Package: libmoertel-dev
+Package: libtrilinos-moertel-dev
 Architecture: any
 Section: libdevel
-Depends: libmoertel11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-moertel11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: mortar methods package
  This package supplies capabilities for nonconforming mesh tying and contact
@@ -561,7 +560,7 @@ Description: mortar methods package
  .
  This package provides headers.
 
-Package: libmoocho11
+Package: libtrilinos-moocho11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -575,10 +574,10 @@ Description: nonlinear optimization package
  .
  This package contains the dynamic libraries.
 
-Package: libmoocho-dev
+Package: libtrilinos-moocho-dev
 Architecture: any
 Section: libdevel
-Depends: libmoocho11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-moocho11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: nonlinear optimization package
  MOOCHO (Multifunctional Object-Oriented arCHitecture for Optimization) is
@@ -590,7 +589,7 @@ Description: nonlinear optimization package
  .
  This package provides headers.
 
-Package: libmuelu11
+Package: libtrilinos-muelu11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -598,16 +597,16 @@ Description: next generation multilevel preconditioner capabilities
  .
  This package contains the dynamic libraries.
 
-Package: libmuelu-dev
+Package: libtrilinos-muelu-dev
 Architecture: any
 Section: libdevel
-Depends: libmuelu11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-muelu11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: next generation multilevel preconditioner capabilities
  .
  This package provides headers.
 
-Package: libnox11
+Package: libtrilinos-nox11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -620,10 +619,10 @@ Description: robust solution of nonlinear equations
  .
  This package contains the dynamic libraries.
 
-Package: libnox-dev
+Package: libtrilinos-nox-dev
 Architecture: any
 Section: libdevel
-Depends: libnox11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-nox11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: robust solution of nonlinear equations
  NOX robustly solves and analyzes large-scale systems of nonlinear equations.
@@ -634,7 +633,7 @@ Description: robust solution of nonlinear equations
  .
  This package provides headers.
 
-Package: liboptipack11
+Package: libtrilinos-optipack11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -645,10 +644,10 @@ Description: Trilinos optimization algorithms
  .
  This package contains the dynamic libraries.
 
-Package: liboptipack-dev
+Package: libtrilinos-optipack-dev
 Architecture: any
 Section: libdevel
-Depends: liboptipack11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-optipack11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos optimization algorithms
  The OptiPack package contains interfaces and concrete implementations of some
@@ -657,7 +656,7 @@ Description: Trilinos optimization algorithms
  .
  This package provides headers.
 
-Package: libpamgen11
+Package: libtrilinos-pamgen11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -669,10 +668,10 @@ Description: hexahedral and quadrilateral mesh generator
  .
  This package contains the dynamic libraries.
 
-Package: libpamgen-dev
+Package: libtrilinos-pamgen-dev
 Architecture: any
 Section: libdevel
-Depends: libpamgen11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-pamgen11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: hexahedral and quadrilateral mesh generator
  PAMGEN creates hexahedral or quadrilateral (in 2D) finite element meshes of
@@ -682,7 +681,7 @@ Description: hexahedral and quadrilateral mesh generator
  .
  This package provides headers.
 
-Package: libphalanx11
+Package: libtrilinos-phalanx11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -699,10 +698,10 @@ Description: local field evaluation kernel
  .
  This package contains the dynamic libraries.
 
-Package: libphalanx-dev
+Package: libtrilinos-phalanx-dev
 Architecture: any
 Section: libdevel
-Depends: libphalanx11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-phalanx11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: local field evaluation kernel
  Phalanx is a local field evaluation kernel specifically designed for general
@@ -717,7 +716,7 @@ Description: local field evaluation kernel
  .
  This package provides headers.
 
-Package: libpiro11
+Package: libtrilinos-piro11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -732,10 +731,10 @@ Description: embedded nonlinear analysis package
  .
  This package contains the dynamic libraries.
 
-Package: libpiro-dev
+Package: libtrilinos-piro-dev
 Architecture: any
 Section: libdevel
-Depends: libpiro11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-piro11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: embedded nonlinear analysis package
  Piro is the top-level, unifying package of the Embedded Nonlinear Analysis
@@ -748,7 +747,7 @@ Description: embedded nonlinear analysis package
  .
  This package provides headers.
 
-Package: libpliris11
+Package: libtrilinos-pliris11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -757,17 +756,17 @@ Description: Trilinos dense solvers package
  .
  This package contains the dynamic libraries.
 
-Package: libpliris-dev
+Package: libtrilinos-pliris-dev
 Architecture: any
 Section: libdevel
-Depends: libpliris11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-pliris11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos dense solvers package
  Pliris is a Trilinos dense solver package.
  .
  This package provides headers.
 
-Package: librtop11
+Package: libtrilinos-rtop11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -777,10 +776,10 @@ Description: reductions/transformation operators
  .
  This package contains the dynamic libraries.
 
-Package: librtop-dev
+Package: libtrilinos-rtop-dev
 Architecture: any
 Section: libdevel
-Depends: librtop11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-rtop11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: reductions/transformation operators
  RTOp (reduction/transformation operators) provides the basic mechanism for
@@ -788,7 +787,7 @@ Description: reductions/transformation operators
  .
  This package provides headers.
 
-Package: librythmos11
+Package: libtrilinos-rythmos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -801,10 +800,10 @@ Description: Trilinos transient integrator
  .
  This package contains the dynamic libraries.
 
-Package: librythmos-dev
+Package: libtrilinos-rythmos-dev
 Architecture: any
 Section: libdevel
-Depends: librythmos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-rythmos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos transient integrator
  Rythmos is a transient integrator for ordinary differential equations and
@@ -815,7 +814,7 @@ Description: Trilinos transient integrator
  .
  This package provides headers.
 
-Package: libsacado11
+Package: libtrilinos-sacado11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -826,10 +825,10 @@ Description: automatic differentiation for C++ applications
  .
  This package contains the dynamic libraries.
 
-Package: libsacado-dev
+Package: libtrilinos-sacado-dev
 Architecture: any
 Section: libdevel
-Depends: libsacado11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-sacado11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: automatic differentiation for C++ applications
  Sacado is a set of automatic differentiation tools for C++ applications. It
@@ -838,7 +837,7 @@ Description: automatic differentiation for C++ applications
  .
  This package provides headers.
 
-Package: libseacas11
+Package: libtrilinos-seacas11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -850,10 +849,10 @@ Description: finite element analysis
  .
  This package contains the dynamic libraries.
 
-Package: libseacas-dev
+Package: libtrilinos-seacas-dev
 Architecture: any
 Section: libdevel
-Depends: libseacas11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-seacas11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: finite element analysis
  The Sandia Engineering Analysis Code Access System (SEACAS) is a suite of
@@ -863,7 +862,7 @@ Description: finite element analysis
  .
  This package provides headers.
 
-Package: libshards11
+Package: libtrilinos-shards11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -879,10 +878,10 @@ Description: interoperability tools for PDE solving
  .
  This package contains the dynamic libraries.
 
-Package: libshards-dev
+Package: libtrilinos-shards-dev
 Architecture: any
 Section: libdevel
-Depends: libshards11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-shards11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: interoperability tools for PDE solving
  The purpose of Shards is to provide a suite of common tools for numerical and
@@ -896,7 +895,7 @@ Description: interoperability tools for PDE solving
  .
  This package provides headers.
 
-Package: libstk11
+Package: libtrilinos-stk11
 Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -908,10 +907,10 @@ Description: mesh and topology handling
  .
  This package contains the dynamic libraries.
 
-Package: libstk-dev
+Package: libtrilinos-stk-dev
 Architecture: any
 Section: libdevel
-Depends: libstk11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-stk11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: mesh and topology handling
  The Sierra Toolkit Mesh product provides a unstructured mesh in-memory,
@@ -921,7 +920,7 @@ Description: mesh and topology handling
  .
  This package provides headers.
 
-Package: libstokhos11
+Package: libtrilinos-stokhos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -934,10 +933,10 @@ Description: Trilinos uncertainty quantification package
  .
  This package contains the dynamic libraries.
 
-Package: libstokhos-dev
+Package: libtrilinos-stokhos-dev
 Architecture: any
 Section: libdevel
-Depends: libstokhos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-stokhos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos uncertainty quantification package
  Stokhos is a package for intrusive stochastic Galerkin uncertainty
@@ -948,7 +947,7 @@ Description: Trilinos uncertainty quantification package
  .
  This package provides headers.
 
-Package: libstratimikos11
+Package: libtrilinos-stratimikos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -960,10 +959,10 @@ Description: wrappers for linear solvers and preconditioners
  .
  This package contains the dynamic libraries.
 
-Package: libstratimikos-dev
+Package: libtrilinos-stratimikos-dev
 Architecture: any
 Section: libdevel
-Depends: libstratimikos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-stratimikos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: wrappers for linear solvers and preconditioners
  The package Stratimikos contains a unified set of Thyra-based wrappers to
@@ -973,7 +972,7 @@ Description: wrappers for linear solvers and preconditioners
  .
  This package provides headers.
 
-Package: libsundance11
+Package: libtrilinos-sundance11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -986,10 +985,10 @@ Description: rapid development system of finite element solvers
  .
  This package contains the dynamic libraries.
 
-Package: libsundance-dev
+Package: libtrilinos-sundance-dev
 Architecture: any
 Section: libdevel
-Depends: libsundance11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-sundance11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: rapid development system of finite element solvers
  Sundance is a system for rapid development of high-performance parallel
@@ -1000,7 +999,7 @@ Description: rapid development system of finite element solvers
  .
  This package provides headers.
 
-Package: libteko11
+Package: libtrilinos-teko11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1019,10 +1018,10 @@ Description: block preconditioners
  .
  This package contains the dynamic libraries.
 
-Package: libteko-dev
+Package: libtrilinos-teko-dev
 Architecture: any
 Section: libdevel
-Depends: libteko11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-teko11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: block preconditioners
  Teko is a package for development and implementation of block preconditioners.
@@ -1039,7 +1038,7 @@ Description: block preconditioners
  .
  This package provides headers.
 
-Package: libteuchos11
+Package: libtrilinos-teuchos11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1050,10 +1049,10 @@ Description: common tools for Trilinos
  .
  This package contains the dynamic libraries.
 
-Package: libteuchos-dev
+Package: libtrilinos-teuchos-dev
 Architecture: any
 Section: libdevel
-Depends: libteuchos11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-teuchos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: common tools for Trilinos
  Teuchos provides a suite of common tools for Trilinos for developers to use.
@@ -1062,7 +1061,7 @@ Description: common tools for Trilinos
  .
  This package provides headers.
 
-Package: libthyra11
+Package: libtrilinos-thyra11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1075,10 +1074,10 @@ Description: interoperability layer for numerical software
  .
  This package contains the dynamic libraries.
 
-Package: libthyra-dev
+Package: libtrilinos-thyra-dev
 Architecture: any
 Section: libdevel
-Depends: libthyra11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-thyra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: interoperability layer for numerical software
  The Thyra package contains a set of interfaces and supporting code that
@@ -1089,7 +1088,7 @@ Description: interoperability layer for numerical software
  .
  This package provides headers.
 
-Package: libtpi11
+Package: libtrilinos-tpi11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1097,16 +1096,16 @@ Description: tpi
  .
  This package contains the dynamic libraries.
 
-Package: libtpi-dev
+Package: libtrilinos-tpi-dev
 Architecture: any
 Section: libdevel
-Depends: libtpi11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-tpi11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: tpi
  .
  This package provides headers.
 
-Package: libtpetra11
+Package: libtrilinos-tpetra11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1116,10 +1115,10 @@ Description: templated numerical linear algebra package
  .
  This package contains the dynamic libraries.
 
-Package: libtpetra-dev
+Package: libtrilinos-tpetra-dev
 Architecture: any
 Section: libdevel
-Depends: libtpetra11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-tpetra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: templated numerical linear algebra package
  Next-generation, templated version of Petra, taking advantage of the newer
@@ -1127,7 +1126,7 @@ Description: templated numerical linear algebra package
  .
  This package provides headers.
 
-Package: libtrilinoscouplings11
+Package: libtrilinos-trilinoscouplings11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1137,10 +1136,10 @@ Description: combining Trilinos packages
  .
  This package contains the dynamic libraries.
 
-Package: libtrilinoscouplings-dev
+Package: libtrilinos-trilinoscouplings-dev
 Architecture: any
 Section: libdevel
-Depends: libtrilinoscouplings11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-trilinoscouplings11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: combining Trilinos packages
  TrilinosCouplings provides a location for multiple Trilinos packages to be
@@ -1148,7 +1147,7 @@ Description: combining Trilinos packages
  .
  This package provides headers.
 
-Package: libtriutils11
+Package: libtrilinos-triutils11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1157,17 +1156,17 @@ Description: utilities for Trilinos
  .
  This package contains the dynamic libraries.
 
-Package: libtriutils-dev
+Package: libtrilinos-triutils-dev
 Architecture: any
 Section: libdevel
-Depends: libtriutils11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-triutils11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: utilities for Trilinos
  TriUtils a package of utilities for other Trilinos packages.
  .
  This package provides headers.
 
-Package: libxpetra11
+Package: libtrilinos-xpetra11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1176,17 +1175,17 @@ Description: conversion between Epetra and Teuchos objects
  .
  This package contains the dynamic libraries.
 
-Package: libxpetra-dev
+Package: libtrilinos-xpetra-dev
 Architecture: any
 Section: libdevel
-Depends: libxpetra11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-xpetra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: conversion between Epetra and Teuchos objects
  Xpetra is an interoperability layer for Epetra/Tpetra.
  .
  This package provides headers.
 
-Package: libzoltan11
+Package: libtrilinos-zoltan11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1200,10 +1199,10 @@ Description: parallel dynamic load balancing
  .
  This package contains the dynamic libraries.
 
-Package: libzoltan-dev
+Package: libtrilinos-zoltan-dev
 Architecture: any
 Section: libdevel
-Depends: libzoltan11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-zoltan11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: parallel dynamic load balancing
  Zoltan is a toolkit of parallel services for dynamic, unstructured, and/or
@@ -1215,7 +1214,7 @@ Description: parallel dynamic load balancing
  .
  This package provides headers.
 
-Package: libzoltan2-11
+Package: libtrilinos-zoltan2-11
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -1226,10 +1225,10 @@ Description: Trilinos next generation load balancing package
  .
  This package contains the dynamic libraries.
 
-Package: libzoltan2-dev
+Package: libtrilinos-zoltan2-dev
 Architecture: any
 Section: libdevel
-Depends: libzoltan2-11 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-zoltan2-11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
 Description: Trilinos next generation load balancing package
  Zoltan2 is a package for load balancing and combinatorial scientific
