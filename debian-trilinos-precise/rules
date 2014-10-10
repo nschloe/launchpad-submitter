@@ -154,10 +154,10 @@ install-stamp: auto_install-stamp debian/Trilinos_version.h
 		echo $$cmd; $$cmd; \
 	done
 	@for i in $(LIB_PACKAGES) ctrilinos sundance tpi; do \
-	  echo "dh_install --sourcedir=debian/tmp_$$i -plib$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.*"; \
-	  dh_install --sourcedir=debian/tmp_$$i -plib$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.* || exit 1; \
-	  echo "dh_install --sourcedir=debian/tmp_$$i -plib$$i-dev --autodest usr/include usr/lib/*/*.so usr/lib/*/cmake"; \
-	  dh_install --sourcedir=debian/tmp_$$i -plib$$i-dev --autodest usr/include usr/lib/*/*.so usr/lib/*/cmake || exit 1; \
+	  echo "dh_install --sourcedir=debian/tmp_$$i -plibtrilinos-$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.*"; \
+	  dh_install --sourcedir=debian/tmp_$$i -plibtrilinos-$${i/2/2-}"$(SOVERSION)" usr/lib/*/*.so.* || exit 1; \
+	  echo "dh_install --sourcedir=debian/tmp_$$i -plibtrilinos-$$i-dev --autodest usr/include usr/lib/*/*.so usr/lib/*/cmake"; \
+	  dh_install --sourcedir=debian/tmp_$$i -plibtrilinos-$$i-dev --autodest usr/include usr/lib/*/*.so usr/lib/*/cmake || exit 1; \
 	  if grep -q "^lib$$i\>" debian/lintian-override; then \
 	    install -d debian/lib$${i/2/2-}$(SOVERSION)/usr/share/lintian/overrides; \
 	    grep "^lib$${i/2/2-}%V\>" debian/lintian-override |\
