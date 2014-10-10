@@ -182,7 +182,7 @@ install-stamp: auto_install-stamp debian/Trilinos_version.h
 
 override_dh_prep:
 	dh_prep
-	echo mydevpackages=$(LIB_PACKAGES:%=lib%-dev,) libctrilinos-dev, libsundance-dev, libtpi-dev > debian/trilinos-dev.substvars
+	echo mydevpackages=$(LIB_PACKAGES:%=libtrilinos-%-dev,) libtrilinos-ctrilinos-dev, libtrilinos-sundance-dev, libtrilinos-tpi-dev > debian/trilinos-dev.substvars
 
 override_dh_strip:
 	dh_strip -a --dbg-package=trilinos-dbg
