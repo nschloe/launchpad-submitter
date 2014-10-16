@@ -896,7 +896,7 @@ Description: interoperability tools for PDE solving
  This package provides headers.
 
 Package: libtrilinos-stk11
-Architecture: amd64
+Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: mesh and topology handling
