@@ -75,7 +75,7 @@ def _main():
     print('Creating new archive %s...' % tarball_path)
     if os.path.isfile(tarball_path):
         os.remove(tarball_path)
-    # Append the "/" to $PREFIX, otherwise this may be interpreted as an
+    # Append the '/' to $PREFIX, otherwise this may be interpreted as an
     # ordinary filename-prefix.
     subprocess.check_call(['git', 'archive',
                            'master',
@@ -122,6 +122,24 @@ def _main():
             os.chdir(prefix)
             subprocess.check_call('patch -p1 < ' + patch_file, shell=True)
 
+        # Optionally remove patches.
+        if args.patches_blacklist:
+            series_file = os.path.join(prefix, 'debian', 'patches/series')
+            tmp_file = os.path.join('/tmp/series.new')
+            with open(series_file, 'r') as input:
+                with open(tmp_file, 'w') as output:
+                    for line in input:
+                        try:
+                            k = args.patches_blacklist.index(line.strip())
+                            args.patches_blacklist.pop(k)
+                        except ValueError:
+                            output.write(line)
+            if args.patches_blacklist:
+                raise ValueError('The patches %r are not in debian/series.'
+                                % args.patches_blacklist)
+            shutil.copy2(tmp_file, series_file)
+
+
         # Optionally add extra patches.
         if args.extra_patches_dir:
             if os.path.isabs(args.extra_patches_dir):
@@ -131,7 +149,7 @@ def _main():
             os.chdir(release_dir)
             dest_dir = os.path.join(prefix, 'debian', 'patches/')
             assert(os.path.isdir(dest_dir))
-            files = glob.iglob(os.path.join(source_dir, "*.patch"))
+            files = glob.iglob(os.path.join(source_dir, '*.patch'))
             for file in files:
                 if os.path.isfile(file):
                     shutil.copy2(file, dest_dir)
@@ -264,8 +282,14 @@ def _parse_cmd_arguments():
         type=str
         )
     parser.add_argument(
+        '-c', '--patches-blacklist',
+        help='Patches which must not be applied',
+        type=str,
+        nargs='+'
+        )
+    parser.add_argument(
         '-z', '--submit-hashes-file',
-        help='File in which to store the submit hashes.',
+        help='File in which to store the submit hashes',
         type=str,
         required=True
         )
