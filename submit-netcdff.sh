@@ -3,7 +3,7 @@
 # Set SSH agent variables.
 eval $(cat $HOME/.ssh/agent/info)
 
-THIS_DIR=`dirname $0`
+THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 $THIS_DIR/launchpad-submitter \
   --name netcdff \
@@ -13,4 +13,4 @@ $THIS_DIR/launchpad-submitter \
   --ubuntu-releases trusty utopic vivid \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/netcdf-nightly \
-  --submit-hashes-file "netcdff-submit-hash-unstable.dat"
+  --submit-hashes-file "$THIS_DIR/netcdff-submit-hash-unstable.dat"
