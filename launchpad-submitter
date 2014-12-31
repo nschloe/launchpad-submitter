@@ -15,7 +15,7 @@ import yaml
 def _main():
     # Get the directory of this script. This has to be done before any chdir
     # command.
-    this_dir = os.path.dirname(os.path.realpath(__file__))
+    #this_dir = os.path.dirname(os.path.realpath(__file__))
 
     args = _parse_cmd_arguments()
 
@@ -42,18 +42,14 @@ def _main():
                                                ]).decode('utf-8').strip()
 
     # File to store the HEAD command of the last push.
-    try:
-        revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
-        revision_dicts = []
-        for doc in revision_data:
-            revision_dicts.append(doc)
-        is_uptodate = (
-            source_revision == revision_dicts[0]['source revision']
-            and debian_revision == revision_dicts[0]['debian revision']
-            )
-    except IOError:
-        # If no file is found, assume that we are not up-to-date.
-        is_uptodate = False
+    revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
+    revision_dicts = []
+    for doc in revision_data:
+        revision_dicts.append(doc)
+    is_uptodate = (
+        source_revision == revision_dicts[0]['source revision']
+        and debian_revision == revision_dicts[0]['debian revision']
+        )
 
     if is_uptodate:
         print('Latest version already submitted to launchpad.')
@@ -124,21 +120,23 @@ def _main():
 
         # Optionally remove patches.
         if args.patches_blacklist:
+            # list copies: <http://stackoverflow.com/a/2612815/353337>
+            tmp_blacklist = list(args.patches_blacklist)
             series_file = os.path.join(prefix, 'debian', 'patches/series')
             tmp_file = os.path.join('/tmp/series.new')
             with open(series_file, 'r') as input:
                 with open(tmp_file, 'w') as output:
                     for line in input:
                         try:
-                            k = args.patches_blacklist.index(line.strip())
-                            args.patches_blacklist.pop(k)
+                            k = tmp_blacklist.index(line.strip())
+                            tmp_blacklist.pop(k)
                         except ValueError:
                             output.write(line)
-            if args.patches_blacklist:
+            if tmp_blacklist:
                 raise ValueError('The patches %r are not in debian/series.'
-                                % args.patches_blacklist)
+                                 % tmp_blacklist
+                                 )
             shutil.copy2(tmp_file, series_file)
-
 
         # Optionally add extra patches.
         if args.extra_patches_dir:
