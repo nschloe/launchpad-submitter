@@ -1,0 +1,35 @@
+this is seacas as provided at [1], not what looks like "upstream" seacas [2].
+this should be fine, see the mail below.
+
+in addition, we have patched the sonames shipped within libseacas* to start
+with "seacas" to avoid name clashes. this is consistent with all other packages
+originating from the trilinos source package.
+
+"""
+Date: Mon, 7 Apr 2014 15:43:12 +0000
+From: "Sjaardema, Gregory D" <gdsjaar@sandia.gov>
+To: Nico Schlömer <nico.schloemer@gmail.com>
+CC: Felix Salfelder <felix@salfelder.org>
+Subject: Re: [EXTERNAL] SEACAS: sourceforge vs. Trilinos
+
+They have diverged a little currently, but are intended to try to stay
+very similar and eventually the same.
+
+Internally, there is the Sierra/seacas which is the same as the
+Trilinos/seacas.  I also have a SEACAS/seacas which is the original code
+base.  I tend to do some experimentation in the SEACAS/seacas which
+eventually makes it to the Sierra/seacas and therefore the Trilinos/seacas.
+
+The sourceforge/seacas comes from the SEACAS/seacas.
+
+Not sure that answered anything or just confused you more.  At the current
+time, the primary difference among all of them is that the SEACAS/seacas
+and SourceForge/seacas have a prototype grouping capability in exodus that
+doesn¹t currently exist in Sierra/seacas.  Once I unify that, all
+instances should be the same.
+
+..Greg
+"""
+
+[1] http://trilinos.sandia.gov/packages/seacas/,
+[2] http://sourceforge.net/projects/seacas/

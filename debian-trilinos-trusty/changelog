@@ -1,0 +1,138 @@
+trilinos (11.12.0-1) UNRELEASED; urgency=low
+
+  [Nico Schlömer]
+  * import new upstream relase
+    - remove libtrilinos_ prefixes
+    - clear patches
+  [Felix Salfelder]
+  * build separate library packages
+  * some lintian overrides
+  * workaround (embed) Trilinos_Version.h
+  [TODO]
+  * python package
+    - PyTrilinos is only compatible with SWIG<=2.0.11.
+      Not sure when this gets fixed upstream. <nico>
+  * check: old patches
+  * ...
+
+ -- Felix Salfelder <felix@salfelder.org>  Wed, 9 Apr 2014 10:30:42 +0100
+
+trilinos (10.0.4.dfsg-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Don't hardcode name of the default make target (closes: #577388).
+
+ -- Jakub Wilk <jwilk@debian.org>  Wed, 19 May 2010 13:59:28 +0200
+
+trilinos (10.0.4.dfsg-1) unstable; urgency=low
+
+  [Christophe Prud'homme]
+  * New upstream release
+  * debian/control: updated Standard-Version to 3.8.3 (no changes)
+
+  [Johannes Ring]
+  * debian/patches: Update patches for 10.0.4 release.
+  * debian/control:
+    - Add XS-Python-Version field to source package and
+      XB-Python-Version field to binary package python-pytrilinos.
+    - Add python-numpy to Depends for binary package python-pytrilinos.
+  * debian/rules: Fix issue with PyTrilinos and Python 2.6.
+  * Switch from python-support to python-central.
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Sun, 03 Jan 2010 08:25:23 +0100
+
+trilinos (10.0.3.dfsg-2) unstable; urgency=low
+
+  [Christophe Prud'homme]
+  * debian/rules: enable noxlapack
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Mon, 21 Dec 2009 11:04:12 +0100
+
+trilinos (10.0.3.dfsg-1) unstable; urgency=low
+
+  [Christophe Prud'homme]
+  * New upstream release
+
+  [Johannes Ring]
+  * debian/patches/libname.patch: Add prefix 'libtrilinos_' to all
+    libraries.
+  * debian/patches/soname.patch: Add soversion to libraries.
+  * debian/watch: Update download URL.
+  * debian/control:
+    - Remove python-numeric from Build-Depends (virtual package).
+    - Remove automake and autotools from Build-Depends and add cmake to
+      reflect switch to CMake.
+    - Add python-support to Build-Depends.
+  * debian/rules:
+    - Cleanup and updates for switch to CMake.
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Sun, 13 Dec 2009 12:53:22 +0100
+
+trilinos (9.0.3.dfsg-2) unstable; urgency=low
+
+  * debian/rules: fixed lintian warning (package-installs-python-pyc)
+  * debian/control: updated Standard-=Version to 3.8.2 (no change)
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Tue, 14 Jul 2009 08:55:52 +0200
+
+trilinos (9.0.3.dfsg-1) unstable; urgency=low
+
+  [Christophe Prud'homme]
+  * New upstream release
+  * python-pytrilinos: fix lintian warning package-installs-python-pyc
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Fri, 03 Jul 2009 11:26:41 +0200
+
+trilinos (9.0.2.dfsg-5) unstable; urgency=low
+
+  [Fabrice Coutadeur]
+  * Adapt package to python2.6 (LP: #386625):
+    - debian/python-pytrilinos.install: changed python2.5 to python*
+    - debian/control: changed build dependency from python2.5-dev to python-dev
+    - debian/rules: changed reference to python2.5 to python2.6
+    - debian/patches/python_2.6.patch: add --install-layout=deb to setup.py
+      call in Makefile.in and Makefile.am for Packages/PyTrilinos/shared,
+      packages/PyTrilinos/src and packages/Sundance/python/src
+
+  [Christophe Prud'homme]
+  * debian/rules: fix some lintian warnings
+  * Bug fix: "trilinos FTBFS with python2.6", thanks to Fabrice Coutadeur
+    (Closes: #535145).
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Fri, 03 Jul 2009 07:32:36 +0200
+
+trilinos (9.0.2.dfsg-4) unstable; urgency=low
+
+  * debian/rules: added sacado to TRILINOS_PACKAGES and
+    TRILINOS_PACKAGES_LIBS, thanks to Adam for pointing this out.
+  * debian/libtrilinos-dev.install: move /usr/include/*.h to
+    /usr/include/trilinos, thanks to Adam for pointing this out.
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Fri, 22 May 2009 12:09:26 +0200
+
+trilinos (9.0.2.dfsg-3) unstable; urgency=low
+
+  * Added patch to fix gcc 4.4 FTBS
+  * Bug fix: "missing #include", thanks to Martin Michlmayr (Closes:
+    #527210).
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Tue, 12 May 2009 21:02:58 +0200
+
+trilinos (9.0.2.dfsg-2) unstable; urgency=low
+
+  * debian/rules: enable sacado
+  * Bug fix: "Missing Sacado", thanks to Adam C Powell IV (Closes:
+    #527835).
+  * Bug fix: "error when trying to install together", thanks to Ralf
+    Treinen (Closes: #526992).
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Sat, 09 May 2009 14:19:14 +0200
+
+trilinos (9.0.2.dfsg-1) unstable; urgency=low
+
+  * Initial release Closes: #362293
+  * as per discussion with debian ftpmaster, renamed all libraries using
+    prefix libtrilinos_, hence improving the library naming in trilinos
+
+ -- Christophe Prud'homme <prudhomm@debian.org>  Thu, 19 Mar 2009 10:50:42 +0100
+
