@@ -1,4 +1,4 @@
-#!/bin/sh -u -e
+#!/bin/sh -ue
 
 # Set SSH agent variables.
 eval $(cat $HOME/.ssh/agent/info)
