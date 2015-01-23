@@ -120,23 +120,24 @@ def _main():
 
         # Optionally remove patches.
         if args.patches_blacklist:
-            # list copies: <http://stackoverflow.com/a/2612815/353337>
-            tmp_blacklist = list(args.patches_blacklist)
-            series_file = os.path.join(prefix, 'debian', 'patches/series')
-            tmp_file = os.path.join('/tmp/series.new')
-            with open(series_file, 'r') as input:
-                with open(tmp_file, 'w') as output:
-                    for line in input:
-                        try:
-                            k = tmp_blacklist.index(line.strip())
-                            tmp_blacklist.pop(k)
-                        except ValueError:
-                            output.write(line)
-            if tmp_blacklist:
-                raise ValueError('The patches %r are not in debian/series.'
-                                 % tmp_blacklist
-                                 )
-            shutil.copy2(tmp_file, series_file)
+            for sfile in ['patches/series', 'patches/ubuntu.series']:
+                # list copies: <http://stackoverflow.com/a/2612815/353337>
+                tmp_blacklist = list(args.patches_blacklist)
+                series_file = os.path.join(prefix, 'debian', sfile)
+                tmp_file = os.path.join('/tmp/series.new')
+                with open(series_file, 'r') as input:
+                    with open(tmp_file, 'w') as output:
+                        for line in input:
+                            try:
+                                k = tmp_blacklist.index(line.strip())
+                                tmp_blacklist.pop(k)
+                            except ValueError:
+                                output.write(line)
+                if tmp_blacklist:
+                    raise ValueError('The patches %r are not in debian/series.'
+                                     % tmp_blacklist
+                                     )
+                shutil.copy2(tmp_file, series_file)
 
         # Optionally add extra patches.
         if args.extra_patches_dir:
