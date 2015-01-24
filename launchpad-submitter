@@ -62,7 +62,7 @@ def _main():
 
     # Create a day-to-day version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20140927'
+    #today_str = '20150124'
     version = package_version + '~' + today_str
 
     # Create the tarball.
