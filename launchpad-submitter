@@ -73,12 +73,13 @@ def _main():
         os.remove(tarball_path)
     # Append the '/' to $PREFIX, otherwise this may be interpreted as an
     # ordinary filename-prefix.
-    subprocess.check_call(['git', 'archive',
-                           'master',
-                           '--prefix=%s/' % prefix,
-                           '--format=tar.gz',
-                           '--output=%s' % tarball_path
-                           ])
+    subprocess.check_call([
+        'git', 'archive',
+        'master',
+        '--prefix=%s/' % prefix,
+        '--format=tar.gz',
+        '--output=%s' % tarball_path
+        ])
     print('done.')
 
     for ubuntu_release in args.ubuntu_releases:
@@ -121,9 +122,11 @@ def _main():
         # Optionally remove patches.
         if args.patches_blacklist:
             for sfile in ['patches/series', 'patches/ubuntu.series']:
+                series_file = os.path.join(prefix, 'debian', sfile)
+                if not os.path.isfile(series_file):
+                    continue
                 # list copies: <http://stackoverflow.com/a/2612815/353337>
                 tmp_blacklist = list(args.patches_blacklist)
-                series_file = os.path.join(prefix, 'debian', sfile)
                 tmp_file = os.path.join('/tmp/series.new')
                 with open(series_file, 'r') as input:
                     with open(tmp_file, 'w') as output:
