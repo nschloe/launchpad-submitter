@@ -29,7 +29,7 @@ Vcs-Git: git://git.debian.org/debian-science/packages/trilinos.git
 Vcs-Browser: http://git.debian.org/?p=debian-science/packages/trilinos.git
 
 Package: trilinos-dev
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${misc:Depends}, ${mydevpackages}
 Suggests: libtrilinos-doc
@@ -43,7 +43,7 @@ Description: object-oriented framework for large-scale problems
  This package contains the development header and some makefile templates.
 
 Package: libtrilinos-amesos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: direct sparse solver package
@@ -54,7 +54,7 @@ Description: direct sparse solver package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-amesos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-amesos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -66,7 +66,7 @@ Description: direct sparse solver package
  This package provides headers.
 
 Package: libtrilinos-amesos2-11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: next generation direct sparse solver package
@@ -77,7 +77,7 @@ Description: next generation direct sparse solver package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-amesos2-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-amesos2-11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -89,7 +89,7 @@ Description: next generation direct sparse solver package
  This package provides headers.
 
 Package: libtrilinos-anasazi11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: large-scale eigenvalue algorithms
@@ -103,7 +103,7 @@ Description: large-scale eigenvalue algorithms
  This package contains the dynamic libraries.
 
 Package: libtrilinos-anasazi-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-anasazi11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -118,7 +118,7 @@ Description: large-scale eigenvalue algorithms
  This package provides headers.
 
 Package: libtrilinos-aztecoo11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: object-oriented interface to the Aztec solver
@@ -131,7 +131,7 @@ Description: object-oriented interface to the Aztec solver
  This package contains the dynamic libraries.
 
 Package: libtrilinos-aztecoo-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-aztecoo11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -145,7 +145,7 @@ Description: object-oriented interface to the Aztec solver
  This package provides headers.
 
 Package: libtrilinos-belos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: iterative linear solvers
@@ -158,7 +158,7 @@ Description: iterative linear solvers
  This package contains the dynamic libraries.
 
 Package: libtrilinos-belos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-belos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -172,7 +172,7 @@ Description: iterative linear solvers
  This package provides headers.
 
 Package: libtrilinos-ctrilinos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos interface for C
@@ -181,7 +181,7 @@ Description: Trilinos interface for C
  This package contains the dynamic libraries.
 
 Package: libtrilinos-ctrilinos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-ctrilinos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -191,7 +191,7 @@ Description: Trilinos interface for C
  This package provides headers.
 
 Package: libtrilinos-epetra11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: basis package for linear algebra
@@ -202,7 +202,7 @@ Description: basis package for linear algebra
  This package contains the dynamic libraries.
 
 Package: libtrilinos-epetra-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-epetra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -214,7 +214,7 @@ Description: basis package for linear algebra
  This package provides headers.
 
 Package: libtrilinos-epetraext11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: extensions to the Epetra toolkit
@@ -224,7 +224,7 @@ Description: extensions to the Epetra toolkit
  This package contains the dynamic libraries.
 
 Package: libtrilinos-epetraext-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-epetraext11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -235,7 +235,7 @@ Description: extensions to the Epetra toolkit
  This package provides headers.
 
 Package: libtrilinos-fei11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: finite element interface for lineawr solvers
@@ -250,7 +250,7 @@ Description: finite element interface for lineawr solvers
  This package contains the dynamic libraries.
 
 Package: libtrilinos-fei-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-fei11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -266,7 +266,7 @@ Description: finite element interface for lineawr solvers
  This package provides headers.
 
 Package: libtrilinos-galeri11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: generation of distributed linear systems
@@ -279,7 +279,7 @@ Description: generation of distributed linear systems
  This package contains the dynamic libraries.
 
 Package: libtrilinos-galeri-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-galeri11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -293,7 +293,7 @@ Description: generation of distributed linear systems
  This package provides headers.
 
 Package: libtrilinos-globipack11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: 1D globalization capabilities
@@ -307,7 +307,7 @@ Description: 1D globalization capabilities
  This package contains the dynamic libraries.
 
 Package: libtrilinos-globipack-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-globipack11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -322,7 +322,7 @@ Description: 1D globalization capabilities
  This package provides headers.
 
 Package: libtrilinos-ifpack11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: algebraic preconditioners
@@ -335,7 +335,7 @@ Description: algebraic preconditioners
  This package contains the dynamic libraries.
 
 Package: libtrilinos-ifpack-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-ifpack11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -349,7 +349,7 @@ Description: algebraic preconditioners
  This package provides headers.
 
 Package: libtrilinos-ifpack2-11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: next generation algebraic preconditioners
@@ -362,7 +362,7 @@ Description: next generation algebraic preconditioners
  This package contains the dynamic libraries.
 
 Package: libtrilinos-ifpack2-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-ifpack2-11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -376,7 +376,7 @@ Description: next generation algebraic preconditioners
  This package provides headers.
 
 Package: libtrilinos-intrepid11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: compatible discretizations of PDEs
@@ -389,7 +389,7 @@ Description: compatible discretizations of PDEs
  This package contains the dynamic libraries.
 
 Package: libtrilinos-intrepid-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-intrepid11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -403,7 +403,7 @@ Description: compatible discretizations of PDEs
  This package provides headers.
 
 Package: libtrilinos-isorropia11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: partioning, load balancing, coloring of sparse matrices
@@ -417,7 +417,7 @@ Description: partioning, load balancing, coloring of sparse matrices
  This package contains the dynamic libraries.
 
 Package: libtrilinos-isorropia-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-isorropia11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -432,7 +432,7 @@ Description: partioning, load balancing, coloring of sparse matrices
  This package provides headers.
 
 Package: libtrilinos-kokkos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos core kernels
@@ -441,7 +441,7 @@ Description: Trilinos core kernels
  This package contains the dynamic libraries.
 
 Package: libtrilinos-kokkos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-kokkos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -451,7 +451,7 @@ Description: Trilinos core kernels
  This package provides headers.
 
 Package: libtrilinos-komplex11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: complex linear solver package
@@ -461,7 +461,7 @@ Description: complex linear solver package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-komplex-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-komplex11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -472,7 +472,7 @@ Description: complex linear solver package
  This package provides headers.
 
 Package: libtrilinos-mesquite11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: numerical mesh improvement/adaptation package
@@ -482,7 +482,7 @@ Description: numerical mesh improvement/adaptation package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-mesquite-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-mesquite11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -493,7 +493,7 @@ Description: numerical mesh improvement/adaptation package
  This package provides headers.
 
 Package: libtrilinos-ml11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: multigrid preconditioning
@@ -510,7 +510,7 @@ Description: multigrid preconditioning
  This package contains the dynamic libraries.
 
 Package: libtrilinos-ml-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-ml11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -528,7 +528,7 @@ Description: multigrid preconditioning
  This package provides headers.
 
 Package: libtrilinos-moertel11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: mortar methods package
@@ -545,7 +545,7 @@ Description: mortar methods package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-moertel-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-moertel11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -563,7 +563,7 @@ Description: mortar methods package
  This package provides headers.
 
 Package: libtrilinos-moocho11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: nonlinear optimization package
@@ -577,7 +577,7 @@ Description: nonlinear optimization package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-moocho-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-moocho11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -592,7 +592,7 @@ Description: nonlinear optimization package
  This package provides headers.
 
 Package: libtrilinos-muelu11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: next generation multilevel preconditioner capabilities
@@ -600,7 +600,7 @@ Description: next generation multilevel preconditioner capabilities
  This package contains the dynamic libraries.
 
 Package: libtrilinos-muelu-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-muelu11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -609,7 +609,7 @@ Description: next generation multilevel preconditioner capabilities
  This package provides headers.
 
 Package: libtrilinos-nox11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: robust solution of nonlinear equations
@@ -622,7 +622,7 @@ Description: robust solution of nonlinear equations
  This package contains the dynamic libraries.
 
 Package: libtrilinos-nox-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-nox11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -636,7 +636,7 @@ Description: robust solution of nonlinear equations
  This package provides headers.
 
 Package: libtrilinos-optipack11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos optimization algorithms
@@ -647,7 +647,7 @@ Description: Trilinos optimization algorithms
  This package contains the dynamic libraries.
 
 Package: libtrilinos-optipack-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-optipack11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -659,7 +659,7 @@ Description: Trilinos optimization algorithms
  This package provides headers.
 
 Package: libtrilinos-pamgen11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: hexahedral and quadrilateral mesh generator
@@ -671,7 +671,7 @@ Description: hexahedral and quadrilateral mesh generator
  This package contains the dynamic libraries.
 
 Package: libtrilinos-pamgen-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-pamgen11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -684,7 +684,7 @@ Description: hexahedral and quadrilateral mesh generator
  This package provides headers.
 
 Package: libtrilinos-phalanx11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: local field evaluation kernel
@@ -701,7 +701,7 @@ Description: local field evaluation kernel
  This package contains the dynamic libraries.
 
 Package: libtrilinos-phalanx-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-phalanx11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -719,7 +719,7 @@ Description: local field evaluation kernel
  This package provides headers.
 
 Package: libtrilinos-piro11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: embedded nonlinear analysis package
@@ -734,7 +734,7 @@ Description: embedded nonlinear analysis package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-piro-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-piro11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -750,7 +750,7 @@ Description: embedded nonlinear analysis package
  This package provides headers.
 
 Package: libtrilinos-pliris11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos dense solvers package
@@ -759,7 +759,7 @@ Description: Trilinos dense solvers package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-pliris-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-pliris11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -769,7 +769,7 @@ Description: Trilinos dense solvers package
  This package provides headers.
 
 Package: libtrilinos-rtop11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: reductions/transformation operators
@@ -779,7 +779,7 @@ Description: reductions/transformation operators
  This package contains the dynamic libraries.
 
 Package: libtrilinos-rtop-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-rtop11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -790,7 +790,7 @@ Description: reductions/transformation operators
  This package provides headers.
 
 Package: libtrilinos-rythmos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos transient integrator
@@ -803,7 +803,7 @@ Description: Trilinos transient integrator
  This package contains the dynamic libraries.
 
 Package: libtrilinos-rythmos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-rythmos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -817,7 +817,7 @@ Description: Trilinos transient integrator
  This package provides headers.
 
 Package: libtrilinos-sacado11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: automatic differentiation for C++ applications
@@ -828,7 +828,7 @@ Description: automatic differentiation for C++ applications
  This package contains the dynamic libraries.
 
 Package: libtrilinos-sacado-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-sacado11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -840,7 +840,7 @@ Description: automatic differentiation for C++ applications
  This package provides headers.
 
 Package: libtrilinos-seacas11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: finite element analysis
@@ -852,7 +852,7 @@ Description: finite element analysis
  This package contains the dynamic libraries.
 
 Package: libtrilinos-seacas-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-seacas11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -865,7 +865,7 @@ Description: finite element analysis
  This package provides headers.
 
 Package: libtrilinos-shards11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: interoperability tools for PDE solving
@@ -881,7 +881,7 @@ Description: interoperability tools for PDE solving
  This package contains the dynamic libraries.
 
 Package: libtrilinos-shards-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-shards11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -898,7 +898,7 @@ Description: interoperability tools for PDE solving
  This package provides headers.
 
 Package: libtrilinos-stk11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: mesh and topology handling
@@ -910,7 +910,7 @@ Description: mesh and topology handling
  This package contains the dynamic libraries.
 
 Package: libtrilinos-stk-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-stk11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -923,7 +923,7 @@ Description: mesh and topology handling
  This package provides headers.
 
 Package: libtrilinos-stokhos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos uncertainty quantification package
@@ -936,7 +936,7 @@ Description: Trilinos uncertainty quantification package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-stokhos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-stokhos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -950,7 +950,7 @@ Description: Trilinos uncertainty quantification package
  This package provides headers.
 
 Package: libtrilinos-stratimikos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: wrappers for linear solvers and preconditioners
@@ -962,7 +962,7 @@ Description: wrappers for linear solvers and preconditioners
  This package contains the dynamic libraries.
 
 Package: libtrilinos-stratimikos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-stratimikos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -975,7 +975,7 @@ Description: wrappers for linear solvers and preconditioners
  This package provides headers.
 
 Package: libtrilinos-sundance11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: rapid development system of finite element solvers
@@ -988,7 +988,7 @@ Description: rapid development system of finite element solvers
  This package contains the dynamic libraries.
 
 Package: libtrilinos-sundance-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-sundance11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1002,7 +1002,7 @@ Description: rapid development system of finite element solvers
  This package provides headers.
 
 Package: libtrilinos-teko11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: block preconditioners
@@ -1021,7 +1021,7 @@ Description: block preconditioners
  This package contains the dynamic libraries.
 
 Package: libtrilinos-teko-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-teko11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1041,7 +1041,7 @@ Description: block preconditioners
  This package provides headers.
 
 Package: libtrilinos-teuchos11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: common tools for Trilinos
@@ -1052,7 +1052,7 @@ Description: common tools for Trilinos
  This package contains the dynamic libraries.
 
 Package: libtrilinos-teuchos-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-teuchos11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1064,7 +1064,7 @@ Description: common tools for Trilinos
  This package provides headers.
 
 Package: libtrilinos-thyra11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: interoperability layer for numerical software
@@ -1077,7 +1077,7 @@ Description: interoperability layer for numerical software
  This package contains the dynamic libraries.
 
 Package: libtrilinos-thyra-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-thyra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1091,7 +1091,7 @@ Description: interoperability layer for numerical software
  This package provides headers.
 
 Package: libtrilinos-tpi11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: tpi
@@ -1099,7 +1099,7 @@ Description: tpi
  This package contains the dynamic libraries.
 
 Package: libtrilinos-tpi-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-tpi11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1108,7 +1108,7 @@ Description: tpi
  This package provides headers.
 
 Package: libtrilinos-tpetra11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: templated numerical linear algebra package
@@ -1118,7 +1118,7 @@ Description: templated numerical linear algebra package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-tpetra-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-tpetra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1129,7 +1129,7 @@ Description: templated numerical linear algebra package
  This package provides headers.
 
 Package: libtrilinos-trilinoscouplings11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: combining Trilinos packages
@@ -1139,7 +1139,7 @@ Description: combining Trilinos packages
  This package contains the dynamic libraries.
 
 Package: libtrilinos-trilinoscouplings-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-trilinoscouplings11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1150,7 +1150,7 @@ Description: combining Trilinos packages
  This package provides headers.
 
 Package: libtrilinos-triutils11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: utilities for Trilinos
@@ -1159,7 +1159,7 @@ Description: utilities for Trilinos
  This package contains the dynamic libraries.
 
 Package: libtrilinos-triutils-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-triutils11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1169,7 +1169,7 @@ Description: utilities for Trilinos
  This package provides headers.
 
 Package: libtrilinos-xpetra11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: conversion between Epetra and Teuchos objects
@@ -1178,7 +1178,7 @@ Description: conversion between Epetra and Teuchos objects
  This package contains the dynamic libraries.
 
 Package: libtrilinos-xpetra-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-xpetra11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1188,7 +1188,7 @@ Description: conversion between Epetra and Teuchos objects
  This package provides headers.
 
 Package: libtrilinos-zoltan11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: parallel dynamic load balancing
@@ -1202,7 +1202,7 @@ Description: parallel dynamic load balancing
  This package contains the dynamic libraries.
 
 Package: libtrilinos-zoltan-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-zoltan11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1217,7 +1217,7 @@ Description: parallel dynamic load balancing
  This package provides headers.
 
 Package: libtrilinos-zoltan2-11
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Trilinos next generation load balancing package
@@ -1228,7 +1228,7 @@ Description: Trilinos next generation load balancing package
  This package contains the dynamic libraries.
 
 Package: libtrilinos-zoltan2-dev
-Architecture: any
+Architecture: amd64
 Section: libdevel
 Depends: libtrilinos-zoltan2-11 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
@@ -1240,7 +1240,7 @@ Description: Trilinos next generation load balancing package
  This package provides headers.
 
 Package: seacas
-Architecture: any
+Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: finite element analysis
@@ -1252,7 +1252,7 @@ Description: finite element analysis
  This package contains the binary executables.
 
 Package: trilinos-dbg
-Architecture: any
+Architecture: amd64
 Section: debug
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: libtrilinos-doc

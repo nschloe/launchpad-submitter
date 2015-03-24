@@ -15,7 +15,8 @@ $THIS_DIR/launchpad-submitter \
   --patches-blacklist stk-sizet.patch \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/trilinos-nightly \
-  --submit-hashes-file "$THIS_DIR/trilinos0-submit-hashes.dat"
+  --submit-hashes-file "$THIS_DIR/trilinos0-submit-hashes.dat" \
+  --force
 
 # submit for trusty, utopic
 $THIS_DIR/launchpad-submitter \
@@ -27,7 +28,8 @@ $THIS_DIR/launchpad-submitter \
   --patches-blacklist stk-sizet.patch \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/trilinos-nightly \
-  --submit-hashes-file "$THIS_DIR/trilinos1-submit-hashes.dat"
+  --submit-hashes-file "$THIS_DIR/trilinos1-submit-hashes.dat" \
+  --force
 
 # submit for vivid
 $THIS_DIR/launchpad-submitter \
@@ -39,4 +41,5 @@ $THIS_DIR/launchpad-submitter \
   --patches-blacklist stk-sizet.patch \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/trilinos-nightly \
-  --submit-hashes-file "$THIS_DIR/trilinos2-submit-hashes.dat"
+  --submit-hashes-file "$THIS_DIR/trilinos2-submit-hashes.dat" \
+  --force

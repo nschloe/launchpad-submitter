@@ -51,7 +51,7 @@ def _main():
         and debian_revision == revision_dicts[0]['debian revision']
         )
 
-    if is_uptodate:
+    if is_uptodate and not args.force:
         print('Latest version already submitted to launchpad.')
         return 0
 
@@ -62,7 +62,7 @@ def _main():
 
     # Create a day-to-day version number of the form 4.3.1.2~20121123.
     today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20150124'
+    #today_str = '20150306'
     version = package_version + '~' + today_str
 
     # Create the tarball.
@@ -294,6 +294,12 @@ def _parse_cmd_arguments():
         help='File in which to store the submit hashes',
         type=str,
         required=True
+        )
+    parser.add_argument(
+        '-f', '--force',
+        help='Force submission even if build is already uploaded',
+        action='store_true',
+        default=False
         )
     return parser.parse_args()
 
