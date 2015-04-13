@@ -897,6 +897,45 @@ Description: interoperability tools for PDE solving
  .
  This package provides headers.
 
+Package: libtrilinos-shylu11
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: solving sparse linear systems
+ ShyLU is a package for solving sparse linear systems. It can be used either as
+ a preconditioner, or as a solver. Currently, we recommend using it as an
+ Ifpack preconditioner. ShyLU uses a hybrid direct/iterative approach based on
+ Schur complements. The goal is to provide robustness similar to sparse direct
+ solvers, but memory usage more similar to preconditioned iterative solvers.
+ ShyLU was designed as a node-level solver. It can use both MPI and threads in
+ several ways. ShyLU was designed (a) to solve difficult but medium-size
+ problems, and (b) to be used as a subdomain solver or smoother for very large
+ problems within an iterative scheme. It is a purely algebraic method so can be
+ used as a black-box solver. ShyLU has been particularly successful in
+ electrical circuit simulation (Xyce).
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-shylu-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-shylu11 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: solving sparse linear systems
+ ShyLU is a package for solving sparse linear systems. It can be used either as
+ a preconditioner, or as a solver. Currently, we recommend using it as an
+ Ifpack preconditioner. ShyLU uses a hybrid direct/iterative approach based on
+ Schur complements. The goal is to provide robustness similar to sparse direct
+ solvers, but memory usage more similar to preconditioned iterative solvers.
+ ShyLU was designed as a node-level solver. It can use both MPI and threads in
+ several ways. ShyLU was designed (a) to solve difficult but medium-size
+ problems, and (b) to be used as a subdomain solver or smoother for very large
+ problems within an iterative scheme. It is a purely algebraic method so can be
+ used as a black-box solver. ShyLU has been particularly successful in
+ electrical circuit simulation (Xyce).
+ .
+ This package provides headers.
+
 Package: libtrilinos-stk11
 Architecture: amd64
 Section: libs

@@ -36,6 +36,7 @@ LIB_PACKAGES = \
     sacado \
     seacas \
     shards \
+    shylu \
     stk \
     stokhos \
     stratimikos \
