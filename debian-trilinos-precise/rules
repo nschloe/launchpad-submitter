@@ -4,7 +4,7 @@
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # need -, because some names end with number
-SOVERSION=11
+SOVERSION=12
 
 # dirnames deviate from package names...
 LIB_PACKAGES = \
