@@ -10,7 +10,7 @@ $THIS_DIR/launchpad-submitter \
   --resubmission 1 \
   --source-dir "$HOME/software/netcdf-cxx/source/" \
   --debian-dir "$HOME/rcs/debian-packages/netcdfcxx/" \
-  --ubuntu-releases trusty utopic vivid \
+  --ubuntu-releases trusty utopic vivid wily \
   --version-getter 'grep "^AC_INIT" configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/"' \
   --ppas nschloe/netcdf-nightly \
   --submit-hashes-file "$THIS_DIR/netcdfcxx-submit-hash-unstable.dat"
