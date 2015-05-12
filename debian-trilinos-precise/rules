@@ -29,7 +29,6 @@ LIB_PACKAGES = \
     ml \
     moertel \
     moocho \
-    muelu \
     nox \
     optipack \
     pamgen \
@@ -93,6 +92,7 @@ configure-stamp:
    -DTrilinos_ASSERT_MISSING_PACKAGES:BOOL=OFF \
    -DTrilinos_ENABLE_Didasko:BOOL=OFF \
    -DTrilinos_ENABLE_Gtest:BOOL=OFF \
+   -DTrilinos_ENABLE_MueLu:BOOL=OFF \
    -DTrilinos_ENABLE_Optika:BOOL=OFF \
    -DTrilinos_ENABLE_Panzer:BOOL=OFF \
    -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
