@@ -35,6 +35,7 @@ LIB_PACKAGES = \
     phalanx \
     piro \
     pliris \
+    rol \
     rtop \
     rythmos \
     sacado \
