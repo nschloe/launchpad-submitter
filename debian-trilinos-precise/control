@@ -778,6 +778,18 @@ Description: Trilinos dense solvers package
  .
  This package provides headers.
 
+Package: libtrilinos-rol12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: rapid optimization library
+ The Rapid Optimization Library (ROL) is a package for large-scale optimization.
+ It is used for the solution of optimal design, optimal control and inverse
+ problems in large-scale engineering applications. Other uses include mesh
+ optimization and image processing.
+ .
+ This package contains the dynamic libraries.
+
 Package: libtrilinos-rol-dev
 Architecture: amd64
 Section: libdevel
@@ -790,16 +802,6 @@ Description: rapid optimization library
  optimization and image processing.
  .
  This package provides headers.
-
-Package: libtrilinos-rtop12
-Architecture: amd64
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: reductions/transformation operators
- RTOp (reduction/transformation operators) provides the basic mechanism for
- implementing vector operations in a flexible and efficient manner.
- .
- This package contains the dynamic libraries.
 
 Package: libtrilinos-rtop12
 Architecture: amd64
