@@ -14,8 +14,7 @@ $THIS_DIR/launchpad-submitter \
   --ubuntu-releases precise \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/trilinos-nightly \
-  --submit-hashes-file "$THIS_DIR/trilinos0-submit-hashes.dat" \
-  --force
+  --submit-hashes-file "$THIS_DIR/trilinos0-submit-hashes.dat"
 
 # submit for the rest
 $THIS_DIR/launchpad-submitter \
@@ -26,5 +25,4 @@ $THIS_DIR/launchpad-submitter \
   --ubuntu-releases trusty utopic vivid wily \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/trilinos-nightly \
-  --submit-hashes-file "$THIS_DIR/trilinos2-submit-hashes.dat" \
-  --force
+  --submit-hashes-file "$THIS_DIR/trilinos1-submit-hashes.dat"
