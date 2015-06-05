@@ -32,18 +32,18 @@ License: Sandia BSD
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  THE POSSIBILITY OF SUCH DAMAGE.
 
-Files: packages/amesos/*,
- packages/anasazi/*,
- packages/mesquite/*,
- packages/ml/*,
- packages/pamgen/*,
- packages/PyTrilinos/*,
- packages/rythmos/*,
- packages/sacado/*,
- packages/seacas/*,
- packages/stk/*,
- packages/Sundance/*,
- packages/TriKota/*,
+Files: packages/amesos/*
+ packages/anasazi/*
+ packages/mesquite/*
+ packages/ml/*
+ packages/pamgen/*
+ packages/PyTrilinos/*
+ packages/rythmos/*
+ packages/sacado/*
+ packages/seacas/*
+ packages/stk/*
+ packages/Sundance/*
+ packages/TriKota/*
  packages/trilinoscouplings/*
 Copyright: 2001--2014 Sandia Corporation <maherou@sandia.gov>
 License: Sandia LGPL-2.1
@@ -144,11 +144,11 @@ License: LGPL-2.1
  Copyright, this License, and the Availability note are retained,
  and a notice that the code was modified is included.
 
-Files: packages/galeri/src/iohb.cpp,
- packages/triutils/src/iohb.cpp,
- packages/aztecoo/example/azoo_iterate_hb/iohb.c,
- packages/aztecoo/example/aztec_hb/iohb.c,
- packages/komplex/example/komplex_hb/iohb.c,
+Files: packages/galeri/src/iohb.cpp
+ packages/triutils/src/iohb.cpp
+ packages/aztecoo/example/azoo_iterate_hb/iohb.c
+ packages/aztecoo/example/aztec_hb/iohb.c
+ packages/komplex/example/komplex_hb/iohb.c
  packages/ifpack/example/ifpack_threaded_hb/iohb.c
 Copyright: National Institute of Standards and Technology, MD. K.A. Remington
 License: MIT
@@ -163,8 +163,8 @@ License: MIT
  software for any purpose. This software is provided "as is" without
  expressed or implied warranty.
 
-Files: packages/intrepid/test/Shared/IntrepidPolylib/test_01.cpp,
-  packages/intrepid/src/Shared/Intrepid_Polylib.hpp,
+Files: packages/intrepid/test/Shared/IntrepidPolylib/test_01.cpp
+  packages/intrepid/src/Shared/Intrepid_Polylib.hpp
   packages/intrepid/src/Shared/Intrepid_PolylibDef.hpp
 Copyright: 2006 Department of Aeronautics, Imperial College London (UK)
   and Scientific Computing and Imaging Institute, University of Utah (USA)
@@ -205,7 +205,7 @@ License: LGPL-2.1
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  Lesser General Public License for more details.
 
-Files: packages/pamgen/example/getopts.C,
+Files: packages/pamgen/example/getopts.C
  packages/pamgen/example/getopts.h
 Copyright: 2001--2004 Steve Mertz <steve@dragon-ware.com>
 License: BSD-3
@@ -281,12 +281,12 @@ License: GPL-2
  write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  Boston, MA 02110-1301, USA.
 
-Files: packages/seacas/libraries/aprepro_lib/apr_parser.cc,
- packages/seacas/libraries/aprepro_lib/location.hh,
- packages/seacas/libraries/aprepro_lib/aprepro_parser.h,
- packages/seacas/libraries/aprepro_lib/stack.hh,
- packages/seacas/libraries/aprepro_lib/position.hh,
- packages/seacas/applications/aprepro/y.tab.c,
+Files: packages/seacas/libraries/aprepro_lib/apr_parser.cc
+ packages/seacas/libraries/aprepro_lib/location.hh
+ packages/seacas/libraries/aprepro_lib/aprepro_parser.h
+ packages/seacas/libraries/aprepro_lib/stack.hh
+ packages/seacas/libraries/aprepro_lib/position.hh
+ packages/seacas/applications/aprepro/y.tab.c
  packages/seacas/applications/aprepro/y.tab.h
 Copyright: 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 License: GPL-2 w/Bison exception
@@ -316,7 +316,7 @@ License: GPL-2 w/Bison exception
  This special exception was added by the Free Software Foundation in
  version 2.2 of Bison.
 
-Files: packages/seacas/libraries/supes/ext_lib/getline_int.c,
+Files: packages/seacas/libraries/supes/ext_lib/getline_int.c
  packages/seacas/applications/aprepro/ap_getline_int.c
 Copyright: 1991, 1992, 1993 by Chris Thewalt <thewalt@ce.berkeley.edu>
 License: MIT

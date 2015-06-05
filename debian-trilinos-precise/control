@@ -19,8 +19,8 @@ Build-Depends: debhelper (>= 9),
  libmumps-dev (>= 4.7.3),
  libnetcdf-dev (>= 4.3.3),
  libptscotch-dev,
+ libsuperlu3-dev,
  libtbb-dev,
- sed (>= 4.2.1),
  zlib1g-dev
 Standards-Version: 3.9.5
 Vcs-Git: git://git.debian.org/debian-science/packages/trilinos.git
@@ -166,25 +166,6 @@ Description: iterative linear solvers
  linear algebra using traits mechanisms, abstract interfaces to
  orthogonalization, abstract interfaces to iteration kernels, powerful solver
  managers, and a basic linear problem class.
- .
- This package provides headers.
-
-Package: libtrilinos-ctrilinos12
-Architecture: amd64
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Trilinos interface for C
- CTrilinos provides a C interface for certain parts of Trilinos.
- .
- This package contains the dynamic libraries.
-
-Package: libtrilinos-ctrilinos-dev
-Architecture: amd64
-Section: libdevel
-Depends: libtrilinos-ctrilinos12 (= ${binary:Version}), ${misc:Depends}
-Suggests: libtrilinos-doc
-Description: Trilinos interface for C
- CTrilinos provides a C interface for certain parts of Trilinos.
  .
  This package provides headers.
 
@@ -469,27 +450,6 @@ Description: complex linear solver package
  .
  This package provides headers.
 
-Package: libtrilinos-mesquite12
-Architecture: amd64
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: numerical mesh improvement/adaptation package
- MESQUITE is a linkable software library that applies a variety of
- node-movement algorithms to improve the quality and/or adapt a given mesh.
- .
- This package contains the dynamic libraries.
-
-Package: libtrilinos-mesquite-dev
-Architecture: amd64
-Section: libdevel
-Depends: libtrilinos-mesquite12 (= ${binary:Version}), ${misc:Depends}
-Suggests: libtrilinos-doc
-Description: numerical mesh improvement/adaptation package
- MESQUITE is a linkable software library that applies a variety of
- node-movement algorithms to improve the quality and/or adapt a given mesh.
- .
- This package provides headers.
-
 Package: libtrilinos-ml12
 Architecture: amd64
 Section: libs
@@ -560,32 +520,30 @@ Description: mortar methods package
  .
  This package provides headers.
 
-Package: libtrilinos-moocho12
+Package: libtrilinos-muelu12
 Architecture: amd64
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: nonlinear optimization package
- MOOCHO (Multifunctional Object-Oriented arCHitecture for Optimization) is
- designed to solve large-scale, equality and inequality nonlinearly
- constrained, non-convex optimization problems (i.e. nonlinear programs) using
- reduced-space successive quadratic programming (SQP) methods. Click the links
- on the left under Documentation to find out more about the current development
- version of MOOCHO as well as the current and previous releases of MOOCHO.
+Description: next generation multilevel preconditioner capabilities
+ MueLu is designed to solve large sparse linear systems of equations arising
+ from PDE discretizations. MueLu provides easy-to-use multigrid solvers and
+ preconditioners based on smoothed aggregation algorithms. As a multigrid
+ framework, MueLu supports the design of highly application specific multigrid
+ preconditioners.
  .
  This package contains the dynamic libraries.
 
-Package: libtrilinos-moocho-dev
+Package: libtrilinos-muelu-dev
 Architecture: amd64
 Section: libdevel
-Depends: libtrilinos-moocho12 (= ${binary:Version}), ${misc:Depends}
+Depends: libtrilinos-muelu12 (= ${binary:Version}), ${misc:Depends}
 Suggests: libtrilinos-doc
-Description: nonlinear optimization package
- MOOCHO (Multifunctional Object-Oriented arCHitecture for Optimization) is
- designed to solve large-scale, equality and inequality nonlinearly
- constrained, non-convex optimization problems (i.e. nonlinear programs) using
- reduced-space successive quadratic programming (SQP) methods. Click the links
- on the left under Documentation to find out more about the current development
- version of MOOCHO as well as the current and previous releases of MOOCHO.
+Description: next generation multilevel preconditioner capabilities
+ MueLu is designed to solve large sparse linear systems of equations arising
+ from PDE discretizations. MueLu provides easy-to-use multigrid solvers and
+ preconditioners based on smoothed aggregation algorithms. As a multigrid
+ framework, MueLu supports the design of highly application specific multigrid
+ preconditioners.
  .
  This package provides headers.
 
@@ -661,6 +619,51 @@ Description: hexahedral and quadrilateral mesh generator
  simple shapes (cubes and cylinders) in parallel. When linked to an application
  as a library, it allows each process of a parallel simulation to generate its
  finite element domain representation at execution time.
+ .
+ This package provides headers.
+
+Package: libtrilinos-panzer12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: multiphysics assembly engine for solving large-scale PDE systems
+ Panzer is a tool kit for multiphysics PDE assembly. It is physics agnostic.
+ Using this package, a user can define high level equation sets for multiphysics
+ systems.  The library then generates a Thyra::ModelEvaluator for a fully
+ coupled implicit system that can be then handed off to Trilinos linear and
+ nonlinear solvers.  Panzer is a toolkit so users do not have to buy into the
+ complete infrastructure. For example, panzer provides a stand-alone degree of
+ freedom manager that provides a unique global indexing given the mesh
+ connectivity and the degree of feedom patterns in each element block. This
+ allows for different degrees of freedom/equation sets in each mesh element
+ block of a coupled system and allows for mixed basis within each element block.
+ Additionally, Panzer contains machinery for evaluating individual operator
+ contributions so that block decomposed and physics-based preconditioners can be
+ efficiently constructed.  Panzer also contains the adapters to support STK mesh
+ and SEACAS/Exodus formats.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-panzer-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-panzer12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: multiphysics assembly engine for solving large-scale PDE systems
+ Panzer is a tool kit for multiphysics PDE assembly. It is physics agnostic.
+ Using this package, a user can define high level equation sets for multiphysics
+ systems.  The library then generates a Thyra::ModelEvaluator for a fully
+ coupled implicit system that can be then handed off to Trilinos linear and
+ nonlinear solvers.  Panzer is a toolkit so users do not have to buy into the
+ complete infrastructure. For example, panzer provides a stand-alone degree of
+ freedom manager that provides a unique global indexing given the mesh
+ connectivity and the degree of feedom patterns in each element block. This
+ allows for different degrees of freedom/equation sets in each mesh element
+ block of a coupled system and allows for mixed basis within each element block.
+ Additionally, Panzer contains machinery for evaluating individual operator
+ contributions so that block decomposed and physics-based preconditioners can be
+ efficiently constructed.  Panzer also contains the adapters to support STK mesh
+ and SEACAS/Exodus formats.
  .
  This package provides headers.
 
@@ -1048,33 +1051,6 @@ Description: wrappers for linear solvers and preconditioners
  .
  This package provides headers.
 
-Package: libtrilinos-sundance12
-Architecture: amd64
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: rapid development system of finite element solvers
- Sundance is a system for rapid development of high-performance parallel
- finite-element solutions of partial differential equations. It is built on top
- of an engine for in-place Frechet differentiation of symbolic objects, thereby
- enabling differentiable simulations for use in optimization, uncertainty
- quantification, and adaptive error control.
- .
- This package contains the dynamic libraries.
-
-Package: libtrilinos-sundance-dev
-Architecture: amd64
-Section: libdevel
-Depends: libtrilinos-sundance12 (= ${binary:Version}), ${misc:Depends}
-Suggests: libtrilinos-doc
-Description: rapid development system of finite element solvers
- Sundance is a system for rapid development of high-performance parallel
- finite-element solutions of partial differential equations. It is built on top
- of an engine for in-place Frechet differentiation of symbolic objects, thereby
- enabling differentiable simulations for use in optimization, uncertainty
- quantification, and adaptive error control.
- .
- This package provides headers.
-
 Package: libtrilinos-teko12
 Architecture: amd64
 Section: libs
@@ -1161,23 +1137,6 @@ Description: interoperability layer for numerical software
  software. The foundation of all of these interfaces are the mathematical
  concepts of vectors, vector spaces, and linear operators. All other interfaces
  and support software is built on the basic operator/vector interfaces.
- .
- This package provides headers.
-
-Package: libtrilinos-tpi12
-Architecture: amd64
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: tpi
- .
- This package contains the dynamic libraries.
-
-Package: libtrilinos-tpi-dev
-Architecture: amd64
-Section: libdevel
-Depends: libtrilinos-tpi12 (= ${binary:Version}), ${misc:Depends}
-Suggests: libtrilinos-doc
-Description: tpi
  .
  This package provides headers.
 
