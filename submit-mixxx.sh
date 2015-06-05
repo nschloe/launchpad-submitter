@@ -10,7 +10,7 @@ $THIS_DIR/launchpad-submitter \
   --resubmission 1 \
   --source-dir "$HOME/software/mixxx/pristine/" \
   --debian-dir "$HOME/rcs/debian-packages/mixxx/debian/" \
-  --ubuntu-releases precise trusty utopic vivid wily \
+  --ubuntu-releases trusty utopic vivid wily \
   --patches-blacklist \
     0001-update_configure.patch \
     0004-soundtouch.patch \
