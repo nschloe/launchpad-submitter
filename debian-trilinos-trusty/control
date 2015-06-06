@@ -1,0 +1,1317 @@
+Source: trilinos
+Homepage: http://trilinos.org
+Section: science
+Priority: extra
+Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Nico Schlömer <nico.schloemer@gmail.com>
+Build-Depends: debhelper (>= 9),
+ binutils-dev,
+ libiberty-dev,
+ cmake (>= 2.8.11),
+ gfortran,
+ libopenmpi-dev,
+ libblas-dev,
+ libboost-dev,
+ libboost-system-dev,
+ libboost-program-options-dev,
+ libglm-dev,
+ libhdf5-openmpi-dev (>= 1.8.7),
+ liblapack-dev,
+ libmumps-dev (>= 4.7.3),
+ libnetcdf-dev (>= 4.3.3),
+ libptscotch-dev,
+ libsuperlu3-dev,
+ libtbb-dev,
+ zlib1g-dev
+Standards-Version: 3.9.5
+Vcs-Git: git://git.debian.org/debian-science/packages/trilinos.git
+Vcs-Browser: http://git.debian.org/?p=debian-science/packages/trilinos.git
+
+Package: trilinos-dev
+Architecture: amd64
+Section: libs
+Depends: ${misc:Depends}, ${mydevpackages}
+Suggests: libtrilinos-doc
+Description: object-oriented framework for large-scale problems
+ The Trilinos Project is an effort to develop algorithms and enabling
+ technologies within an object-oriented software framework for the
+ solution of large-scale, complex multi-physics engineering and
+ scientific problems. A unique design feature of Trilinos is its
+ focus on packages.
+ .
+ This package contains the development header and some makefile templates.
+
+Package: libtrilinos-amesos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: direct sparse solver package
+ Amesos is the Direct Sparse Solver Package in Trilinos. The goal of Amesos is
+ to make AX=B as easy as it sounds, at least for direct methods. Amesos
+ provides clean and consistent interfaces to a number of third-party libraries.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-amesos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-amesos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: direct sparse solver package
+ Amesos is the Direct Sparse Solver Package in Trilinos. The goal of Amesos is
+ to make AX=B as easy as it sounds, at least for direct methods. Amesos
+ provides clean and consistent interfaces to a number of third-party libraries.
+ .
+ This package provides headers.
+
+Package: libtrilinos-amesos2-12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: next generation direct sparse solver package
+ Amesos2 is a package for solving sparse linear systems using direct solvers.
+ It differs from Amesos in that it is templated on the scalar and index types.
+ KLU2 is the only native solver.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-amesos2-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-amesos2-12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: next generation direct sparse solver package
+ Amesos2 is a package for solving sparse linear systems using direct solvers.
+ It differs from Amesos in that it is templated on the scalar and index types.
+ KLU2 is the only native solver.
+ .
+ This package provides headers.
+
+Package: libtrilinos-anasazi12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: large-scale eigenvalue algorithms
+ Anasazi is an extensible and interoperable framework for large-scale
+ eigenvalue algorithms. The motivation for this framework is to provide a
+ generic interface to a collection of algorithms for solving large-scale
+ eigenvalue problems. Anasazi is interoperable because both the matrix and
+ vectors (defining the eigenspace) are considered to be opaque objects -- only
+ knowledge of the matrix and vectors via elementary operations is necessary.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-anasazi-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-anasazi12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: large-scale eigenvalue algorithms
+ Anasazi is an extensible and interoperable framework for large-scale
+ eigenvalue algorithms. The motivation for this framework is to provide a
+ generic interface to a collection of algorithms for solving large-scale
+ eigenvalue problems. Anasazi is interoperable because both the matrix and
+ vectors (defining the eigenspace) are considered to be opaque objects -- only
+ knowledge of the matrix and vectors via elementary operations is necessary.
+ .
+ This package provides headers.
+
+Package: libtrilinos-aztecoo12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: object-oriented interface to the Aztec solver
+ AztecOO provides an object-oriented interface to the well-known Aztec solver
+ library. Furthermore, it allows flexible construction of matrix and vector
+ arguments via Epetra matrix and vector classes. Finally, AztecOO provide
+ additional functionality not found in Aztec and any future enhancements to the
+ Aztec package will be available only through the AztecOO interfaces.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-aztecoo-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-aztecoo12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: object-oriented interface to the Aztec solver
+ AztecOO provides an object-oriented interface to the well-known Aztec solver
+ library. Furthermore, it allows flexible construction of matrix and vector
+ arguments via Epetra matrix and vector classes. Finally, AztecOO provide
+ additional functionality not found in Aztec and any future enhancements to the
+ Aztec package will be available only through the AztecOO interfaces.
+ .
+ This package provides headers.
+
+Package: libtrilinos-belos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: iterative linear solvers
+ Belos provides next-generation iterative linear solvers and a powerful linear
+ solver developer framework. This framework includes abstract interfaces to
+ linear algebra using traits mechanisms, abstract interfaces to
+ orthogonalization, abstract interfaces to iteration kernels, powerful solver
+ managers, and a basic linear problem class.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-belos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-belos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: iterative linear solvers
+ Belos provides next-generation iterative linear solvers and a powerful linear
+ solver developer framework. This framework includes abstract interfaces to
+ linear algebra using traits mechanisms, abstract interfaces to
+ orthogonalization, abstract interfaces to iteration kernels, powerful solver
+ managers, and a basic linear problem class.
+ .
+ This package provides headers.
+
+Package: libtrilinos-epetra12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: basis package for linear algebra
+ Epetra provides the fundamental construction routines and services function
+ that are required for serial and parallel linear algebra libraries. Epetra
+ provides the underlying foundation for all Trilinos solvers.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-epetra-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-epetra12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: basis package for linear algebra
+ Epetra provides the fundamental construction routines and services function
+ that are required for serial and parallel linear algebra libraries. Epetra
+ provides the underlying foundation for all Trilinos solvers.
+ .
+ This package provides headers.
+
+Package: libtrilinos-epetraext12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: extensions to the Epetra toolkit
+ EpetraExt provides tools and functions that make it easier to work with
+ Epetra.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-epetraext-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-epetraext12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: extensions to the Epetra toolkit
+ EpetraExt provides tools and functions that make it easier to work with
+ Epetra.
+ .
+ This package provides headers.
+
+Package: libtrilinos-fei12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: finite element interface for lineawr solvers
+ The Finite Element Interface to Linear Solvers (FEI) is a general interface
+ for assembling finite-element data into a linear system of equations. It is an
+ abstraction layer that insulates finite-element application codes from
+ linear-algebra issues such as sparse matrix storage formats and mappings from
+ nodes and solution fields to distributed equation spaces. It puts a common
+ face on various linear solvers, allowing finite-element applications to switch
+ from one solver library to another with minimal changes to application code.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-fei-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-fei12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: finite element interface for lineawr solvers
+ The Finite Element Interface to Linear Solvers (FEI) is a general interface
+ for assembling finite-element data into a linear system of equations. It is an
+ abstraction layer that insulates finite-element application codes from
+ linear-algebra issues such as sparse matrix storage formats and mappings from
+ nodes and solution fields to distributed equation spaces. It puts a common
+ face on various linear solvers, allowing finite-element applications to switch
+ from one solver library to another with minimal changes to application code.
+ .
+ This package provides headers.
+
+Package: libtrilinos-galeri12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: generation of distributed linear systems
+ The Trilinos package Galeri contains a suite of utilities and classes to
+ generate a variety of (distributed) linear systems. Galeri's functionalities
+ are very close to that of the MATLAB's gallery() function.
+ Several well-known finite element and finite difference matrices can be
+ generated using only a few simple code lines.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-galeri-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-galeri12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: generation of distributed linear systems
+ The Trilinos package Galeri contains a suite of utilities and classes to
+ generate a variety of (distributed) linear systems. Galeri's functionalities
+ are very close to that of the MATLAB's gallery() function.
+ Several well-known finite element and finite difference matrices can be
+ generated using only a few simple code lines.
+ .
+ This package provides headers.
+
+Package: libtrilinos-globipack12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: 1D globalization capabilities
+ The GlobiPack package contains a set of interfaces and implementations for 1D
+ globalization capabilities to be used in nonlinear solvers, optimization
+ solvers, and similar algorithms that require globalization methods (e.g. line
+ search and trust region methods). Basic interfaces and a few implementations
+ are present for 1D line search methods appropritate for Newton, quasi-Newton,
+ and nonlinear CG algorithms.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-globipack-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-globipack12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: 1D globalization capabilities
+ The GlobiPack package contains a set of interfaces and implementations for 1D
+ globalization capabilities to be used in nonlinear solvers, optimization
+ solvers, and similar algorithms that require globalization methods (e.g. line
+ search and trust region methods). Basic interfaces and a few implementations
+ are present for 1D line search methods appropritate for Newton, quasi-Newton,
+ and nonlinear CG algorithms.
+ .
+ This package provides headers.
+
+Package: libtrilinos-ifpack12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: algebraic preconditioners
+ IFPACK provides a suite of object-oriented algebraic preconditioners for the
+ solution of preconditioned iterative solvers. IFPACK constructors expect an
+ Epetra_RowMatrix object for construction. IFPACK is part of the Trilinos
+ Solver Project and IFPACK object interact well with other Trilinos classes. In
+ particular, IFPACK can be used as a preconditioner for AztecOO.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-ifpack-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-ifpack12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: algebraic preconditioners
+ IFPACK provides a suite of object-oriented algebraic preconditioners for the
+ solution of preconditioned iterative solvers. IFPACK constructors expect an
+ Epetra_RowMatrix object for construction. IFPACK is part of the Trilinos
+ Solver Project and IFPACK object interact well with other Trilinos classes. In
+ particular, IFPACK can be used as a preconditioner for AztecOO.
+ .
+ This package provides headers.
+
+Package: libtrilinos-ifpack2-12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: next generation algebraic preconditioners
+ Ifpack2 provides incomplete factorizations, relaxations, and domain
+ decomposition operators for linear algebra objects (sparse matrices,
+ operators, and dense vectors and multivectors) provided by the Tpetra package.
+ You may use these operators however you wish: for example as preconditioners
+ in an iterative solver, or as smoothers for algebraic multigrid.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-ifpack2-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-ifpack2-12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: next generation algebraic preconditioners
+ Ifpack2 provides incomplete factorizations, relaxations, and domain
+ decomposition operators for linear algebra objects (sparse matrices,
+ operators, and dense vectors and multivectors) provided by the Tpetra package.
+ You may use these operators however you wish: for example as preconditioners
+ in an iterative solver, or as smoothers for algebraic multigrid.
+ .
+ This package provides headers.
+
+Package: libtrilinos-intrepid12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: compatible discretizations of PDEs
+ Intrepid is a library of interoperable tools for compatible discretizations of
+ Partial Differential Equations (PDEs).  Intrepid is intended primarily for
+ application developers who want to reuse large parts of their existing code
+ frameworks such as I/O, data structures, assembly routines, etc. while gaining
+ access to advanced discretization capabilities provided by Intrepid.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-intrepid-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-intrepid12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: compatible discretizations of PDEs
+ Intrepid is a library of interoperable tools for compatible discretizations of
+ Partial Differential Equations (PDEs).  Intrepid is intended primarily for
+ application developers who want to reuse large parts of their existing code
+ frameworks such as I/O, data structures, assembly routines, etc. while gaining
+ access to advanced discretization capabilities provided by Intrepid.
+ .
+ This package provides headers.
+
+Package: libtrilinos-isorropia12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: partioning, load balancing, coloring of sparse matrices
+ Isorropia is a package for combinatorial scientific computing, with focus on
+ partitioning and load balancing, but also supports coloring and ordering of
+ sparse matrices. Its main purpose is to assist with redistributing objects
+ such as matrices and graphs in a parallel execution setting, to allow for more
+ efficient computations. Isorropia partitions matrices by rows, and produces
+ good maps for Epetra matrices (graphs).
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-isorropia-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-isorropia12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: partioning, load balancing, coloring of sparse matrices
+ Isorropia is a package for combinatorial scientific computing, with focus on
+ partitioning and load balancing, but also supports coloring and ordering of
+ sparse matrices. Its main purpose is to assist with redistributing objects
+ such as matrices and graphs in a parallel execution setting, to allow for more
+ efficient computations. Isorropia partitions matrices by rows, and produces
+ good maps for Epetra matrices (graphs).
+ .
+ This package provides headers.
+
+Package: libtrilinos-kokkos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos core kernels
+ Kokkos is a Trilinos core kernels package. 
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-kokkos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-kokkos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos core kernels
+ Kokkos is a Trilinos core kernels package. 
+ .
+ This package provides headers.
+
+Package: libtrilinos-komplex12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: complex linear solver package
+ Komplex is a complex linear solver package. Solves complex-valued linear
+ systems via equivalent real formulations.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-komplex-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-komplex12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: complex linear solver package
+ Komplex is a complex linear solver package. Solves complex-valued linear
+ systems via equivalent real formulations.
+ .
+ This package provides headers.
+
+Package: libtrilinos-ml12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: multigrid preconditioning
+ ML is Sandia's main multigrid preconditioning package. ML is designed to solve
+ large sparse linear systems of equations arising primarily from elliptic PDE
+ discretizations. ML is used to define and build multigrid solvers and
+ preconditioners, and it contains black-box classes to construct
+ highly-scalable smoothed aggregation preconditioners. ML preconditioners have
+ been used on thousands of processors for a variety of problems, including the
+ incompressible Navier-Stokes equations with heat and mass transfer, linear and
+ nonlinear elasticity equations, the Maxwell equations, semiconductor
+ equations, and more.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-ml-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-ml12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: multigrid preconditioning
+ ML is Sandia's main multigrid preconditioning package. ML is designed to solve
+ large sparse linear systems of equations arising primarily from elliptic PDE
+ discretizations. ML is used to define and build multigrid solvers and
+ preconditioners, and it contains black-box classes to construct
+ highly-scalable smoothed aggregation preconditioners. ML preconditioners have
+ been used on thousands of processors for a variety of problems, including the
+ incompressible Navier-Stokes equations with heat and mass transfer, linear and
+ nonlinear elasticity equations, the Maxwell equations, semiconductor
+ equations, and more.
+ .
+ This package provides headers.
+
+Package: libtrilinos-moertel12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: mortar methods package
+ This package supplies capabilities for nonconforming mesh tying and contact
+ formulations in 2 and 3 dimensions using Mortar methods. Mortar methods are a
+ type of Lagrange Multiplier constraint that can be used in contact
+ formulations and in non-conforming or conforming mesh tying as well as in
+ domain decomposition techniques. Originally introduced as a domain
+ decomposition method for spectral elements, Mortar methods are used in a large
+ class of nonconforming situations such as the surface coupling of different
+ physical models, discretization schemes or non-matching triangulations along
+ interior interfaces of a domain.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-moertel-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-moertel12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: mortar methods package
+ This package supplies capabilities for nonconforming mesh tying and contact
+ formulations in 2 and 3 dimensions using Mortar methods. Mortar methods are a
+ type of Lagrange Multiplier constraint that can be used in contact
+ formulations and in non-conforming or conforming mesh tying as well as in
+ domain decomposition techniques. Originally introduced as a domain
+ decomposition method for spectral elements, Mortar methods are used in a large
+ class of nonconforming situations such as the surface coupling of different
+ physical models, discretization schemes or non-matching triangulations along
+ interior interfaces of a domain.
+ .
+ This package provides headers.
+
+Package: libtrilinos-muelu12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: next generation multilevel preconditioner capabilities
+ MueLu is designed to solve large sparse linear systems of equations arising
+ from PDE discretizations. MueLu provides easy-to-use multigrid solvers and
+ preconditioners based on smoothed aggregation algorithms. As a multigrid
+ framework, MueLu supports the design of highly application specific multigrid
+ preconditioners.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-muelu-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-muelu12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: next generation multilevel preconditioner capabilities
+ MueLu is designed to solve large sparse linear systems of equations arising
+ from PDE discretizations. MueLu provides easy-to-use multigrid solvers and
+ preconditioners based on smoothed aggregation algorithms. As a multigrid
+ framework, MueLu supports the design of highly application specific multigrid
+ preconditioners.
+ .
+ This package provides headers.
+
+Package: libtrilinos-nox12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: robust solution of nonlinear equations
+ NOX robustly solves and analyzes large-scale systems of nonlinear equations.
+ NOX is short for Nonlinear Object-Oriented Solutions, and its objective is to
+ enable the robust and efficient solution of the equation: F(x)=0 using
+ globalized Newton methods such as line search and trust region methods. NOX is
+ designed to work with any linear algebra package and to be easily customized.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-nox-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-nox12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: robust solution of nonlinear equations
+ NOX robustly solves and analyzes large-scale systems of nonlinear equations.
+ NOX is short for Nonlinear Object-Oriented Solutions, and its objective is to
+ enable the robust and efficient solution of the equation: F(x)=0 using
+ globalized Newton methods such as line search and trust region methods. NOX is
+ designed to work with any linear algebra package and to be easily customized.
+ .
+ This package provides headers.
+
+Package: libtrilinos-optipack12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos optimization algorithms
+ The OptiPack package contains interfaces and concrete implementations of some
+ basic optimization algorithms based on Thyra. The globalization methods used
+ are implemented in GlobiPack.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-optipack-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-optipack12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos optimization algorithms
+ The OptiPack package contains interfaces and concrete implementations of some
+ basic optimization algorithms based on Thyra. The globalization methods used
+ are implemented in GlobiPack.
+ .
+ This package provides headers.
+
+Package: libtrilinos-pamgen12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: hexahedral and quadrilateral mesh generator
+ PAMGEN creates hexahedral or quadrilateral (in 2D) finite element meshes of
+ simple shapes (cubes and cylinders) in parallel. When linked to an application
+ as a library, it allows each process of a parallel simulation to generate its
+ finite element domain representation at execution time.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-pamgen-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-pamgen12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: hexahedral and quadrilateral mesh generator
+ PAMGEN creates hexahedral or quadrilateral (in 2D) finite element meshes of
+ simple shapes (cubes and cylinders) in parallel. When linked to an application
+ as a library, it allows each process of a parallel simulation to generate its
+ finite element domain representation at execution time.
+ .
+ This package provides headers.
+
+Package: libtrilinos-panzer12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: multiphysics assembly engine for solving large-scale PDE systems
+ Panzer is a tool kit for multiphysics PDE assembly. It is physics agnostic.
+ Using this package, a user can define high level equation sets for multiphysics
+ systems.  The library then generates a Thyra::ModelEvaluator for a fully
+ coupled implicit system that can be then handed off to Trilinos linear and
+ nonlinear solvers.  Panzer is a toolkit so users do not have to buy into the
+ complete infrastructure. For example, panzer provides a stand-alone degree of
+ freedom manager that provides a unique global indexing given the mesh
+ connectivity and the degree of feedom patterns in each element block. This
+ allows for different degrees of freedom/equation sets in each mesh element
+ block of a coupled system and allows for mixed basis within each element block.
+ Additionally, Panzer contains machinery for evaluating individual operator
+ contributions so that block decomposed and physics-based preconditioners can be
+ efficiently constructed.  Panzer also contains the adapters to support STK mesh
+ and SEACAS/Exodus formats.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-panzer-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-panzer12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: multiphysics assembly engine for solving large-scale PDE systems
+ Panzer is a tool kit for multiphysics PDE assembly. It is physics agnostic.
+ Using this package, a user can define high level equation sets for multiphysics
+ systems.  The library then generates a Thyra::ModelEvaluator for a fully
+ coupled implicit system that can be then handed off to Trilinos linear and
+ nonlinear solvers.  Panzer is a toolkit so users do not have to buy into the
+ complete infrastructure. For example, panzer provides a stand-alone degree of
+ freedom manager that provides a unique global indexing given the mesh
+ connectivity and the degree of feedom patterns in each element block. This
+ allows for different degrees of freedom/equation sets in each mesh element
+ block of a coupled system and allows for mixed basis within each element block.
+ Additionally, Panzer contains machinery for evaluating individual operator
+ contributions so that block decomposed and physics-based preconditioners can be
+ efficiently constructed.  Panzer also contains the adapters to support STK mesh
+ and SEACAS/Exodus formats.
+ .
+ This package provides headers.
+
+Package: libtrilinos-phalanx12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: local field evaluation kernel
+ Phalanx is a local field evaluation kernel specifically designed for general
+ partial differential equation solvers. The main goal of Phalanx is to
+ decompose a complex problem into a number of simpler problems with managed
+ dependencies to support rapid development and extensibility of the PDE code.
+ Through the use of template metaprogramming concepts, Phalanx supports
+ arbitrary user defined data types and evaluation types. This allows for
+ unprecedented flexibility for direct integration with user applications and
+ provides extensive support for embedded technology such as automatic
+ differentiation for sensitivity analysis and uncertainty quantification.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-phalanx-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-phalanx12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: local field evaluation kernel
+ Phalanx is a local field evaluation kernel specifically designed for general
+ partial differential equation solvers. The main goal of Phalanx is to
+ decompose a complex problem into a number of simpler problems with managed
+ dependencies to support rapid development and extensibility of the PDE code.
+ Through the use of template metaprogramming concepts, Phalanx supports
+ arbitrary user defined data types and evaluation types. This allows for
+ unprecedented flexibility for direct integration with user applications and
+ provides extensive support for embedded technology such as automatic
+ differentiation for sensitivity analysis and uncertainty quantification.
+ .
+ This package provides headers.
+
+Package: libtrilinos-pike12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: physics integration kernels
+ Pike is a software library for coupling and solving multiphysics applications.
+ It provides basic interfaces and utilities for performing code-to-code
+ coupling. It provides simple black-box Picard iteration methods for solving the
+ coupled system of equations including Jacobi and Gauss-Seidel solvers. The
+ Pike library contains no physics and just provides interfaces and utilities for
+ coupling codes.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-pike-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-pike12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: physics integration kernels
+ Pike is a software library for coupling and solving multiphysics applications.
+ It provides basic interfaces and utilities for performing code-to-code
+ coupling. It provides simple black-box Picard iteration methods for solving the
+ coupled system of equations including Jacobi and Gauss-Seidel solvers. The
+ Pike library contains no physics and just provides interfaces and utilities for
+ coupling codes.
+ .
+ This package provides headers.
+
+Package: libtrilinos-piro12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: embedded nonlinear analysis package
+ Piro is the top-level, unifying package of the Embedded Nonlinear Analysis
+ Capability area. The main purpose of the package is to provide driver classes
+ for the common uses of Trilinos nonlinear analysis tools. These drivers all
+ can be constructed similarly, with a ModelEvaluator and a ParameterList, to
+ make it simple to switch between different types of analysis. They also all
+ inherit from the same base classes (reponse-only model evaluators) so that the
+ resulting analysis can in turn driven by non-intrusive analysis routines.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-piro-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-piro12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: embedded nonlinear analysis package
+ Piro is the top-level, unifying package of the Embedded Nonlinear Analysis
+ Capability area. The main purpose of the package is to provide driver classes
+ for the common uses of Trilinos nonlinear analysis tools. These drivers all
+ can be constructed similarly, with a ModelEvaluator and a ParameterList, to
+ make it simple to switch between different types of analysis. They also all
+ inherit from the same base classes (reponse-only model evaluators) so that the
+ resulting analysis can in turn driven by non-intrusive analysis routines.
+ .
+ This package provides headers.
+
+Package: libtrilinos-pliris12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos dense solvers package
+ Pliris is a Trilinos dense solver package.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-pliris-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-pliris12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos dense solvers package
+ Pliris is a Trilinos dense solver package.
+ .
+ This package provides headers.
+
+Package: libtrilinos-rol12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: rapid optimization library
+ The Rapid Optimization Library (ROL) is a package for large-scale optimization.
+ It is used for the solution of optimal design, optimal control and inverse
+ problems in large-scale engineering applications. Other uses include mesh
+ optimization and image processing.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-rol-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-rol12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: rapid optimization library
+ The Rapid Optimization Library (ROL) is a package for large-scale optimization.
+ It is used for the solution of optimal design, optimal control and inverse
+ problems in large-scale engineering applications. Other uses include mesh
+ optimization and image processing.
+ .
+ This package provides headers.
+
+Package: libtrilinos-rtop12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: reductions/transformation operators
+ RTOp (reduction/transformation operators) provides the basic mechanism for
+ implementing vector operations in a flexible and efficient manner.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-rtop-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-rtop12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: reductions/transformation operators
+ RTOp (reduction/transformation operators) provides the basic mechanism for
+ implementing vector operations in a flexible and efficient manner.
+ .
+ This package provides headers.
+
+Package: libtrilinos-rythmos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos transient integrator
+ Rythmos is a transient integrator for ordinary differential equations and
+ differential-algebraic equations with support for explicit, implicit, one-step
+ and multi-step algorithms. The fundamental design of Rythmos is aimed at
+ supporting operator-split algorithms, multi-physics applications, block linear
+ algebra, and adjoint integration.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-rythmos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-rythmos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos transient integrator
+ Rythmos is a transient integrator for ordinary differential equations and
+ differential-algebraic equations with support for explicit, implicit, one-step
+ and multi-step algorithms. The fundamental design of Rythmos is aimed at
+ supporting operator-split algorithms, multi-physics applications, block linear
+ algebra, and adjoint integration.
+ .
+ This package provides headers.
+
+Package: libtrilinos-sacado12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: automatic differentiation for C++ applications
+ Sacado is a set of automatic differentiation tools for C++ applications. It
+ provides templated classes for forward, reverse and Taylor mode automatic
+ differentiation.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-sacado-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-sacado12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: automatic differentiation for C++ applications
+ Sacado is a set of automatic differentiation tools for C++ applications. It
+ provides templated classes for forward, reverse and Taylor mode automatic
+ differentiation.
+ .
+ This package provides headers.
+
+Package: libtrilinos-seacas12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: finite element analysis
+ The Sandia Engineering Analysis Code Access System (SEACAS) is a suite of
+ preprocessing, postprocessing, translation, and utility applications
+ supporting finite element analysis software using the ExodusII database file
+ format.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-seacas-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-seacas12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: finite element analysis
+ The Sandia Engineering Analysis Code Access System (SEACAS) is a suite of
+ preprocessing, postprocessing, translation, and utility applications
+ supporting finite element analysis software using the ExodusII database file
+ format.
+ .
+ This package provides headers.
+
+Package: libtrilinos-shards12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: interoperability tools for PDE solving
+ The purpose of Shards is to provide a suite of common tools for numerical and
+ topological data that facilitate interoperability between typical software
+ modules used to solve Partial Differential Equations (PDEs) by finite element,
+ finite volume and finite difference methods. Shards comprises of two
+ categories of tools: methods to manage and access information about cell
+ topologies used in mesh-based methods for PDEs, and methods to work with
+ multi-dimensional arrays used to store numerical data in corresponding
+ computer codes.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-shards-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-shards12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: interoperability tools for PDE solving
+ The purpose of Shards is to provide a suite of common tools for numerical and
+ topological data that facilitate interoperability between typical software
+ modules used to solve Partial Differential Equations (PDEs) by finite element,
+ finite volume and finite difference methods. Shards comprises of two
+ categories of tools: methods to manage and access information about cell
+ topologies used in mesh-based methods for PDEs, and methods to work with
+ multi-dimensional arrays used to store numerical data in corresponding
+ computer codes.
+ .
+ This package provides headers.
+
+Package: libtrilinos-shylu12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: solving sparse linear systems
+ ShyLU is a package for solving sparse linear systems. It can be used either as
+ a preconditioner, or as a solver. Currently, we recommend using it as an
+ Ifpack preconditioner. ShyLU uses a hybrid direct/iterative approach based on
+ Schur complements. The goal is to provide robustness similar to sparse direct
+ solvers, but memory usage more similar to preconditioned iterative solvers.
+ ShyLU was designed as a node-level solver. It can use both MPI and threads in
+ several ways. ShyLU was designed (a) to solve difficult but medium-size
+ problems, and (b) to be used as a subdomain solver or smoother for very large
+ problems within an iterative scheme. It is a purely algebraic method so can be
+ used as a black-box solver. ShyLU has been particularly successful in
+ electrical circuit simulation (Xyce).
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-shylu-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-shylu12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: solving sparse linear systems
+ ShyLU is a package for solving sparse linear systems. It can be used either as
+ a preconditioner, or as a solver. Currently, we recommend using it as an
+ Ifpack preconditioner. ShyLU uses a hybrid direct/iterative approach based on
+ Schur complements. The goal is to provide robustness similar to sparse direct
+ solvers, but memory usage more similar to preconditioned iterative solvers.
+ ShyLU was designed as a node-level solver. It can use both MPI and threads in
+ several ways. ShyLU was designed (a) to solve difficult but medium-size
+ problems, and (b) to be used as a subdomain solver or smoother for very large
+ problems within an iterative scheme. It is a purely algebraic method so can be
+ used as a black-box solver. ShyLU has been particularly successful in
+ electrical circuit simulation (Xyce).
+ .
+ This package provides headers.
+
+Package: libtrilinos-stk12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: mesh and topology handling
+ The Sierra Toolkit Mesh product provides a unstructured mesh in-memory,
+ parallel-distributed database. Mesh capabilities include a mesh topology data
+ structure, mesh subsetting, coefficient data, mesh field data, support for
+ changing the mesh topology, and support for parallel operations on the mesh.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-stk-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-stk12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: mesh and topology handling
+ The Sierra Toolkit Mesh product provides a unstructured mesh in-memory,
+ parallel-distributed database. Mesh capabilities include a mesh topology data
+ structure, mesh subsetting, coefficient data, mesh field data, support for
+ changing the mesh topology, and support for parallel operations on the mesh.
+ .
+ This package provides headers.
+
+Package: libtrilinos-stokhos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos uncertainty quantification package
+ Stokhos is a package for intrusive stochastic Galerkin uncertainty
+ quantification methods. It provides methods for computing well-known intrusive
+ stochastic Galerkin projections such as Polynomial Chaos and Generalized
+ Polynomial Chaos, interfaces for forming the resulting nonlinear systems, and
+ linear solver methods for solving block stochastic Galerkin linear systems.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-stokhos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-stokhos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos uncertainty quantification package
+ Stokhos is a package for intrusive stochastic Galerkin uncertainty
+ quantification methods. It provides methods for computing well-known intrusive
+ stochastic Galerkin projections such as Polynomial Chaos and Generalized
+ Polynomial Chaos, interfaces for forming the resulting nonlinear systems, and
+ linear solver methods for solving block stochastic Galerkin linear systems.
+ .
+ This package provides headers.
+
+Package: libtrilinos-stratimikos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: wrappers for linear solvers and preconditioners
+ The package Stratimikos contains a unified set of Thyra-based wrappers to
+ linear solver and preconditioner capabilities in Trilinos.  The Stratimikos
+ package is also a place where unified testing of linear solvers and
+ preconditioners can be performed.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-stratimikos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-stratimikos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: wrappers for linear solvers and preconditioners
+ The package Stratimikos contains a unified set of Thyra-based wrappers to
+ linear solver and preconditioner capabilities in Trilinos.  The Stratimikos
+ package is also a place where unified testing of linear solvers and
+ preconditioners can be performed.
+ .
+ This package provides headers.
+
+Package: libtrilinos-teko12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: block preconditioners
+ Teko is a package for development and implementation of block preconditioners.
+ This includes support for manipulation and setup of block operators.
+ Furthermore tools exist to support decomposition of a fully coupled operator.
+ Additionally, facilities that allow the construction of approximate inverse
+ operators using the full complement of available preconditioners and solvers
+ are available in Teko. Finally, a small number of generic block
+ preconditioners has been implemented in Teko, including block Jacobi, and
+ block Gauss-Seidel. For the Navier-Stokes equation, Teko has implementations
+ of SIMPLE, PCD and LSC. For details on these methods see Stabilization and
+ Scalable Block Preconditioning for the Navier-Stokes Equations and the
+ references therein.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-teko-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-teko12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: block preconditioners
+ Teko is a package for development and implementation of block preconditioners.
+ This includes support for manipulation and setup of block operators.
+ Furthermore tools exist to support decomposition of a fully coupled operator.
+ Additionally, facilities that allow the construction of approximate inverse
+ operators using the full complement of available preconditioners and solvers
+ are available in Teko. Finally, a small number of generic block
+ preconditioners has been implemented in Teko, including block Jacobi, and
+ block Gauss-Seidel. For the Navier-Stokes equation, Teko has implementations
+ of SIMPLE, PCD and LSC. For details on these methods see Stabilization and
+ Scalable Block Preconditioning for the Navier-Stokes Equations and the
+ references therein.
+ .
+ This package provides headers.
+
+Package: libtrilinos-teuchos12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: common tools for Trilinos
+ Teuchos provides a suite of common tools for Trilinos for developers to use.
+ These tools include BLAS/LAPACK wrappers, smart pointers, parameter lists, XML
+ parsers, etc.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-teuchos-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-teuchos12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: common tools for Trilinos
+ Teuchos provides a suite of common tools for Trilinos for developers to use.
+ These tools include BLAS/LAPACK wrappers, smart pointers, parameter lists, XML
+ parsers, etc.
+ .
+ This package provides headers.
+
+Package: libtrilinos-thyra12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: interoperability layer for numerical software
+ The Thyra package contains a set of interfaces and supporting code that
+ defines basic interoperability mechanisms between different types of numerical
+ software. The foundation of all of these interfaces are the mathematical
+ concepts of vectors, vector spaces, and linear operators. All other interfaces
+ and support software is built on the basic operator/vector interfaces.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-thyra-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-thyra12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: interoperability layer for numerical software
+ The Thyra package contains a set of interfaces and supporting code that
+ defines basic interoperability mechanisms between different types of numerical
+ software. The foundation of all of these interfaces are the mathematical
+ concepts of vectors, vector spaces, and linear operators. All other interfaces
+ and support software is built on the basic operator/vector interfaces.
+ .
+ This package provides headers.
+
+Package: libtrilinos-tpetra12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: templated numerical linear algebra package
+ Next-generation, templated version of Petra, taking advantage of the newer
+ advanced features of C++.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-tpetra-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-tpetra12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: templated numerical linear algebra package
+ Next-generation, templated version of Petra, taking advantage of the newer
+ advanced features of C++.
+ .
+ This package provides headers.
+
+Package: libtrilinos-trilinoscouplings12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: combining Trilinos packages
+ TrilinosCouplings provides a location for multiple Trilinos packages to be
+ combined for testing integrated package capabilities.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-trilinoscouplings-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-trilinoscouplings12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: combining Trilinos packages
+ TrilinosCouplings provides a location for multiple Trilinos packages to be
+ combined for testing integrated package capabilities.
+ .
+ This package provides headers.
+
+Package: libtrilinos-triutils12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: utilities for Trilinos
+ TriUtils a package of utilities for other Trilinos packages.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-triutils-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-triutils12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: utilities for Trilinos
+ TriUtils a package of utilities for other Trilinos packages.
+ .
+ This package provides headers.
+
+Package: libtrilinos-xpetra12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: conversion between Epetra and Teuchos objects
+ Xpetra is an interoperability layer for Epetra/Tpetra.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-xpetra-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-xpetra12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: conversion between Epetra and Teuchos objects
+ Xpetra is an interoperability layer for Epetra/Tpetra.
+ .
+ This package provides headers.
+
+Package: libtrilinos-zoltan12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: parallel dynamic load balancing
+ Zoltan is a toolkit of parallel services for dynamic, unstructured, and/or
+ adaptive simulations. Zoltan provides parallel dynamic load balancing and
+ related services for a wide variety of applications, including finite element
+ methods, matrix operations, particle methods, and crash simulations. Zoltan
+ also provides parallel graph coloring, matrix ordering, unstructured
+ communication tools, and distributed data directories.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-zoltan-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-zoltan12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: parallel dynamic load balancing
+ Zoltan is a toolkit of parallel services for dynamic, unstructured, and/or
+ adaptive simulations. Zoltan provides parallel dynamic load balancing and
+ related services for a wide variety of applications, including finite element
+ methods, matrix operations, particle methods, and crash simulations. Zoltan
+ also provides parallel graph coloring, matrix ordering, unstructured
+ communication tools, and distributed data directories.
+ .
+ This package provides headers.
+
+Package: libtrilinos-zoltan2-12
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trilinos next generation load balancing package
+ Zoltan2 is a package for load balancing and combinatorial scientific
+ computing. It may be viewed as a successor to the popular Zoltan and Isorropia
+ packages.
+ .
+ This package contains the dynamic libraries.
+
+Package: libtrilinos-zoltan2-dev
+Architecture: amd64
+Section: libdevel
+Depends: libtrilinos-zoltan2-12 (= ${binary:Version}), ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: Trilinos next generation load balancing package
+ Zoltan2 is a package for load balancing and combinatorial scientific
+ computing. It may be viewed as a successor to the popular Zoltan and Isorropia
+ packages.
+ .
+ This package provides headers.
+
+Package: seacas
+Architecture: amd64
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: finite element analysis
+ The Sandia Engineering Analysis Code Access System (SEACAS) is a suite of
+ preprocessing, postprocessing, translation, and utility applications
+ supporting finite element analysis software using the ExodusII database file
+ format.
+ .
+ This package contains the binary executables.
+
+Package: trilinos-dbg
+Architecture: amd64
+Section: debug
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: libtrilinos-doc
+Description: object-oriented framework for large-scale problems
+ The Trilinos Project is an effort to develop algorithms and enabling
+ technologies within an object-oriented software framework for the
+ solution of large-scale, complex multi-physics engineering and
+ scientific problems. A unique design feature of Trilinos is its
+ focus on packages.
+ .
+ These libraries are built with debug symbols. They are useful to debug
+ programs which use Trilinos. These must be used also at build/link time.
+
+Package: trilinos-doc
+Homepage: http://trilinos.sandia.gov/documentation.html
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Description: object-oriented framework for large-scale problems
+ The Trilinos Project is an effort to develop algorithms and enabling
+ technologies within an object-oriented software framework for the
+ solution of large-scale, complex multi-physics engineering and
+ scientific problems. A unique design feature of Trilinos is its
+ focus on packages.
+ .
+ This is documentation for the Trilinos libraries in HTML format.
+ Some pages point to header files provided in the corresponding -dev package,
+ so it is suggested to install the latter as well.
