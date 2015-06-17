@@ -11,6 +11,7 @@ import shutil
 import glob
 import yaml
 import git
+import tarfile
 
 
 def _main():
@@ -20,6 +21,24 @@ def _main():
     # Retrieve the directory of this script
     basedir = os.path.dirname(os.path.realpath(__file__))
 
+    # Get package version.
+    # Actually quite dangerous. The user may inject malicious code here.
+    os.chdir(args.source_dir)
+    package_version = subprocess.getoutput(args.version_getter).strip()
+
+    # Get Debian info.
+    try:
+        debian_repo = git.Repo(args.debian_dir)
+        print('Fetching updates...')
+        debian_repo.remotes.origin.pull()
+        print('done.')
+        debian_revision = str(debian_repo.rev_parse('HEAD'))
+    except git.exc.InvalidGitRepositoryError:
+        print('Not a Git repo')
+        print(args.source_dir + ' is not a Git repo.')
+        return 1
+
+    # Build a version.
     try:
         source_repo = git.Repo(args.source_dir)
         print('Fetching updates...')
@@ -27,37 +46,23 @@ def _main():
         print('done.')
         source_revision = str(source_repo.rev_parse('HEAD'))
     except git.exc.InvalidGitRepositoryError:
-        print('Not a Git repo')
-        return 1
+        source_repo = None
+        source_revision = None
 
-    try:
-        debian_repo = git.Repo(args.source_dir)
-        print('Fetching updates...')
-        debian_repo.remotes.origin.pull()
-        print('done.')
-        debian_revision = str(debian_repo.rev_parse('HEAD'))
-    except git.exc.InvalidGitRepositoryError:
-        print('Not a Git repo')
-        return 1
+    if args.submit_hashes_file:
+        # File to store the HEAD command of the last push.
+        revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
+        revision_dicts = []
+        for doc in revision_data:
+            revision_dicts.append(doc)
+        is_uptodate = (
+            source_revision == revision_dicts[0]['source revision'] and
+            debian_revision == revision_dicts[0]['debian revision']
+            )
 
-    # File to store the HEAD command of the last push.
-    revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
-    revision_dicts = []
-    for doc in revision_data:
-        revision_dicts.append(doc)
-    is_uptodate = (
-        source_revision == revision_dicts[0]['source revision'] and
-        debian_revision == revision_dicts[0]['debian revision']
-        )
-
-    if is_uptodate and not args.force:
-        print('Latest version already submitted to launchpad.')
-        return 0
-
-    # Get package version.
-    # Actually quite dangerous. The user may inject malicious code here.
-    os.chdir(args.source_dir)
-    package_version = subprocess.getoutput(args.version_getter).strip()
+        if is_uptodate and not args.force:
+            print('Latest version already submitted to launchpad.')
+            return 0
 
     # Create a day-to-day version number of the form 4.3.1.2~201211230030.
     # For launchpad to accept new submissions, the string has to increment.
@@ -70,13 +75,18 @@ def _main():
     print('Creating new archive %s...' % tarball_path)
     # Append the '/' to $PREFIX, otherwise this may be interpreted as an
     # ordinary filename-prefix.
-    fh = open(tarball_path, 'wb')
-    source_repo.archive(
-            fh,
-            prefix=prefix + '/',
-            format='tar.gz'
-            )
-    fh.close()
+    if source_repo:
+        fh = open(tarball_path, 'wb')
+        source_repo.archive(
+                fh,
+                prefix=prefix + '/',
+                format='tar.gz'
+                )
+        fh.close()
+    else:
+        with tarfile.open(tarball_path, "w:gz") as tar:
+            tar.add(args.source_dir, arcname=prefix)
+
     print('done.')
 
     for ubuntu_release in args.ubuntu_releases:
@@ -94,7 +104,9 @@ def _main():
         shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
         # Unpack the tarball
         os.chdir(release_dir)
-        subprocess.check_call(['tar', 'xf', tarball_name])
+        tar = tarfile.open(tarball_name)
+        tar.extractall()
+        tar.close()
 
         ## Cleaning Debian directory to avoid copy errors with invalid
         ## symlinks.
@@ -208,14 +220,14 @@ def _main():
                       % (args.name, full_version)
                       )
 
-    if args.ppas:
+    if args.submit_hashes_file:
         # Store which revision we're pushing so we don't do it twice.
         data = {
             'source revision': source_revision,
             'debian revision': debian_revision
             }
         with open(args.submit_hashes_file, 'w') as outfile:
-             outfile.write(yaml.dump(data, default_flow_style=False))
+            outfile.write(yaml.dump(data, default_flow_style=False))
 
     return
 
@@ -292,7 +304,7 @@ def _parse_cmd_arguments():
         '-z', '--submit-hashes-file',
         help='File in which to store the submit hashes',
         type=str,
-        required=True
+        default=None
         )
     parser.add_argument(
         '-f', '--force',
