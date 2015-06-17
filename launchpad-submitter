@@ -10,36 +10,35 @@ import datetime
 import shutil
 import glob
 import yaml
+import git
 
 
 def _main():
-    # Get the directory of this script. This has to be done before any chdir
-    # command.
-    #this_dir = os.path.dirname(os.path.realpath(__file__))
 
     args = _parse_cmd_arguments()
 
     # Retrieve the directory of this script
     basedir = os.path.dirname(os.path.realpath(__file__))
 
-    print('Fetching updates...')
-    os.chdir(args.source_dir)
-    subprocess.check_call(['git', 'pull'])
-    #os.chdir(args.debian_dir)
-    #subprocess.check_call(['git', 'pull'])
-    print('done.')
+    try:
+        source_repo = git.Repo(args.source_dir)
+        print('Fetching updates...')
+        source_repo.remotes.origin.pull()
+        print('done.')
+        source_revision = str(source_repo.rev_parse('HEAD'))
+    except git.exc.InvalidGitRepositoryError:
+        print('Not a Git repo')
+        return 1
 
-    os.chdir(args.source_dir)
-    source_revision = subprocess.check_output(['git',
-                                               'rev-parse',
-                                               'HEAD'
-                                               ]).decode('utf-8').strip()
-
-    os.chdir(args.debian_dir)
-    debian_revision = subprocess.check_output(['git',
-                                               'rev-parse',
-                                               'HEAD'
-                                               ]).decode('utf-8').strip()
+    try:
+        debian_repo = git.Repo(args.source_dir)
+        print('Fetching updates...')
+        debian_repo.remotes.origin.pull()
+        print('done.')
+        debian_revision = str(debian_repo.rev_parse('HEAD'))
+    except git.exc.InvalidGitRepositoryError:
+        print('Not a Git repo')
+        return 1
 
     # File to store the HEAD command of the last push.
     revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
@@ -47,8 +46,8 @@ def _main():
     for doc in revision_data:
         revision_dicts.append(doc)
     is_uptodate = (
-        source_revision == revision_dicts[0]['source revision']
-        and debian_revision == revision_dicts[0]['debian revision']
+        source_revision == revision_dicts[0]['source revision'] and
+        debian_revision == revision_dicts[0]['debian revision']
         )
 
     if is_uptodate and not args.force:
@@ -60,26 +59,24 @@ def _main():
     os.chdir(args.source_dir)
     package_version = subprocess.getoutput(args.version_getter).strip()
 
-    # Create a day-to-day version number of the form 4.3.1.2~20121123.
-    today_str = datetime.date.today().strftime('%Y%m%d')
-    #today_str = '20150427'
-    version = package_version + '~' + today_str
+    # Create a day-to-day version number of the form 4.3.1.2~201211230030.
+    # For launchpad to accept new submissions, the string has to increment.
+    now_str = datetime.datetime.now().strftime('%Y%m%d%H%M')
+    version = package_version + '~' + now_str
 
     # Create the tarball.
     tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
     prefix = args.name + '-' + version
     print('Creating new archive %s...' % tarball_path)
-    if os.path.isfile(tarball_path):
-        os.remove(tarball_path)
     # Append the '/' to $PREFIX, otherwise this may be interpreted as an
     # ordinary filename-prefix.
-    subprocess.check_call([
-        'git', 'archive',
-        'master',
-        '--prefix=%s/' % prefix,
-        '--format=tar.gz',
-        '--output=%s' % tarball_path
-        ])
+    fh = open(tarball_path, 'wb')
+    source_repo.archive(
+            fh,
+            prefix=prefix + '/',
+            format='tar.gz'
+            )
+    fh.close()
     print('done.')
 
     for ubuntu_release in args.ubuntu_releases:
@@ -108,7 +105,10 @@ def _main():
         # Copy over the debian folder to
         #     /tmp/trilinos/trusty/debian/
         os.chdir(release_dir)
-        shutil.copytree(args.debian_dir, os.path.join(prefix, 'debian'))
+        shutil.copytree(
+                args.debian_dir,
+                os.path.join(prefix, 'debian')
+                )
 
         # Patch the sources if necessary
         patch_file = os.path.join(basedir,
@@ -163,9 +163,9 @@ def _main():
                     outfile.write(infile.read())
 
         # Use the `-` as a separator (instead of `~` as it's often used) to
-        # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This
-        # makes it possible to increment `x` and have launchpad recognize
-        # it as a new version.
+        # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This makes
+        # it possible to increment `x` and have launchpad recognize it as a new
+        # version.
         full_version = version + '-' + ubuntu_release + args.resubmission
         if args.slot:
             chlog_version = args.slot + ':' + full_version
@@ -188,10 +188,9 @@ def _main():
 
         # Call debuild, the actual workhorse
         os.chdir(prefix)
-        subprocess.check_call(['debuild',
-                               '-p%s' % os.path.join(basedir, 'mygpg'),
-                               '-S'
-                               ])
+        subprocess.check_call(
+                ['debuild', '-p%s' % os.path.join(basedir, 'mygpg'), '-S']
+                )
 
         # Submit to launchpad.
         os.chdir(os.pardir)
@@ -216,7 +215,7 @@ def _main():
             'debian revision': debian_revision
             }
         with open(args.submit_hashes_file, 'w') as outfile:
-            outfile.write(yaml.dump(data, default_flow_style=False))
+             outfile.write(yaml.dump(data, default_flow_style=False))
 
     return
 
