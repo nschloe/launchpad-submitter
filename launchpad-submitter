@@ -12,6 +12,31 @@ import glob
 import yaml
 import git
 import tarfile
+import sys
+
+
+def _run(command):
+    '''Runs a given command on the command line and returns its output.
+    '''
+    # print(command)
+    process = subprocess.Popen(
+        command,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        close_fds=True
+        )
+    output = process.stdout.read()[:-1]
+    ret = process.wait()
+
+    if ret != 0:
+        sys.exit(
+            '\nERROR: The command \n\n%s\n\nreturned a nonzero '
+            'exit status. The error message is \n\n%s\n\n'
+            'Abort.\n'
+            % (command, process.stderr.read()[:-1])
+            )
+    return output
 
 
 def _main():
@@ -27,29 +52,53 @@ def _main():
     package_version = subprocess.getoutput(args.version_getter).strip()
 
     # Get Debian info.
-    try:
-        debian_repo = git.Repo(args.debian_dir)
-        print('Fetching updates...')
-        debian_repo.remotes.origin.pull()
-        print('done.')
-        debian_revision = str(debian_repo.rev_parse('HEAD'))
-    except git.exc.InvalidGitRepositoryError:
-        print('Not a Git repo')
-        print(args.source_dir + ' is not a Git repo.')
-        return 1
+    if args.debian_dir:
+        try:
+            debian_repo = git.Repo(args.debian_dir + '../')
+        except git.exc.InvalidGitRepositoryError:
+            try:
+                debian_repo = git.Repo(args.debian_dir)
+                print('Fetching updates...')
+                debian_repo.remotes.origin.pull()
+                print('done.')
+                debian_revision = str(debian_repo.rev_parse('HEAD'))
+            except git.exc.InvalidGitRepositoryError:
+                debian_revision = None
+    else:
+        debian_revision = None
 
-    # Build a version.
     try:
         source_repo = git.Repo(args.source_dir)
+    except git.exc.InvalidGitRepositoryError:
+        source_repo = None
+
+    has_tmp_commit = False
+    if source_repo:
         print('Fetching updates...')
         source_repo.remotes.origin.pull()
         print('done.')
+        # Build a version.
+        if source_repo.is_dirty():
+            if args.force:
+                index = source_repo.index
+                # Add all files with uncommitted changes to the index
+                index.add([diff.a_blob.path for diff in index.diff(None)])
+                # commit
+                index.commit(
+                    'temp commit',
+                    author=git.Actor('launchpad-submitter', 'ls@wind')
+                    )
+                has_tmp_commit = True  # for later undoing of the commit
+            else:
+                raise RuntimeError(
+                    'Uncommitted changes in the source repo. '
+                    'Use -f to submit nonetheless.'
+                    )
         source_revision = str(source_repo.rev_parse('HEAD'))
-    except git.exc.InvalidGitRepositoryError:
-        source_repo = None
+    else:
         source_revision = None
 
-    if args.submit_hashes_file:
+    if args.submit_hashes_file and os.path.isfile(args.submit_hashes_file):
         # File to store the HEAD command of the last push.
         revision_data = yaml.load_all(open(args.submit_hashes_file, 'r'))
         revision_dicts = []
@@ -57,7 +106,8 @@ def _main():
             revision_dicts.append(doc)
         is_uptodate = (
             source_revision == revision_dicts[0]['source revision'] and
-            debian_revision == revision_dicts[0]['debian revision']
+            (not debian_revision or
+                debian_revision == revision_dicts[0]['debian revision'])
             )
 
         if is_uptodate and not args.force:
@@ -76,18 +126,31 @@ def _main():
     # Append the '/' to $PREFIX, otherwise this may be interpreted as an
     # ordinary filename-prefix.
     if source_repo:
-        fh = open(tarball_path, 'wb')
-        source_repo.archive(
-                fh,
-                prefix=prefix + '/',
-                format='tar.gz'
+        if source_repo.submodules:
+            # Use <https://github.com/Kentzo/git-archive-all>
+            os.chdir(args.source_dir)
+            _run(
+                'git-archive-all --prefix=%s %s' %
+                (prefix + '/', tarball_path)
                 )
-        fh.close()
+        else:
+            fh = open(tarball_path, 'wb')
+            source_repo.archive(
+                    fh,
+                    prefix=prefix + '/',
+                    format='tar.gz'
+                    )
+            fh.close()
     else:
-        with tarfile.open(tarball_path, "w:gz") as tar:
+        # Not a Git repo
+        with tarfile.open(tarball_path, 'w:gz') as tar:
             tar.add(args.source_dir, arcname=prefix)
 
     print('done.')
+
+    if has_tmp_commit:
+        # undo temporary commit aka `git reset HEAD^`
+        source_repo.git.reset('HEAD^')
 
     for ubuntu_release in args.ubuntu_releases:
         # Create empty directory of the form
@@ -108,19 +171,23 @@ def _main():
         tar.extractall()
         tar.close()
 
-        ## Cleaning Debian directory to avoid copy errors with invalid
-        ## symlinks.
-        # TODO don't clean to make sure not to accidentally delete patches
-        #os.chdir(args.debian_dir)
-        #subprocess.check_call(['git', 'clean', '-f', '-d'])
+        # # Cleaning Debian directory to avoid copy errors with invalid
+        # # symlinks.
+        #  TODO don't clean to make sure not to accidentally delete patches
+        # os.chdir(args.debian_dir)
+        # subprocess.check_call(['git', 'clean', '-f', '-d'])
 
         # Copy over the debian folder to
         #     /tmp/trilinos/trusty/debian/
         os.chdir(release_dir)
-        shutil.copytree(
-                args.debian_dir,
-                os.path.join(prefix, 'debian')
-                )
+        if args.debian_dir:
+            shutil.copytree(
+                    args.debian_dir,
+                    os.path.join(prefix, 'debian')
+                    )
+        else:
+            # assert that the source tree contains a folder 'debian'
+            assert(os.path.isdir(os.path.join(args.source_dir, 'debian')))
 
         # Patch the sources if necessary
         patch_file = os.path.join(basedir,
@@ -253,7 +320,6 @@ def _parse_cmd_arguments():
         )
     parser.add_argument(
         '-d', '--debian-dir',
-        required=True,
         help='Directory of the debian/ source'
         )
     parser.add_argument(
