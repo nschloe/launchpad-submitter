@@ -1,2 +1,6 @@
 dist-packages.patch
-find-netcdf.patch
+find-tpl-blas.patch
+find-tpl-lapack.patch
+find-tpl-netcdf.patch
+find-tpl-zlib.patch
+thyra-indent-1000.patch

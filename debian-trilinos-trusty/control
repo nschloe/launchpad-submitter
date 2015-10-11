@@ -15,12 +15,10 @@ Build-Depends: debhelper (>= 9),
  libboost-system-dev,
  libboost-program-options-dev,
  libglm-dev,
- libhdf5-openmpi-dev (>= 1.8.7),
  liblapack-dev,
  libmumps-dev (>= 4.7.3),
- libnetcdf-dev (>= 4.3.3),
+ libnetcdf-dev,
  libptscotch-dev,
- libsuperlu3-dev,
  libtbb-dev,
  zlib1g-dev
 Standards-Version: 3.9.5

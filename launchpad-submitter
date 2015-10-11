@@ -55,6 +55,7 @@ def _main():
     if args.debian_dir:
         try:
             debian_repo = git.Repo(args.debian_dir + '../')
+            debian_revision = str(debian_repo.rev_parse('HEAD'))
         except git.exc.InvalidGitRepositoryError:
             try:
                 debian_repo = git.Repo(args.debian_dir)

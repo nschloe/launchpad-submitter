@@ -115,8 +115,6 @@ configure-stamp:
    -DTPL_ENABLE_ParMETIS:BOOL=OFF \
    -DTPL_ENABLE_Scotch:BOOL=ON \
      -DTPL_Scotch_INCLUDE_DIRS:PATH=/usr/include/scotch/ \
-   -DTPL_ENABLE_SuperLU:BOOL=ON \
-     -DSuperLU_INCLUDE_DIRS:PATH=/usr/include/superlu/ \
    -DTPL_ENABLE_TBB:BOOL=ON \
    -DTPL_ENABLE_X11:BOOL=OFF \
    -DTPL_ENABLE_Zlib:BOOL=ON
