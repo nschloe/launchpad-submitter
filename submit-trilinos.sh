@@ -36,7 +36,7 @@ $THIS_DIR/launchpad-submitter \
   --resubmission 1 \
   --source-dir "$HOME/software/trilinos/github/" \
   --debian-dir "$HOME/rcs/debian-packages/trilinos/debian/" \
-  --ubuntu-releases vivid wily \
+  --ubuntu-releases vivid wily xenial \
   --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
   --ppas nschloe/trilinos-nightly \
   --submit-hashes-file "$THIS_DIR/trilinos2-submit-hashes.dat" \
