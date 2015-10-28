@@ -4,15 +4,16 @@
 Automatically create tarball and submit it to launchpad.
 '''
 
-import os
-import subprocess
 import datetime
-import shutil
 import glob
-import yaml
 import git
-import tarfile
+# import git_archive_all
+import os
+import shutil
+import subprocess
 import sys
+import tarfile
+import yaml
 
 
 def _run(command):
@@ -142,10 +143,29 @@ def _main():
                     format='tar.gz'
                     )
             fh.close()
+
+        if args.debian_prepare:
+            # Extract tarball, execute code in debian dir, retar.
+            print('Untar...')
+            os.chdir(os.path.dirname(tarball_path))
+            tar = tarfile.open(tarball_path)
+            tar.extractall()
+            tar.close()
+            # execute
+            print('Execute \'%s\'...' % args.debian_prepare)
+            os.chdir(os.path.join(prefix, 'debian'))
+            _run(args.debian_prepare)
+            # retar
+            print('Retar...')
+            os.chdir(os.path.dirname(tarball_path))
+            tar = tarfile.open(tarball_path, 'w:gz')
+            tar.add(prefix)
+            tar.close()
     else:
         # Not a Git repo
         with tarfile.open(tarball_path, 'w:gz') as tar:
             tar.add(args.source_dir, arcname=prefix)
+        # TODO args.debian_prepare here
 
     print('done.')
 
@@ -341,6 +361,11 @@ def _parse_cmd_arguments():
         help='Shell command for extracting the version number',
         type=str,
         required=True
+        )
+    parser.add_argument(
+        '-e', '--debian-prepare',
+        help='Shell command to execute in the debian folder before processing',
+        type=str
         )
     parser.add_argument(
         '-l', '--slot',
