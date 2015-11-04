@@ -77,7 +77,12 @@ def _main():
     has_tmp_commit = False
     if source_repo:
         print('Fetching updates...')
-        source_repo.remotes.origin.pull()
+        try:
+            source_repo.remotes.origin.pull()
+        except ValueError:
+            # ValueError: Failed to parse line: '         WARNING NOTICE TO
+            # USERS: SNL Systems Are Monitored'
+            pass
         print('done.')
         # Build a version.
         if source_repo.is_dirty():
@@ -294,19 +299,20 @@ def _main():
 
         # Submit to launchpad.
         os.chdir(os.pardir)
-        for ppa in args.ppas:
-            print()
-            print('Uploading to PPA %s...' % ppa)
-            print()
-            subprocess.check_call([
-                'dput',
-                'ppa:%s' % ppa,
-                '%s_%s_source.changes' % (args.name, full_version)
-                ])
-            # Remove the upload file so we can upload again to another ppa
-            os.remove('%s_%s_source.ppa.upload'
-                      % (args.name, full_version)
-                      )
+        if not args.dry:
+            for ppa in args.ppas:
+                print()
+                print('Uploading to PPA %s...' % ppa)
+                print()
+                subprocess.check_call([
+                    'dput',
+                    'ppa:%s' % ppa,
+                    '%s_%s_source.changes' % (args.name, full_version)
+                    ])
+                # Remove the upload file so we can upload again to another ppa
+                os.remove('%s_%s_source.ppa.upload'
+                          % (args.name, full_version)
+                          )
 
     if args.submit_hashes_file:
         # Store which revision we're pushing so we don't do it twice.
@@ -401,6 +407,12 @@ def _parse_cmd_arguments():
     parser.add_argument(
         '-f', '--force',
         help='Force submission even if build is already uploaded',
+        action='store_true',
+        default=False
+        )
+    parser.add_argument(
+        '-y', '--dry',
+        help='Dry run (do everything but the upload)',
         action='store_true',
         default=False
         )
