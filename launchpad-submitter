@@ -294,7 +294,8 @@ def _main():
         # Call debuild, the actual workhorse
         os.chdir(prefix)
         subprocess.check_call(
-                ['debuild', '-p%s' % os.path.join(basedir, 'mygpg'), '-S']
+                ['debuild', '-p%s' % os.path.join(basedir, 'mygpg'), '-S',
+                 '--lintian-opts', '-EvIL', '+pedantic']
                 )
 
         # Submit to launchpad.
