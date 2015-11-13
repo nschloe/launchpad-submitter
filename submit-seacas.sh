@@ -5,12 +5,15 @@ eval "$(cat "$HOME/.ssh/agent/info")"
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+SOURCE_DIR="$HOME/software/seacas/source-upstream/"
+VERSION=$(grep "SEACASProj_VERSION " "$SOURCE_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
+
 "$THIS_DIR/launchpad-submitter" \
   --name seacas \
   --resubmission 1 \
-  --source-dir "$HOME/software/seacas/source-upstream/" \
+  --source-dir "$SOURCE_DIR" \
   --ubuntu-releases trusty vivid wily xenial \
-  --version-getter 'grep "SEACASProj_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
+  --version "$VERSION" \
   --ppas nschloe/seacas-nightly \
   --submit-hashes-file "$THIS_DIR/seacas-submit-hash1.dat" \
   "$@"

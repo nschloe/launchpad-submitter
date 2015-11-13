@@ -5,6 +5,9 @@ eval "$(cat "$HOME/.ssh/agent/info")"
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+SOURCE_DIR="$HOME/software/trilinos/github/"
+VERSION=$(grep "Trilinos_VERSION " "$SOURCE_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
+
 # copy over debian dir and replace respective lines
 rm -rf '/tmp/debian-trusty'
 cp -r "$HOME/rcs/debian-packages/trilinos/debian/" "/tmp/debian-trusty"
@@ -19,10 +22,10 @@ sed -i '/SuperLU/d' '/tmp/debian-trusty/rules'
 "$THIS_DIR/launchpad-submitter" \
   --name trilinos \
   --resubmission 1 \
-  --source-dir "$HOME/software/trilinos/github/" \
+  --source-dir "$SOURCE_DIR" \
   --debian-dir "/tmp/debian-trusty/" \
   --ubuntu-releases trusty \
-  --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
+  --version "$VERSION" \
   --ppas nschloe/trilinos-nightly \
   --submit-hashes-file "$THIS_DIR/trilinos1-submit-hashes.dat" \
   "$@"
@@ -40,10 +43,10 @@ sleep 60
 "$THIS_DIR/launchpad-submitter" \
   --name trilinos \
   --resubmission 1 \
-  --source-dir "$HOME/software/trilinos/github/" \
+  --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/trilinos/debian/" \
   --ubuntu-releases vivid wily xenial \
-  --version-getter 'grep "Trilinos_VERSION " Version.cmake | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/"' \
+  --version "$VERSION" \
   --ppas nschloe/trilinos-nightly \
   --submit-hashes-file "$THIS_DIR/trilinos2-submit-hashes.dat" \
   "$@"
