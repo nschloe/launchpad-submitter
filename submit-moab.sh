@@ -10,7 +10,6 @@ VERSION=$(grep AC_INIT "$SOURCE_DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\
 
 "$THIS_DIR/launchpad-submitter" \
   --name moab \
-  --resubmission 1 \
   --source-dir "$SOURCE_DIR" \
   --ubuntu-releases trusty vivid \
   --debian-prepare 'make' \
@@ -30,7 +29,6 @@ sleep 60
 
 "$THIS_DIR/launchpad-submitter" \
   --name moab \
-  --resubmission 1 \
   --source-dir "$SOURCE_DIR" \
   --ubuntu-releases wily xenial \
   --debian-prepare 'ADDITIONAL_DEPS=", libmetis-dev, libparmetis-dev" ADDITIONAL_ENABLES="-DENABLE_METIS:BOOL=ON -DENABLE_PARMETIS:BOOL=ON -DMOAB_BUILD_MBPART:BOOL=ON" make' \

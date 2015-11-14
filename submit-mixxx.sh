@@ -10,7 +10,6 @@ VERSION=$(grep "define VERSION" "$SOURCE_DIR/src/defs_version.h" | sed "s/[^0-9]
 
 "$THIS_DIR/launchpad-submitter"\
   --name mixxx \
-  --resubmission 1 \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/mixxx/debian/" \
   --ubuntu-releases trusty vivid wily xenial \

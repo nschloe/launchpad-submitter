@@ -10,7 +10,6 @@ VERSION=$(grep "^AC_INIT" "$SOURCE_DIR/configure.ac" | sed "s/[^0-9]*\([0-9][\.0
 
 "$THIS_DIR/launchpad-submitter" \
   --name netcdf \
-  --resubmission 1 \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/netcdf/debian/" \
   --ubuntu-releases precise trusty vivid wily xenial \

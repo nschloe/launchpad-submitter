@@ -120,13 +120,13 @@ def _main():
     tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
     prefix = args.name + '-' + version
     print('Creating new archive %s...' % tarball_path)
-    # Append the '/' to $PREFIX, otherwise this may be interpreted as an
-    # ordinary filename-prefix.
     if source_repo:
         if source_repo.submodules:
             # Use <https://github.com/Kentzo/git-archive-all>
             os.chdir(args.source_dir)
-            _run(
+            # Append the '/' to $PREFIX, otherwise this may be interpreted as
+            # an ordinary filename-prefix.
+            subprocess.check_output(
                 'git-archive-all --prefix=%s %s' %
                 (prefix + '/', tarball_path)
                 )
@@ -138,24 +138,6 @@ def _main():
                     format='tar.gz'
                     )
             fh.close()
-
-        if args.debian_prepare:
-            # Extract tarball, execute code in debian dir, retar.
-            print('Untar...')
-            os.chdir(os.path.dirname(tarball_path))
-            tar = tarfile.open(tarball_path)
-            tar.extractall()
-            tar.close()
-            # execute
-            print('Execute \'%s\'...' % args.debian_prepare)
-            os.chdir(os.path.join(prefix, 'debian'))
-            _run(args.debian_prepare)
-            # retar
-            print('Retar...')
-            os.chdir(os.path.dirname(tarball_path))
-            tar = tarfile.open(tarball_path, 'w:gz')
-            tar.add(prefix)
-            tar.close()
     else:
         # Not a Git repo
         with tarfile.open(tarball_path, 'w:gz') as tar:
@@ -201,9 +183,18 @@ def _main():
                     args.debian_dir,
                     os.path.join(prefix, 'debian')
                     )
-        else:
-            # assert that the source tree contains a folder 'debian'
-            assert(os.path.isdir(os.path.join(args.source_dir, 'debian')))
+        # else:
+        #     # assert that the source tree contains a folder 'debian'
+        #     assert(os.path.isdir(os.path.join(args.source_dir, 'debian')))
+
+        assert os.path.isdir(os.path.join(prefix, 'debian'))
+
+        if args.debian_prepare:
+            print('Execute \'%s\'...' % args.debian_prepare)
+            os.chdir(os.path.join(prefix, 'debian'))
+            _run(args.debian_prepare)
+
+        os.chdir(release_dir)
 
         # Patch the sources if necessary
         patch_file = os.path.join(basedir,

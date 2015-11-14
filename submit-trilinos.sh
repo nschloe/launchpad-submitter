@@ -21,7 +21,6 @@ sed -i '/SuperLU/d' '/tmp/debian-trusty/rules'
 # trusty
 "$THIS_DIR/launchpad-submitter" \
   --name trilinos \
-  --resubmission 1 \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "/tmp/debian-trusty/" \
   --ubuntu-releases trusty \
@@ -42,7 +41,6 @@ sleep 60
 # submit for the rest
 "$THIS_DIR/launchpad-submitter" \
   --name trilinos \
-  --resubmission 1 \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/trilinos/debian/" \
   --ubuntu-releases vivid wily xenial \
