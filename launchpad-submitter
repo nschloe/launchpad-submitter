@@ -142,7 +142,6 @@ def _main():
         # Not a Git repo
         with tarfile.open(tarball_path, 'w:gz') as tar:
             tar.add(args.source_dir, arcname=prefix)
-        # TODO args.debian_prepare here
 
     print('done.')
 
@@ -252,7 +251,7 @@ def _main():
         # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This makes
         # it possible to increment `x` and have launchpad recognize it as a new
         # version.
-        full_version = version + '-' + ubuntu_release + args.resubmission
+        full_version = version + '-' + ubuntu_release + str(args.resubmission)
         if args.slot:
             chlog_version = args.slot + ':' + full_version
         else:
