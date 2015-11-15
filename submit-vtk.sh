@@ -15,7 +15,11 @@ VERSION="$MAJOR.$MINOR.$PATCH"
 
 DEBIAN_PREPARE="
 find . -type f -print0 | xargs -0 sed -i 's/6\.2/$MAJOR.$MINOR/g'; \
-sed -i \"/\b\(cat\|rat\)\b/d\" filename;
+sed -i \"/10_allpatches.patch/d\" patches/series; \
+sed -i \"/30_matplotlib.patch/d\" patches/series; \
+sed -i \"/40_use_system_sqlite.patch/d\" patches/series; \
+sed -i \"/50_use_system_utf8.patch/d\" patches/series; \
+sed -i \"/vtkMarchingCubesCases.h/d\" libvtk6-dev.install;
 "
 
 "$THIS_DIR/launchpad-submitter" \
@@ -25,11 +29,6 @@ sed -i \"/\b\(cat\|rat\)\b/d\" filename;
   --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases wily xenial \
   --version "$VERSION" \
-  --patches-blacklist \
-    10_allpatches.patch \
-    30_matplotlib.patch \
-    40_use_system_sqlite.patch \
-    50_use_system_utf8.patch \
   --ppas nschloe/vtk-nightly \
   --submit-hashes-file "$THIS_DIR/vtk-submit-hashes.dat" \
   "$@"
