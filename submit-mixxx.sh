@@ -7,6 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 SOURCE_DIR="$HOME/software/mixxx/pristine/"
 VERSION=$(grep "define VERSION" "$SOURCE_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
+FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_PREPARE="
 sed -i \"/0001-update_configure.patch/d\" patches/series; \
@@ -21,7 +22,7 @@ sed -i \"/9001-waveformsignalcolors_fix.patch/d\" patches/series; \
   --debian-dir "$HOME/rcs/debian-packages/mixxx/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases trusty vivid wily xenial \
-  --version "$VERSION" \
+  --version "$FULL_VERSION" \
   --ppas nschloe/mixxx-nightly \
   --submit-hashes-file "$THIS_DIR/mixxx-nightly.dat" \
   "$@"

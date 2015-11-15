@@ -111,14 +111,9 @@ def _main():
             print('Latest version already submitted to launchpad.')
             return 0
 
-    # Create a day-to-day version number of the form 4.3.1.2~201211230030.
-    # For launchpad to accept new submissions, the string has to increment.
-    now_str = datetime.datetime.now().strftime('%Y%m%d%H%M')
-    version = args.version + '~' + now_str
-
     # Create the tarball.
     tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
-    prefix = args.name + '-' + version
+    prefix = args.name + '-' + args.version
     print('Creating new archive %s...' % tarball_path)
     if source_repo:
         if source_repo.submodules:
@@ -160,7 +155,7 @@ def _main():
 
         # Copy source tarball to
         #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123.tar.gz
-        tarball_name = '%s_%s.orig.tar.gz' % (args.name, version)
+        tarball_name = '%s_%s.orig.tar.gz' % (args.name, args.version)
         shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
         # Unpack the tarball
         os.chdir(release_dir)
@@ -208,7 +203,7 @@ def _main():
         # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This makes
         # it possible to increment `x` and have launchpad recognize it as a new
         # version.
-        full_version = version + '-' + ubuntu_release + str(args.resubmission)
+        full_version = args.version + '-' + ubuntu_release + str(args.resubmission)
         if args.slot:
             chlog_version = args.slot + ':' + full_version
         else:
