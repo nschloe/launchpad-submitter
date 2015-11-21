@@ -5,25 +5,26 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-SOURCE_DIR="$HOME/software/trilinos/github/"
+SOURCE_DIR="$HOME/software/trilinos/source-upstream/"
 VERSION=$(grep "Trilinos_VERSION " "$SOURCE_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
+DEBIAN_DIR="$HOME/rcs/debian-packages/trilinos/debian/"
+
 # copy over debian dir and replace respective lines
-rm -rf '/tmp/debian-trusty'
-cp -r "$HOME/rcs/debian-packages/trilinos/debian/" "/tmp/debian-trusty"
-# remove hdf5 support
-sed -i '/libhdf5-openmpi-dev/d' '/tmp/debian-trusty/control'
-sed -i '/HDF5/d' '/tmp/debian-trusty/rules'
-# remove superlu support
-sed -i '/libsuperlu-dev/d' '/tmp/debian-trusty/control'
-sed -i '/SuperLU/d' '/tmp/debian-trusty/rules'
+DEBIAN_PREPARE="
+sed -i '/libhdf5-openmpi-dev/d' control; \
+sed -i '/HDF5/d' rules; \
+sed -i '/libsuperlu-dev/d' control; \
+sed -i '/SuperLU/d' rules;
+"
 
 # trusty
 "$THIS_DIR/launchpad-submitter" \
   --name trilinos \
   --source-dir "$SOURCE_DIR" \
-  --debian-dir "/tmp/debian-trusty/" \
+  --debian-dir "$DEBIAN_DIR" \
+  --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases trusty \
   --version "$FULL_VERSION" \
   --ppas nschloe/trilinos-nightly \
@@ -36,7 +37,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/launchpad-submitter" \
   --name trilinos \
   --source-dir "$SOURCE_DIR" \
-  --debian-dir "$HOME/rcs/debian-packages/trilinos/debian/" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases vivid wily xenial \
   --version "$FULL_VERSION" \
   --ppas nschloe/trilinos-nightly \

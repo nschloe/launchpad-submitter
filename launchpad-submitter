@@ -191,10 +191,11 @@ def _main():
         os.chdir(release_dir)
 
         # Patch the sources if necessary
-        patch_file = os.path.join(basedir,
-                                  args.name + '-ubuntu-backports',
-                                  ubuntu_release + '.patch'
-                                  )
+        patch_file = os.path.join(
+                basedir,
+                args.name + '-ubuntu-backports',
+                ubuntu_release + '.patch'
+                )
         if os.path.isfile(patch_file):
             os.chdir(prefix)
             subprocess.check_call('patch -p1 < ' + patch_file, shell=True)
@@ -203,7 +204,8 @@ def _main():
         # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This makes
         # it possible to increment `x` and have launchpad recognize it as a new
         # version.
-        full_version = args.version + '-' + ubuntu_release + str(args.resubmission)
+        full_version = args.version + '-' + ubuntu_release + \
+            str(args.resubmission)
         if args.slot:
             chlog_version = args.slot + ':' + full_version
         else:

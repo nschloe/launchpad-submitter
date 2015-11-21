@@ -1,7 +1,7 @@
 #!/bin/sh -ue
 
 # Set SSH agent variables.
-eval $(cat "$HOME/.ssh/agent/info")
+. "$HOME/.keychain/$(/bin/hostname)-sh"
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -10,10 +10,10 @@ VERSION=$(grep "define VERSION" "$SOURCE_DIR/src/defs_version.h" | sed "s/[^0-9]
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_PREPARE="
-sed -i \"/0001-update_configure.patch/d\" patches/series; \
-sed -i \"/0004-soundtouch.patch/d\" patches/series; \
-sed -i \"/1001-buildsystem.patch/d\" patches/series; \
-sed -i \"/9001-waveformsignalcolors_fix.patch/d\" patches/series; \
+sed -i \"/0001-update_configure.patch/d\" patches/ubuntu.series; \
+sed -i \"/0004-soundtouch.patch/d\" patches/ubuntu.series; \
+sed -i \"/1001-buildsystem.patch/d\" patches/ubuntu.series; \
+sed -i \"/9001-waveformsignalcolors_fix.patch/d\" patches/ubuntu.series;
 "
 
 "$THIS_DIR/launchpad-submitter"\

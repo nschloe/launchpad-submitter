@@ -1,11 +1,11 @@
 #!/bin/sh -ue
 
 # Set SSH agent variables.
-eval $(cat $HOME/.ssh/agent/info)
+. "$HOME/.keychain/$(/bin/hostname)-sh"
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-$THIS_DIR/launchpad-submitter \
+"$THIS_DIR/launchpad-submitter" \
   --name netcdff \
   --resubmission 1 \
   --source-dir "$HOME/software/netcdf-fortran/source-upstream/" \
