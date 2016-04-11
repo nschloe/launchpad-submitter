@@ -12,7 +12,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/launchpad-submitter" \
   --name docker-gc \
   --source-dir "$SOURCE_DIR" \
-  --ubuntu-releases trusty vivid wily xenial \
+  --ubuntu-releases trusty wily xenial \
   --version "$FULL_VERSION" \
   --ppas nschloe/docker-gc-nightly \
   --submit-hashes-file "$THIS_DIR/docker-gc-submit-hash.dat" \
