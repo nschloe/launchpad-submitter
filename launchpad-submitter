@@ -48,21 +48,18 @@ def _main():
     basedir = os.path.dirname(os.path.realpath(__file__))
 
     # Get Debian info.
+    debian_revision = None
     if args.debian_dir:
-        try:
-            debian_repo = git.Repo(args.debian_dir + '../')
-            debian_revision = str(debian_repo.rev_parse('HEAD'))
-        except git.exc.InvalidGitRepositoryError:
+        for directory in [args.debian_dir, args.debian_dir + '../']:
             try:
-                debian_repo = git.Repo(args.debian_dir)
-                print('Fetching updates...')
+                debian_repo = git.Repo(directory)
+                print('Fetching Debian updates...')
                 debian_repo.remotes.origin.pull()
                 print('done.')
                 debian_revision = str(debian_repo.rev_parse('HEAD'))
             except git.exc.InvalidGitRepositoryError:
-                debian_revision = None
-    else:
-        debian_revision = None
+                # never mind
+                pass
 
     try:
         source_repo = git.Repo(args.source_dir)
