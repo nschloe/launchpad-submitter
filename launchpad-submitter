@@ -130,10 +130,13 @@ def _main():
                     format='tar.gz'
                     )
             fh.close()
-    else:
+    elif args.source_dir:
         # Not a Git repo
         with tarfile.open(tarball_path, 'w:gz') as tar:
             tar.add(args.source_dir, arcname=prefix)
+    else:
+        # No source at all, just a dependency package
+        pass
 
     print('done.')
 
@@ -273,7 +276,6 @@ def _parse_cmd_arguments():
         )
     parser.add_argument(
         '-s', '--source-dir',
-        required=True,
         help='Directory of the package source'
         )
     parser.add_argument(
