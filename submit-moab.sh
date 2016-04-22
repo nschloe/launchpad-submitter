@@ -32,7 +32,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/launchpad-submitter" \
   --name moab \
   --source-dir "$SOURCE_DIR" \
-  --ubuntu-releases wily xenial \
+  --ubuntu-releases wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/moab-nightly \
   --submit-hashes-file "$THIS_DIR/moab-submit-hash1.dat" \

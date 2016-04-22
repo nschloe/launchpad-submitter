@@ -38,7 +38,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
   --name trilinos \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
-  --ubuntu-releases wily xenial \
+  --ubuntu-releases wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/trilinos-nightly \
   --submit-hashes-file "$THIS_DIR/trilinos2-submit-hashes.dat" \

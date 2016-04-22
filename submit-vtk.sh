@@ -51,7 +51,7 @@ VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/vtk/upstream/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \
-  --ubuntu-releases wily xenial \
+  --ubuntu-releases wily xenial yakkety \
   --version "$VERSION" \
   --ppas nschloe/vtk-nightly \
   --submit-hashes-file "$THIS_DIR/vtk-submit-hashes1.dat" \

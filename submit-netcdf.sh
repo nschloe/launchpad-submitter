@@ -17,7 +17,7 @@ sed -i \"/hdf5-library-path.patch/d\" patches/series; \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/netcdf/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \
-  --ubuntu-releases precise trusty wily xenial \
+  --ubuntu-releases precise trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --slot 1 \
   --ppas nschloe/netcdf-nightly \

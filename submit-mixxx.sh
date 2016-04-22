@@ -21,7 +21,7 @@ sed -i \"s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g\" control
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/mixxx/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \
-  --ubuntu-releases trusty wily xenial \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/mixxx-nightly \
   --submit-hashes-file "$THIS_DIR/mixxx-nightly.dat" \

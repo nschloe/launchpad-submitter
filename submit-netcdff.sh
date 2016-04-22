@@ -17,7 +17,7 @@ sed -i \"/privacy-breach-logo.patch/d\" patches/series; \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/netcdf-fortran/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \
-  --ubuntu-releases trusty wily xenial \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/netcdf-nightly \
   --submit-hashes-file "$THIS_DIR/netcdff-submit-hash-unstable.dat" \

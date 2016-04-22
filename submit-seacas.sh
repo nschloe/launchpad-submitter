@@ -12,7 +12,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/launchpad-submitter" \
   --name seacas \
   --source-dir "$SOURCE_DIR" \
-  --ubuntu-releases trusty wily xenial \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/seacas-nightly \
   --submit-hashes-file "$THIS_DIR/seacas-submit-hash1.dat" \
