@@ -14,10 +14,10 @@ DEBIAN_PREPARE="
 "
 "$THIS_DIR/../launchpad-submitter" \
   --name fiat \
-  --debian-dir "$HOME/software/debian-science-fenics/github/fiat/trunk/debian/" \
+  --debian-dir "$HOME/rcs/debian-packages/fenics/fiat/debian/" \
   --source-dir "$SOURCE_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \
   --submit-hashes-file "$THIS_DIR/fiat-submit-hash.dat" \

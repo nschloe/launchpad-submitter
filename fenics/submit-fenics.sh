@@ -15,8 +15,8 @@ DEBIAN_PREPARE="
 "
 "$THIS_DIR/../launchpad-submitter" \
   --name fenics \
-  --debian-dir "$HOME/software/debian-science-fenics/github/fenics/trunk/debian/" \
-  --ubuntu-releases xenial yakkety \
+  --debian-dir "$HOME/rcs/debian-packages/fenics/fenics/debian/" \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \
   --submit-hashes-file "$THIS_DIR/fenics-submit-hash.dat" \

@@ -12,9 +12,9 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$THIS_DIR/../launchpad-submitter" \
   --name instant \
-  --debian-dir "$HOME/software/debian-science-fenics/github/instant/trunk/debian/" \
+  --debian-dir "$HOME/rcs/debian-packages/fenics/instant/debian/" \
   --source-dir "$SOURCE_DIR" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \
   --submit-hashes-file "$THIS_DIR/instant-submit-hash.dat" \

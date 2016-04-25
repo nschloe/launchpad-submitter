@@ -14,9 +14,9 @@ DEBIAN_PREPARE="
 "
 "$THIS_DIR/../launchpad-submitter" \
   --name ufl \
-  --debian-dir "$HOME/software/debian-science-fenics/github/ufl/trunk/debian/" \
+  --debian-dir "$HOME/rcs/debian-packages/fenics/ufl/debian/" \
   --source-dir "$SOURCE_DIR" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \
   --submit-hashes-file "$THIS_DIR/ufl-submit-hash.dat" \

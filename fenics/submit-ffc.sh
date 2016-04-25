@@ -5,7 +5,8 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-SOURCE_DIR="$HOME/software/fenics/ffc/upstream/"
+# SOURCE_DIR="$HOME/software/fenics/ffc/upstream/"
+SOURCE_DIR="$HOME/software/fenics/ffc/source-nschloe/"
 
 VERSION=$(grep '__version__ =' "$SOURCE_DIR/ffc/__init__.py" | sed 's/.*\([0-9]\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
@@ -16,10 +17,10 @@ sed -i \"/ufc-1.pc/d\" rules; \
 "
 "$THIS_DIR/../launchpad-submitter" \
   --name ffc \
-  --debian-dir "$HOME/software/debian-science-fenics/github/ffc/trunk/debian/" \
+  --debian-dir "$HOME/rcs/debian-packages/fenics/ffc/debian/" \
   --source-dir "$SOURCE_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \
   --submit-hashes-file "$THIS_DIR/ffc-submit-hash.dat" \
