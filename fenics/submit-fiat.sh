@@ -13,7 +13,6 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_PREPARE="
 "
 "$THIS_DIR/../launchpad-submitter" \
-  --name fiat \
   --debian-dir "$HOME/rcs/debian-packages/fenics/fiat/debian/" \
   --source-dir "$SOURCE_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \

@@ -13,7 +13,6 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_PREPARE="
 "
 "$THIS_DIR/../launchpad-submitter" \
-  --name ufl \
   --debian-dir "$HOME/rcs/debian-packages/fenics/ufl/debian/" \
   --source-dir "$SOURCE_DIR" \
   --ubuntu-releases trusty wily xenial yakkety \

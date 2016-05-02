@@ -16,7 +16,6 @@ sed -i \"/fix-ufc-config.patch/d\" patches/series; \
 sed -i \"/ufc-1.pc/d\" rules; \
 "
 "$THIS_DIR/../launchpad-submitter" \
-  --name ffc \
   --debian-dir "$HOME/rcs/debian-packages/fenics/ffc/debian/" \
   --source-dir "$SOURCE_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \

@@ -14,7 +14,6 @@ FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_PREPARE="
 "
 "$THIS_DIR/../launchpad-submitter" \
-  --name fenics \
   --debian-dir "$HOME/rcs/debian-packages/fenics/fenics/debian/" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
