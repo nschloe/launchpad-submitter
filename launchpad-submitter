@@ -88,8 +88,24 @@ def _update_patches(debian_dir, source_dir):
     return
 
 
-def _main():
+def _get_name_from_changelog(debian_dir, source_dir):
+    if debian_dir:
+        changelog = os.path.join(debian_dir, 'changelog')
+    elif source_dir:
+        changelog = os.path.join(source_dir, 'debian', 'changelog')
+    else:
+        raise RuntimeError('Need source repo required.')
 
+    with open(changelog, 'r') as f:
+        first_line = f.readline()
+        name_search = re.search('( *[^ ]+).*', first_line, re.IGNORECASE)
+        if name_search:
+            return name_search.group(1)
+        else:
+            raise RuntimeError('Could not extract name from changelog.')
+
+
+def _main():
     args = _parse_cmd_arguments()
 
     # Retrieve the directory of this script
@@ -156,21 +172,20 @@ def _main():
             print('Latest version already submitted to launchpad.')
             return 0
 
-    # Extract the name from the changelog
+    # Copy over the debian folder a temporary directory
+    #     /tmp/trilinos/trusty/debian/
     if args.debian_dir:
-        changelog = os.path.join(args.debian_dir, 'changelog')
-    elif args.source_dir:
-        changelog = os.path.join(args.source_dir, 'debian', 'changelog')
-    else:
-        raise RuntimeError('Need source repo required.')
+        tmp_debian = tempfile.mkdtemp()
+        shutil.rmtree(tmp_debian)
+        shutil.copytree(args.debian_dir, tmp_debian)
 
-    with open(changelog, 'r') as f:
-        first_line = f.readline()
-        name_search = re.search('( *[^ ]+).*', first_line, re.IGNORECASE)
-        if name_search:
-            name = name_search.group(1)
-        else:
-            raise RuntimeError('Could not extract name from changelog.')
+    if args.debian_prepare:
+        print('Execute \'%s\'...' % args.debian_prepare)
+        os.chdir(tmp_debian)
+        _run(args.debian_prepare)
+
+    # Extract the name from the changelog
+    name = _get_name_from_changelog(tmp_debian, args.source_dir)
 
     # Create the tarball.
     tarball_path = os.path.join('/tmp/', name + '.tar.gz')
@@ -182,7 +197,7 @@ def _main():
             os.chdir(args.source_dir)
             # Append the '/' to $PREFIX, otherwise this may be interpreted as
             # an ordinary filename-prefix.
-            subprocess.check_output(
+            _run(
                 'git-archive-all --prefix=%s %s' %
                 (prefix + '/', tarball_path)
                 )
@@ -208,25 +223,13 @@ def _main():
         # undo temporary commit aka `git reset HEAD^`
         source_repo.git.reset('HEAD^')
 
+    _update_patches(tmp_debian, args.source_dir)
+
     # # Cleaning Debian directory to avoid copy errors with invalid
     # # symlinks.
     #  TODO don't clean to make sure not to accidentally delete patches
     # os.chdir(args.debian_dir)
     # subprocess.check_call(['git', 'clean', '-f', '-d'])
-
-    # Copy over the debian folder a temporary directory
-    #     /tmp/trilinos/trusty/debian/
-    if args.debian_dir:
-        tmp_debian = tempfile.mkdtemp()
-        shutil.rmtree(tmp_debian)
-        shutil.copytree(args.debian_dir, tmp_debian)
-
-    if args.debian_prepare:
-        print('Execute \'%s\'...' % args.debian_prepare)
-        os.chdir(tmp_debian)
-        _run(args.debian_prepare)
-
-    _update_patches(tmp_debian, args.source_dir)
 
     for ubuntu_release in args.ubuntu_releases:
         # Create empty directory of the form
