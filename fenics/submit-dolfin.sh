@@ -27,16 +27,16 @@ sed -i \"/slepc-dev/d\" control; \
   --submit-hashes-file "$THIS_DIR/dolfin-submit-hash0.dat" \
   "$@"
 
-# DEBIAN_PREPARE="
-# sed -i \"/python-netcdf/d\" control; \
-# "
-# "$THIS_DIR/../launchpad-submitter" \
-#   --name dolfin \
-#   --debian-dir "$HOME/software/debian-science-fenics/github/dolfin/trunk/debian/" \
-#   --source-dir "$SOURCE_DIR" \
-#   --debian-prepare "$DEBIAN_PREPARE" \
-#   --ubuntu-releases xenial yakkety \
-#   --version "$FULL_VERSION" \
-#   --ppas nschloe/fenics-nightly \
-#   --submit-hashes-file "$THIS_DIR/dolfin-submit-hash1.dat" \
-#   "$@"
+DEBIAN_PREPARE="
+sed -i \"/python-netcdf/d\" control; \
+"
+"$THIS_DIR/../launchpad-submitter" \
+  --name dolfin \
+  --debian-dir "$HOME/software/debian-science-fenics/github/dolfin/trunk/debian/" \
+  --source-dir "$SOURCE_DIR" \
+  --debian-prepare "$DEBIAN_PREPARE" \
+  --ubuntu-releases xenial yakkety \
+  --version "$FULL_VERSION" \
+  --ppas nschloe/fenics-nightly \
+  --submit-hashes-file "$THIS_DIR/dolfin-submit-hash1.dat" \
+  "$@"

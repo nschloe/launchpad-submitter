@@ -9,6 +9,7 @@ import datetime
 import git
 # import git_archive_all
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -108,9 +109,25 @@ def _main():
             print('Latest version already submitted to launchpad.')
             return 0
 
+    # Extract the name from the changelog
+    if args.debian_dir:
+        changelog = os.path.join(args.debian_dir, 'changelog')
+    elif args.source_dir:
+        changelog = os.path.join(args.source_dir, 'debian', 'changelog')
+    else:
+        raise RuntimeError('Need source repo required.')
+
+    with open(changelog, 'r') as f:
+        first_line = f.readline()
+        name_search = re.search('( *[^ ]+).*', first_line, re.IGNORECASE)
+        if name_search:
+            name = name_search.group(1)
+        else:
+            raise RuntimeError('Could not extract name from changelog.')
+
     # Create the tarball.
-    tarball_path = os.path.join('/tmp/', args.name + '.tar.gz')
-    prefix = args.name + '-' + args.version
+    tarball_path = os.path.join('/tmp/', name + '.tar.gz')
+    prefix = name + '-' + args.version
     print('Creating new archive %s...' % tarball_path)
     if source_repo:
         if source_repo.submodules:
@@ -147,7 +164,7 @@ def _main():
     for ubuntu_release in args.ubuntu_releases:
         # Create empty directory of the form
         #     /tmp/trilinos/trusty/
-        release_dir = os.path.join('/tmp', args.name, ubuntu_release)
+        release_dir = os.path.join('/tmp', name, ubuntu_release)
         if os.path.exists(release_dir):
             shutil.rmtree(release_dir)
         # Use Python3's makedirs for recursive creation
@@ -155,7 +172,7 @@ def _main():
 
         # Copy source tarball to
         #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123.tar.gz
-        tarball_name = '%s_%s.orig.tar.gz' % (args.name, args.version)
+        tarball_name = '%s_%s.orig.tar.gz' % (name, args.version)
         shutil.copy2(tarball_path, os.path.join(release_dir, tarball_name))
         # Unpack the tarball
         os.chdir(release_dir)
@@ -193,7 +210,7 @@ def _main():
         # Patch the sources if necessary
         patch_file = os.path.join(
                 basedir,
-                args.name + '-ubuntu-backports',
+                name + '-ubuntu-backports',
                 ubuntu_release + '.patch'
                 )
         if os.path.isfile(patch_file):
@@ -219,7 +236,7 @@ def _main():
   * Initial release
 
  -- Nico Schlömer <nico.schloemer@gmail.com>  %s'''
-                        % (args.name, chlog_version,
+                        % (name, chlog_version,
                            ubuntu_release,
                            utcnow.strftime('%a, %d %b %Y %T +0000')
                            ))
@@ -242,11 +259,11 @@ def _main():
                 subprocess.check_call([
                     'dput',
                     'ppa:%s' % ppa,
-                    '%s_%s_source.changes' % (args.name, full_version)
+                    '%s_%s_source.changes' % (name, full_version)
                     ])
                 # Remove the upload file so we can upload again to another ppa
                 os.remove('%s_%s_source.ppa.upload'
-                          % (args.name, full_version)
+                          % (name, full_version)
                           )
 
     if args.submit_hashes_file:
@@ -263,12 +280,6 @@ def _main():
 
 def _parse_cmd_arguments():
     parser = argparse.ArgumentParser(description='Submit builds to launchpad.')
-    parser.add_argument(
-        '-n', '--name',
-        type=str,
-        required=True,
-        help='package name'
-        )
     parser.add_argument(
         '-r', '--resubmission',
         default=1,

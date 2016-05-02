@@ -10,7 +10,6 @@ SOURCE_DIR="$HOME/software/swig/swig-3.0.8/"
 FULL_VERSION="3.0.8-ppa0"
 
 "$THIS_DIR/launchpad-submitter" \
-  --name swig \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/swig/debian/" \
   --ubuntu-releases trusty wily \

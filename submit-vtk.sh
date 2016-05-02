@@ -47,7 +47,6 @@ sed -i \"/libnetcdf-cxx-legacy-dev/d\" control; \
 
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/launchpad-submitter" \
-  --name vtk6 \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/vtk/upstream/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \

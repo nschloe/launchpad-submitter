@@ -10,7 +10,6 @@ VERSION=$(grep "SEACASProj_VERSION " "$SOURCE_DIR/Version.cmake" | sed "s/[^0-9]
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$THIS_DIR/launchpad-submitter" \
-  --name seacas \
   --source-dir "$SOURCE_DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \

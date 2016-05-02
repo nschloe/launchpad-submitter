@@ -10,7 +10,6 @@ VERSION=$(cat "$SOURCE_DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$THIS_DIR/launchpad-submitter" \
-  --name docker-gc \
   --source-dir "$SOURCE_DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \

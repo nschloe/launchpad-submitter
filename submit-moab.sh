@@ -18,7 +18,6 @@ sed -i \"/ENABLE_PARMETIS/d\" rules; \
 sed -i \"/MOAB_BUILD_MBPART/d\" rules; \
 "
 "$THIS_DIR/launchpad-submitter" \
-  --name moab \
   --source-dir "$SOURCE_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases trusty \
@@ -30,7 +29,6 @@ sed -i \"/MOAB_BUILD_MBPART/d\" rules; \
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$THIS_DIR/launchpad-submitter" \
-  --name moab \
   --source-dir "$SOURCE_DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$FULL_VERSION" \

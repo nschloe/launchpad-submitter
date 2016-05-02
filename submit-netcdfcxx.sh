@@ -9,7 +9,6 @@ SOURCE_DIR="$HOME/software/netcdf-cxx/source-upstream/"
 VERSION=$(grep "^AC_INIT" $SOURCE_DIR/configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/")
 
 "$THIS_DIR/launchpad-submitter" \
-  --name netcdf-cxx \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/netcdf-cxx/debian/" \
   --ubuntu-releases trusty wily xenial yakkety \

@@ -13,7 +13,6 @@ DEBIAN_PREPARE="
 sed -i \"/privacy-breach-logo.patch/d\" patches/series; \
 "
 "$THIS_DIR/launchpad-submitter" \
-  --name netcdf-fortran \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/netcdf-fortran/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \

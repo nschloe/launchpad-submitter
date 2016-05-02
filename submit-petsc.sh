@@ -13,10 +13,12 @@ VERSION_SUBMINOR=$(grep '#define PETSC_VERSION_SUBMINOR' "$SOURCE_DIR/include/pe
 
 # PETSc adds a 0 to the minor version for development to distinguish it from
 # the release.
+UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
 UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR="$HOME/rcs/debian-packages/petsc/debian/"
 DEBIAN_VERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
+DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9]\.[0-9]\).*/\1/')
 
 # Some comments here:
 #   * We cannot enable sowing since it requires downloading the software at
@@ -36,12 +38,12 @@ sed -i \"s/--useThreads 0/--useThreads=0 --with-sowing=0/g\" rules; \
 sed -i \"/makefile.html/d\" petsc$DEBIAN_VERSION-doc.docs; \
 sed -i \"/docs/d\" petsc$DEBIAN_VERSION-doc.docs; \
 rename 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/' *; \
-for i in *; do sed -i 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/g' \"\$i\"; done \
+for i in *; do sed -i 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/g' \"\$i\"; done; \
+for i in *; do sed -i 's/$DEBIAN_SOVERSION/$UPSTREAM_SOVERSION/g' \"\$i\"; done; \
 "
 # sed -i \"/hypre.patch/d\" patches/series; \
 
 "$THIS_DIR/launchpad-submitter" \
-  --name petsc \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \

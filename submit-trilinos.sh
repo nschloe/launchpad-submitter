@@ -21,7 +21,6 @@ sed -i '/SuperLU/d' rules;
 
 # trusty
 "$THIS_DIR/launchpad-submitter" \
-  --name trilinos \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
@@ -35,7 +34,6 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 # submit for the rest
 "$THIS_DIR/launchpad-submitter" \
-  --name trilinos \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases wily xenial yakkety \

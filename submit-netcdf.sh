@@ -13,7 +13,6 @@ DEBIAN_PREPARE="
 sed -i \"/hdf5-library-path.patch/d\" patches/series; \
 "
 "$THIS_DIR/launchpad-submitter" \
-  --name netcdf \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/netcdf/debian/" \
   --debian-prepare "$DEBIAN_PREPARE" \
