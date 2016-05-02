@@ -9,8 +9,8 @@ SOURCE_DIR="$HOME/software/netcdf/source-upstream/"
 VERSION=$(grep "^AC_INIT" "$SOURCE_DIR/configure.ac" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
+#sed -i \"/hdf5-library-path.patch/d\" patches/series; \
 DEBIAN_PREPARE="
-sed -i \"/hdf5-library-path.patch/d\" patches/series; \
 "
 "$THIS_DIR/launchpad-submitter" \
   --source-dir "$SOURCE_DIR" \
@@ -20,4 +20,5 @@ sed -i \"/hdf5-library-path.patch/d\" patches/series; \
   --version "$FULL_VERSION" \
   --slot 1 \
   --ppas nschloe/netcdf-nightly \
-  --submit-hashes-file "$THIS_DIR/netcdf-submit-hash-unstable.dat"
+  --submit-hashes-file "$THIS_DIR/netcdf-submit-hash-unstable.dat" \
+  "$@"

@@ -48,7 +48,12 @@ def _update_patches(debian_dir, source_dir):
     robust, so use that here to update the Debian patches.
     '''
     print('Updating patches...')
-    series = os.path.join(debian_dir, 'patches', 'series')
+
+    if os.path.isfile(os.path.join(debian_dir, 'patches', 'ubuntu.series')):
+        series = os.path.join(debian_dir, 'patches', 'ubuntu.series')
+    else:
+        series = os.path.join(debian_dir, 'patches', 'series')
+
     with open(series, 'r') as f:
         content = f.readlines()
 
@@ -221,7 +226,6 @@ def _main():
         os.chdir(tmp_debian)
         _run(args.debian_prepare)
 
-    print('tmp_debian', tmp_debian)
     _update_patches(tmp_debian, args.source_dir)
 
     for ubuntu_release in args.ubuntu_releases:

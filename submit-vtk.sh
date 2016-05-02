@@ -25,13 +25,9 @@ sed -i \"/FTGL.h/d\" libvtk6-dev.install; \
 sed -i \"/vtkftglConfig.h/d\" libvtk6-dev.install; \
 sed -i \"/vtk_netcdf.h/d\" libvtk6-dev.install; \
 sed -i \"/vtk_netcdfcpp.h/d\" libvtk6-dev.install; \
-sed -i \"/10_allpatches.patch/d\" patches/series; \
-sed -i \"/30_matplotlib.patch/d\" patches/series; \
 sed -i \"/40_use_system_sqlite.patch/d\" patches/series; \
-sed -i \"/50_use_system_utf8.patch/d\" patches/series; \
 sed -i \"/90_gdal-2.0.patch/d\" patches/series; \
 sed -i \"/97_fix_latex_doxygen.patch/d\" patches/series; \
-sed -i \"/99_remove_xdmf3.patch/d\" patches/series; \
 sed -i \"/102_enable_system_proj4_lib.patch/d\" patches/series; \
 sed -i \"/104_fix_gcc_version_6.patch/d\" patches/series; \
 sed -i \"/-DVTK_USE_SYSTEM_GL2PS=ON/d\" rules; \
