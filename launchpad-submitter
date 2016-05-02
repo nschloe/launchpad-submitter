@@ -14,10 +14,11 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 import yaml
 
 
-def _run(command):
+def _run(command, except_on_error=True):
     '''Runs a given command on the command line and returns its output.
     '''
     # print(command)
@@ -31,7 +32,7 @@ def _run(command):
     output = process.stdout.read()[:-1]
     ret = process.wait()
 
-    if ret != 0:
+    if except_on_error and ret != 0:
         sys.exit(
             '\nERROR: The command \n\n%s\n\nreturned a nonzero '
             'exit status. The error message is \n\n%s\n\n'
@@ -39,6 +40,47 @@ def _run(command):
             % (command, process.stderr.read()[:-1])
             )
     return output
+
+
+def _update_patches(debian_dir, source_dir):
+    '''debuild's patch apply doesn't allow fuzz, but fuzz is often what happens
+    when applying a Debian patch to the master branch. `patch` itself is more
+    robust, so use that here to update the Debian patches.
+    '''
+    print('Updating patches...')
+    series = os.path.join(debian_dir, 'patches', 'series')
+    with open(series, 'r') as f:
+        content = f.readlines()
+
+    if content:
+        # copy the clean source tree to a tmp location
+        tmp_dir = tempfile.mkdtemp()
+        tmp_dir_a = os.path.join(tmp_dir, 'a')
+        shutil.copytree(source_dir, os.path.join(tmp_dir, 'a'))
+        os.chdir(tmp_dir)
+        for line in content:
+            filename = line.strip()
+            if filename[0] == '#':
+                # skip commented-out lines
+                continue
+            print('  Updating %s...' % filename)
+            tmp_dir_b = os.path.join(tmp_dir, 'b')
+            shutil.copytree(source_dir, tmp_dir_b)
+            # patch the source
+            patch_path = os.path.join(debian_dir, 'patches', filename)
+            os.chdir(tmp_dir_b)
+            _run('patch -p1 < %s' % patch_path)
+            os.chdir(tmp_dir)
+            _run(
+                'diff -Naur %s %s > %s' % ('a', 'b', patch_path),
+                except_on_error=False
+                )
+
+            shutil.rmtree(tmp_dir_b)
+        shutil.rmtree(tmp_dir_a)
+
+    print('done.')
+    return
 
 
 def _main():
@@ -161,6 +203,27 @@ def _main():
         # undo temporary commit aka `git reset HEAD^`
         source_repo.git.reset('HEAD^')
 
+    # # Cleaning Debian directory to avoid copy errors with invalid
+    # # symlinks.
+    #  TODO don't clean to make sure not to accidentally delete patches
+    # os.chdir(args.debian_dir)
+    # subprocess.check_call(['git', 'clean', '-f', '-d'])
+
+    # Copy over the debian folder a temporary directory
+    #     /tmp/trilinos/trusty/debian/
+    if args.debian_dir:
+        tmp_debian = tempfile.mkdtemp()
+        shutil.rmtree(tmp_debian)
+        shutil.copytree(args.debian_dir, tmp_debian)
+
+    if args.debian_prepare:
+        print('Execute \'%s\'...' % args.debian_prepare)
+        os.chdir(tmp_debian)
+        _run(args.debian_prepare)
+
+    print('tmp_debian', tmp_debian)
+    _update_patches(tmp_debian, args.source_dir)
+
     for ubuntu_release in args.ubuntu_releases:
         # Create empty directory of the form
         #     /tmp/trilinos/trusty/
@@ -180,30 +243,8 @@ def _main():
         tar.extractall()
         tar.close()
 
-        # # Cleaning Debian directory to avoid copy errors with invalid
-        # # symlinks.
-        #  TODO don't clean to make sure not to accidentally delete patches
-        # os.chdir(args.debian_dir)
-        # subprocess.check_call(['git', 'clean', '-f', '-d'])
-
-        # Copy over the debian folder to
-        #     /tmp/trilinos/trusty/debian/
-        os.chdir(release_dir)
-        if args.debian_dir:
-            shutil.copytree(
-                    args.debian_dir,
-                    os.path.join(prefix, 'debian')
-                    )
-        # else:
-        #     # assert that the source tree contains a folder 'debian'
-        #     assert(os.path.isdir(os.path.join(args.source_dir, 'debian')))
-
-        assert os.path.isdir(os.path.join(prefix, 'debian'))
-
-        if args.debian_prepare:
-            print('Execute \'%s\'...' % args.debian_prepare)
-            os.chdir(os.path.join(prefix, 'debian'))
-            _run(args.debian_prepare)
+        # Copy over Debian dir
+        shutil.copytree(tmp_debian, os.path.join(prefix, 'debian'))
 
         os.chdir(release_dir)
 
