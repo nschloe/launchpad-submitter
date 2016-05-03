@@ -51,8 +51,10 @@ def _update_patches(debian_dir, source_dir):
 
     if os.path.isfile(os.path.join(debian_dir, 'patches', 'ubuntu.series')):
         series = os.path.join(debian_dir, 'patches', 'ubuntu.series')
-    else:
+    elif os.path.isfile(os.path.join(debian_dir, 'patches', 'series')):
         series = os.path.join(debian_dir, 'patches', 'series')
+    else:
+        return
 
     with open(series, 'r') as f:
         content = f.readlines()
@@ -114,7 +116,7 @@ def _main():
     # Get Debian info.
     debian_revision = None
     if args.debian_dir:
-        for directory in [args.debian_dir, args.debian_dir + '../']:
+        for directory in [args.debian_dir, os.path.join(args.debian_dir, '..')]:
             try:
                 debian_repo = git.Repo(directory)
                 print('Fetching Debian updates...')
@@ -178,11 +180,6 @@ def _main():
         tmp_debian = tempfile.mkdtemp()
         shutil.rmtree(tmp_debian)
         shutil.copytree(args.debian_dir, tmp_debian)
-
-    if args.debian_prepare:
-        print('Execute \'%s\'...' % args.debian_prepare)
-        os.chdir(tmp_debian)
-        _run(args.debian_prepare)
 
     # Extract the name from the changelog
     name = _get_name_from_changelog(tmp_debian, args.source_dir)
@@ -359,11 +356,6 @@ def _parse_cmd_arguments():
         help='Package version',
         type=str,
         required=True
-        )
-    parser.add_argument(
-        '-e', '--debian-prepare',
-        help='Shell command to execute in the debian folder before processing',
-        type=str
         )
     parser.add_argument(
         '-l', '--slot',

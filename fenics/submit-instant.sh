@@ -11,8 +11,8 @@ VERSION=$(grep '__version__ =' "$SOURCE_DIR/instant/__init__.py" | sed 's/.*\([0
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$THIS_DIR/../launchpad-submitter" \
-  --debian-dir "$HOME/rcs/debian-packages/fenics/instant/debian/" \
   --source-dir "$SOURCE_DIR" \
+  --debian-dir "$HOME/rcs/debian-packages/fenics/instant/debian/" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \

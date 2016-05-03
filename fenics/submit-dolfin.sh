@@ -12,27 +12,30 @@ MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([
 MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_PREPARE="
-sed -i \"/python-netcdf/d\" control; \
-sed -i \"/slepc-dev/d\" control; \
-"
+DEBIAN_DIR="/tmp/debian-dolfin"
+rm -rf "$DEBIAN_DIR"
+cp -r "$HOME/rcs/debian-packages/fenics/dolfin/debian/" "$DEBIAN_DIR"
+cd "$DEBIAN_DIR"
+sed -i "/python-netcdf/d" control
+sed -i "/slepc-dev/d" control
+
 "$THIS_DIR/../launchpad-submitter" \
-  --debian-dir "$HOME/rcs/debian-packages/fenics/dolfin/debian/" \
   --source-dir "$SOURCE_DIR" \
-  --debian-prepare "$DEBIAN_PREPARE" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty wily \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \
   --submit-hashes-file "$THIS_DIR/dolfin-submit-hash0.dat" \
   "$@"
 
-DEBIAN_PREPARE="
-sed -i \"/python-netcdf/d\" control; \
-"
+rm -rf "$DEBIAN_DIR"
+cp -r "$HOME/rcs/debian-packages/fenics/dolfin/debian/" "$DEBIAN_DIR"
+cd "$DEBIAN_DIR"
+sed -i "/python-netcdf/d" control
+
 "$THIS_DIR/../launchpad-submitter" \
-  --debian-dir "$HOME/software/debian-science-fenics/github/dolfin/trunk/debian/" \
   --source-dir "$SOURCE_DIR" \
-  --debian-prepare "$DEBIAN_PREPARE" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \

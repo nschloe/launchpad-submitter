@@ -13,13 +13,15 @@ MINOR=$(grep 'MSHR_VERSION_MINOR ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-
 MICRO=$(grep 'MSHR_VERSION_MICRO ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_PREPARE="
-sed -i \"/mshrable/d\" libmshr-dev.install; \
-"
+DEBIAN_DIR="/tmp/debian-mshr"
+rm -rf "$DEBIAN_DIR"
+cp -r "$HOME/rcs/debian-packages/fenics/mshr/debian/" "$DEBIAN_DIR"
+cd "$DEBIAN_DIR"
+sed -i "/mshrable/d" libmshr-dev.install
+
 "$THIS_DIR/../launchpad-submitter" \
   --source-dir "$SOURCE_DIR" \
-  --debian-dir "$HOME/rcs/debian-packages/fenics/mshr/debian/" \
-  --debian-prepare "$DEBIAN_PREPARE" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppas nschloe/fenics-nightly \

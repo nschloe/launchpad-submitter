@@ -11,8 +11,6 @@ MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([
 MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_PREPARE="
-"
 "$THIS_DIR/../launchpad-submitter" \
   --debian-dir "$HOME/rcs/debian-packages/fenics/fenics/debian/" \
   --ubuntu-releases trusty wily xenial yakkety \
