@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+import argparse
+import git
+import os
+import shutil
+import tempfile
+
+
+def update_patches(directory):
+    '''debuild's patch apply doesn't allow fuzz, but fuzz is often what happens
+    when applying a Debian patch to the master branch. `patch` itself is more
+    robust, so use that here to update the Debian patches.
+    '''
+    debian_dir = os.path.join(directory, 'debian')
+    if os.path.isfile(os.path.join(debian_dir, 'patches', 'ubuntu.series')):
+        series = os.path.join(debian_dir, 'patches', 'ubuntu.series')
+    elif os.path.isfile(os.path.join(debian_dir, 'patches', 'series')):
+        series = os.path.join(debian_dir, 'patches', 'series')
+    else:
+        return
+
+    with open(series, 'r') as f:
+        content = f.readlines()
+
+    if content:
+        try:
+            repo = git.Repo(directory)
+        except git.exc.InvalidGitRepositoryError:
+            raise RuntimeError('Directory %s is not Git-managed.' % directory)
+
+        tmp_dir = tempfile.mkdtemp()
+        filenames = []
+        for line in content:
+            filename = line.strip()
+            if filename[0] == '#':
+                # skip commented-out lines
+                continue
+            filenames.append(filename)
+
+            print('  Updating %s...' % filename)
+            repo.git.checkout()
+            # apply the patch
+            patch_path = os.path.join(debian_dir, 'patches', filename)
+            repo.git.apply(patch_path)
+            # write diff to temporary file
+            with open(os.path.join(tmp_dir, filename), 'w') as f:
+                f.write(repo.git.diff())
+
+        # move the files back over to debian/patches
+        repo.git.checkout()
+        for filename in filenames:
+            shutil.move(
+                    os.path.join(tmp_dir, filename),
+                    os.path.join(debian_dir, 'patches', filename)
+                    )
+
+    return
+
+
+def _parse_cmd_arguments():
+    parser = argparse.ArgumentParser(
+            description='Update patches builds to launchpad.'
+            )
+    parser.add_argument(
+            'directory',
+            metavar='DIR',
+            type=str,
+            help='directory with source and debian/'
+            )
+    return parser.parse_args()
+
+if __name__ == '__main__':
+    args = _parse_cmd_arguments()
+    update_patches(args.directory)
