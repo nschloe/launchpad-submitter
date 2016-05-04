@@ -3,7 +3,6 @@
 '''
 Automatically create tarball and submit it to launchpad.
 '''
-
 import argparse
 import datetime
 import git
@@ -11,32 +10,7 @@ import os
 import re
 import shutil
 import subprocess
-import sys
 import tarfile
-
-
-def _run(command, except_on_error=True):
-    '''Runs a given command on the command line and returns its output.
-    '''
-    # print(command)
-    process = subprocess.Popen(
-        command,
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        close_fds=True
-        )
-    output = process.stdout.read()[:-1]
-    ret = process.wait()
-
-    if except_on_error and ret != 0:
-        sys.exit(
-            '\nERROR: The command \n\n%s\n\nreturned a nonzero '
-            'exit status. The error message is \n\n%s\n\n'
-            'Abort.\n'
-            % (command, process.stderr.read()[:-1])
-            )
-    return output
 
 
 def _get_name_from_changelog(changelog):
