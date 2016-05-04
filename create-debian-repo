@@ -64,13 +64,49 @@ def _parse_cmd_arguments():
             description='Update patches builds to launchpad.'
             )
     parser.add_argument(
-            'directory',
-            metavar='DIR',
+            '--source', '-s',
             type=str,
-            help='directory with source and debian/'
+            required=True,
+            help='source directory'
+            )
+    parser.add_argument(
+            '--debian', '-d',
+            type=str,
+            required=True,
+            help='debian/ directory'
+            )
+    parser.add_argument(
+            '--out', '-o',
+            type=str,
+            required=True,
+            help='output directory'
             )
     return parser.parse_args()
 
+
+def create_repo(source, debian, out):
+    shutil.copytree(source, out)
+    shutil.copytree(debian, os.path.join(out, 'debian'))
+
+    # Remove git-related entities to ensure a smooth creation of the repo later
+    try:
+        shutil.rmtree(os.path.join(out, '.git'))
+        os.remove(os.path.join(out, '.gitignore'))
+        shutil.rmtree(os.path.join(out, 'debian', '.git'))
+        os.remove(os.path.join(out, 'debian', '.gitignore'))
+    except FileNotFoundError:
+        pass
+
+    repo = git.Repo.init(out)
+    repo.index.add('*')
+    repo.index.commit('import source, debian/')
+
+    update_patches(out)
+    repo.index.commit('updated patches')
+
+    return
+
+
 if __name__ == '__main__':
     args = _parse_cmd_arguments()
-    update_patches(args.directory)
+    create_repo(args.source, args.debian, args.out)

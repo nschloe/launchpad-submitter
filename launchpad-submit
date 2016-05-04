@@ -187,12 +187,6 @@ def _parse_cmd_arguments():
         type=str
         )
     parser.add_argument(
-        '-z', '--submit-hashes-file',
-        help='File in which to store the submit hashes',
-        type=str,
-        default=None
-        )
-    parser.add_argument(
         '-f', '--force',
         help='Force submission even if build is already uploaded',
         action='store_true',
