@@ -115,7 +115,6 @@ def _copytree(source, dest):
 
 
 def create_repo(source, debian, out):
-    print(source)
     _copytree(source, out)
     _copytree(debian, os.path.join(out, 'debian'))
 
