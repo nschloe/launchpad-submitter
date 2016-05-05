@@ -40,11 +40,9 @@ sed -i "/vtk_netcdfcpp.h/d" rules
 rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
-"$THIS_DIR/launchpad-submitter" \
-  --source-dir "$SOURCE_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+"$THIS_DIR/launchpad-submit" \
+  --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$VERSION" \
-  --ppas nschloe/vtk-nightly \
-  --submit-hashes-file "$THIS_DIR/vtk-submit-hashes1.dat" \
+  --ppa nschloe/vtk-nightly \
   "$@"

@@ -15,5 +15,5 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
   --directory "$SOURCE_DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
-  --ppas nschloe/seacas-nightly \
+  --ppa nschloe/seacas-nightly \
   "$@"

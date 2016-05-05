@@ -21,20 +21,10 @@ rm -rf "$DIR"
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-cd "$DIR"
-HASH=$(git show --pretty=format:'%T')
-HASHFILE="$THIS_DIR/netcdf-submit-hash-unstable.dat"
-if [ "$HASH" = "$(cat "$HASHFILE")" ]; then
-  echo "Already submitted."
-  exit 1
-fi
-
 "$THIS_DIR/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases precise trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --slot 1 \
-  --ppas nschloe/netcdf-nightly \
+  --ppa nschloe/netcdf-nightly \
   "$@"
-
-echo "$HASH" > "$HASHFILE"

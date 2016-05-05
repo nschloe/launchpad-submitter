@@ -56,19 +56,9 @@ rm -rf "$DIR"
 
 cd "$DEBIAN_DIR" && git checkout .
 
-cd "$DIR"
-HASH=$(git show --pretty=format:'%T')
-HASHFILE="$THIS_DIR/petsc-submit-hash.dat"
-if [ "$HASH" = "$(cat "$HASHFILE")" ]; then
-  echo "Already submitted."
-  exit 1
-fi
-
 "$THIS_DIR/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --ppas nschloe/petsc-nightly \
   "$@"
-
-echo "$HASH" > "$HASHFILE"
