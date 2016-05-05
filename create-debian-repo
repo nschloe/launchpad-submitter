@@ -30,6 +30,8 @@ def update_patches(directory):
         except git.exc.InvalidGitRepositoryError:
             raise RuntimeError('Directory %s is not Git-managed.' % directory)
 
+        repo.git.checkout('.')
+
         tmp_dir = tempfile.mkdtemp()
         filenames = []
         for line in content:
@@ -40,16 +42,17 @@ def update_patches(directory):
             filenames.append(filename)
 
             print('  Updating %s...' % filename)
-            repo.git.checkout()
+            repo.git.checkout('.')
             # apply the patch
             patch_path = os.path.join(debian_dir, 'patches', filename)
             repo.git.apply(patch_path)
             # write diff to temporary file
             with open(os.path.join(tmp_dir, filename), 'w') as f:
                 f.write(repo.git.diff())
+                f.write('\n')
 
         # move the files back over to debian/patches
-        repo.git.checkout()
+        repo.git.checkout('.')
         for filename in filenames:
             shutil.move(
                     os.path.join(tmp_dir, filename),
@@ -102,6 +105,7 @@ def create_repo(source, debian, out):
     repo.index.commit('import source, debian/')
 
     update_patches(out)
+    repo.git.add(update=True)
     repo.index.commit('updated patches')
 
     return

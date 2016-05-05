@@ -25,22 +25,9 @@ rm -rf "$DIR"
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-cd "$DEBIAN_DIR" && git checkout .
-
-cd "$DIR"
-HASH=$(git log --pretty=format:'%T')
-HASHFILE="$THIS_DIR/mixxx-nightly.dat"
-if [ "$HASH" = "$(cat "$HASHFILE")" ]; then
-  echo "Already submitted."
-  exit 1
-fi
-
 "$THIS_DIR/launchpad-submit"\
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
-  --ppas nschloe/mixxx-nightly \
+  --ppa nschloe/mixxx-nightly \
   "$@"
-
-# Update hash
-echo "$HASH" > "$HASHFILE"

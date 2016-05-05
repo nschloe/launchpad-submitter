@@ -6,6 +6,8 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 SOURCE_DIR="$HOME/software/moab/source-upstream/"
+cd "$SOURCE_DIR" && git pull
+
 VERSION=$(grep AC_INIT "$SOURCE_DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\)\].*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 

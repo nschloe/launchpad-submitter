@@ -6,6 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 SOURCE_DIR="$HOME/software/petsc/source-upstream/"
+cd "$SOURCE_DIR" && git pull
 
 VERSION_MAJOR=$(grep '#define PETSC_VERSION_MAJOR' "$SOURCE_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 VERSION_MINOR=$(grep '#define PETSC_VERSION_MINOR' "$SOURCE_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
@@ -17,6 +18,8 @@ UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
 UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR="$HOME/rcs/debian-packages/petsc/debian/"
+cd "$DEBIAN_DIR" && git pull
+
 DEBIAN_VERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
 DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9]\.[0-9]\).*/\1/')
 
@@ -25,9 +28,6 @@ DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9]\.[0
 #     configure time which isn't possible on launchpad.
 #   * No sowing, no fortran interface (Matt Knepley, Apr 2016).
 #   * SuperLU is outdated in Debian.
-DEBIAN_DIR="/tmp/petsc-debian/"
-rm -rf "$DEBIAN_DIR"
-cp -r "$HOME/rcs/debian-packages/petsc/debian/" "$DEBIAN_DIR"
 cd "$DEBIAN_DIR"
 sed -i "/build-no-rpath.patch/d" patches/series
 sed -i "/docs.patch/d" patches/series
@@ -47,11 +47,28 @@ for i in ./*; do
 done
 # sed -i "/hypre.patch/d" patches/series
 
-"$THIS_DIR/launchpad-submitter" \
-  --source-dir "$SOURCE_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+DIR="/tmp/petsc"
+rm -rf "$DIR"
+"$THIS_DIR/create-debian-repo" \
+  --source "$SOURCE_DIR" \
+  --debian "$DEBIAN_DIR" \
+  --out "$DIR"
+
+cd "$DEBIAN_DIR" && git checkout .
+
+cd "$DIR"
+HASH=$(git show --pretty=format:'%T')
+HASHFILE="$THIS_DIR/petsc-submit-hash.dat"
+if [ "$HASH" = "$(cat "$HASHFILE")" ]; then
+  echo "Already submitted."
+  exit 1
+fi
+
+"$THIS_DIR/launchpad-submit" \
+  --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --ppas nschloe/petsc-nightly \
-  --submit-hashes-file "$THIS_DIR/petsc-submit-hash1.dat" \
   "$@"
+
+echo "$HASH" > "$HASHFILE"

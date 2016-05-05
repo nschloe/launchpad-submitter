@@ -12,6 +12,8 @@ import shutil
 import subprocess
 import tarfile
 
+from launchpadlib.launchpad import Launchpad
+
 
 def _get_name_from_changelog(changelog):
     with open(changelog, 'r') as f:
@@ -30,7 +32,7 @@ def submit(
         resubmission,
         slot,
         dry,
-        ppas,
+        ppa_string,
         force=False
         ):
     # Retrieve the directory of this script
@@ -51,7 +53,35 @@ def submit(
         repo.archive(fh, prefix=prefix + '/', format='tar.gz')
     print('done.')
 
+    tree_hash = repo.tree().hexsha
+
+    lp = Launchpad.login_anonymously('foo', 'production', None)
+    ppa_owner, ppa_name = tuple(ppa_string.split('/'))
+
+    owner = lp.people[ppa_owner]
+    ppa = owner.getPPAByName(name=ppa_name)
+    sources = ppa.getPublishedSources()
+
+    published_sources = [
+            d for d in sources.entries if d['status'] == 'Published'
+            ]
+
     for ubuntu_release in ubuntu_releases:
+        # Check if this version has already been published.
+        print(ubuntu_release)
+        published_in_series = [
+                d for d in published_sources
+                  if d['distro_series_link'] ==
+                    'https://api.launchpad.net/1.0/ubuntu/%s' % ubuntu_release
+                ]
+        if published_in_series:
+            # Expect a package version of the form
+            # 2.1.0~20160504184836-01b3a567-trusty1
+            parts = published_in_series[0]['source_package_version'].split('-')
+            if len(parts) == 3 and parts[2] == tree_hash[:8]:
+                print('Same version already published. Abort')
+                exit(1)
+
         # Create empty directory of the form
         #     /tmp/trilinos/trusty/
         release_dir = os.path.join('/tmp', name, ubuntu_release)
@@ -61,9 +91,10 @@ def submit(
         os.makedirs(release_dir, exist_ok=True)
 
         # Copy source tarball to
-        #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123.tar.gz
-        tarball_dest = '%s_%s.orig.tar.gz' % (name, version)
+        #     /tmp/trilinos/trusty/trilinos_4.3.1.2~20121123-01b3a567.tar.gz
+        tarball_dest = '%s_%s-%s.orig.tar.gz' % (name, version, tree_hash[:8])
         shutil.copy2(tarball_path, os.path.join(release_dir, tarball_dest))
+        print(os.path.join(release_dir, tarball_dest))
         # Unpack the tarball
         os.chdir(release_dir)
         tar = tarfile.open(tarball_dest)
@@ -76,8 +107,8 @@ def submit(
         # make sure that ${UBUNTU_RELEASE}x isn't part of the name. This makes
         # it possible to increment `x` and have launchpad recognize it as a new
         # version.
-        full_version = version + '-' + ubuntu_release + \
-            str(resubmission)
+        full_version = '%s-%s-%s%d' % \
+                (version, tree_hash[:8], ubuntu_release, resubmission)
         if slot:
             chlog_version = slot + ':' + full_version
         else:
@@ -107,19 +138,18 @@ def submit(
         # Submit to launchpad.
         os.chdir(os.pardir)
         if not dry:
-            for ppa in ppas:
-                print()
-                print('Uploading to PPA %s...' % ppa)
-                print()
-                subprocess.check_call([
-                    'dput',
-                    'ppa:%s' % ppa,
-                    '%s_%s_source.changes' % (name, full_version)
-                    ])
-                # Remove the upload file so we can upload again to another ppa
-                os.remove('%s_%s_source.ppa.upload'
-                          % (name, full_version)
-                          )
+            print()
+            print('Uploading to PPA %s...' % ppa_string)
+            print()
+            subprocess.check_call([
+                'dput',
+                'ppa:%s' % ppa_string,
+                '%s_%s_source.changes' % (name, full_version)
+                ])
+            # Remove the upload file so we can upload again to another ppa
+            os.remove('%s_%s_source.ppa.upload'
+                      % (name, full_version)
+                      )
 
     return
 
@@ -142,10 +172,9 @@ def _parse_cmd_arguments():
         nargs='+'
         )
     parser.add_argument(
-        '-p', '--ppas',
-        help='PPAs to submit to',
+        '-p', '--ppa',
+        help='PPA to submit to',
         type=str,
-        nargs='+',
         required=True
         )
     parser.add_argument(
@@ -184,6 +213,6 @@ if __name__ == '__main__':
         args.resubmission,
         args.slot,
         args.dry,
-        args.ppas,
+        args.ppa,
         args.force
         )
