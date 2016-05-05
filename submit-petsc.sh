@@ -32,6 +32,8 @@ cd "$DEBIAN_DIR"
 sed -i "/build-no-rpath.patch/d" patches/series
 sed -i "/docs.patch/d" patches/series
 sed -i "/example-src-dir.patch/d" patches/series
+sed -i "/hypre.patch/d" patches/series
+sed -i "/soname_extension/d" patches/series
 sed -i "/install_python_RDict_upstream_5a4feeed41cb1af9234d439bb06ea004d3cfa5c6/d" patches/series
 sed -i "/with-fortran-interfaces/d" rules
 sed -i "/--with-superlu=1/d" rules
@@ -45,7 +47,6 @@ for i in ./*; do
   [ -f "$i" ] && sed -i "s/$DEBIAN_VERSION/$UPSTREAM_VERSION/g" "$i"
   [ -f "$i" ] && sed -i "s/$DEBIAN_SOVERSION/$UPSTREAM_SOVERSION/g" "$i"
 done
-# sed -i "/hypre.patch/d" patches/series
 
 DIR="/tmp/petsc"
 rm -rf "$DIR"
@@ -54,7 +55,7 @@ rm -rf "$DIR"
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-cd "$DEBIAN_DIR" && git checkout .
+cd "$DEBIAN_DIR" && git checkout . && git clean -f -d -x
 
 "$THIS_DIR/launchpad-submit" \
   --directory "$DIR" \

@@ -114,16 +114,34 @@ def _copytree(source, dest):
     return
 
 
+def find_all_dirs(name, path):
+    # From http://stackoverflow.com/a/1724723/353337
+    result = []
+    for root, dirs, files in os.walk(path):
+        if name in dirs:
+            result.append(os.path.join(root, name))
+    return result
+
+
+def find_all_files(name, path):
+    # From http://stackoverflow.com/a/1724723/353337
+    result = []
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            result.append(os.path.join(root, name))
+    return result
+
+
 def create_repo(source, debian, out):
     _copytree(source, out)
     _copytree(debian, os.path.join(out, 'debian'))
 
     # Remove git-related entities to ensure a smooth creation of the repo later
     try:
-        shutil.rmtree(os.path.join(out, '.git'))
-        os.remove(os.path.join(out, '.gitignore'))
-        shutil.rmtree(os.path.join(out, 'debian', '.git'))
-        os.remove(os.path.join(out, 'debian', '.gitignore'))
+        for dot_git in find_all_dirs('.git', out):
+            shutil.rmtree(dot_git)
+        for dot_gitignore in find_all_files('.gitignore', out):
+            os.remove(dot_gitignore)
     except FileNotFoundError:
         pass
 
