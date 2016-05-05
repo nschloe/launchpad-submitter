@@ -7,6 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # SOURCE_DIR="$HOME/software/vtk/pristine/"
 SOURCE_DIR="$HOME/software/vtk/source-nschloe/"
+cd "$SOURCE_DIR" && git pull
 
 # get version
 MAJOR=$(grep VTK_MAJOR_VERSION "$SOURCE_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
@@ -17,10 +18,8 @@ PATCH=$(grep VTK_BUILD_VERSION "$SOURCE_DIR/CMake/vtkVersion.cmake" | sed 's/^.*
 # For launchpad to accept new submissions, the string has to increment.
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="/tmp/vtk-debian/"
-rm -rf "$DEBIAN_DIR"
-cp -r "$HOME/rcs/debian-packages/vtk/upstream/debian/" "$DEBIAN_DIR"
-cd "$DEBIAN_DIR"
+DEBIAN_DIR="$HOME/rcs/debian-packages/vtk/upstream/debian/"
+cd "$DEBIAN_DIR" && git pull
 find . -type f -print0 | xargs -0 sed -i "s/6\.3\.0+dfsg1-[0-9]/$VERSION/g"
 find . -type f -print0 | xargs -0 sed -i "s/6\.3/$MAJOR.$MINOR/g"
 sed -i "/vtkMarchingCubesCases.h/d" libvtk6-dev.install
@@ -39,7 +38,13 @@ sed -i "/-DVTK_USE_SYSTEM_LIBPROJ4=ON/d" rules
 sed -i "/vtk_netcdfcpp.h/d" rules
 rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
-VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
+DIR="/tmp/vtk"
+rm -rf "$DIR"
+"$THIS_DIR/create-debian-repo" \
+  --source "$SOURCE_DIR" \
+  --debian "$DEBIAN_DIR" \
+  --out "$DIR"
+
 "$THIS_DIR/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
