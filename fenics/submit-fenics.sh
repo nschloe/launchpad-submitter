@@ -5,16 +5,17 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-SOURCE_DIR="$HOME/software/fenics/dolfin/pristine/"
-MAJOR=$(grep 'DOLFIN_VERSION_MAJOR ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
-MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
-MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$SOURCE_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
+DOLFIN_DIR="$HOME/rcs/debian-packages/fenics/dolfin/"
+cd "$DOLFIN_DIR" && git pull
+
+MAJOR=$(grep 'DOLFIN_VERSION_MAJOR ' "$DOLFIN_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
+MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$DOLFIN_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
+MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$DOLFIN_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
-"$THIS_DIR/../launchpad-submitter" \
-  --debian-dir "$HOME/rcs/debian-packages/fenics/fenics/debian/" \
+"$THIS_DIR/../launchpad-submit" \
+  --directory "$HOME/rcs/debian-packages/fenics/fenics/" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
-  --ppas nschloe/fenics-nightly \
-  --submit-hashes-file "$THIS_DIR/fenics-submit-hash.dat" \
+  --ppa nschloe/fenics-nightly \
   "$@"

@@ -19,7 +19,7 @@ sed -i "/ENABLE_METIS/d" rules
 sed -i "/ENABLE_PARMETIS/d" rules
 sed -i "/MOAB_BUILD_MBPART/d" rules
 
-"$THIS_DIR/launchpad-submitter" \
+"$THIS_DIR/launchpad-submit" \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty \
@@ -29,7 +29,7 @@ sed -i "/MOAB_BUILD_MBPART/d" rules
 
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-"$THIS_DIR/launchpad-submitter" \
+"$THIS_DIR/launchpad-submit" \
   --directory "$SOURCE_DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$FULL_VERSION" \

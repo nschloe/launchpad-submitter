@@ -25,12 +25,12 @@ sed -i \"/install_python_RDict_upstream_5a4feeed41cb1af9234d439bb06ea004d3cfa5c6
 rename 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/' *; \
 for i in *; do sed -i 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/g' \"\$i\"; done \
 "
-"$THIS_DIR/launchpad-submitter" \
+"$THIS_DIR/launchpad-submit" \
   --source-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases trusty wily \
   --version "$FULL_VERSION" \
-  --ppas nschloe/petsc-backports \
+  --ppa nschloe/petsc-backports \
   --submit-hashes-file "$THIS_DIR/petsc-submit-hash.dat" \
   "$@"

@@ -44,7 +44,7 @@ rm -rf "$DIR"
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-"$THIS_DIR/launchpad-submitter" \
+"$THIS_DIR/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$FULL_VERSION" \

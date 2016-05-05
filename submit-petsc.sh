@@ -60,5 +60,5 @@ cd "$DEBIAN_DIR" && git checkout .
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
-  --ppas nschloe/petsc-nightly \
+  --ppa nschloe/petsc-nightly \
   "$@"
