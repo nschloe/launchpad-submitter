@@ -6,13 +6,12 @@ Automatically create tarball and submit it to launchpad.
 import argparse
 import datetime
 import git
+from launchpadlib.launchpad import Launchpad
 import os
 import re
 import shutil
 import subprocess
 import tarfile
-
-from launchpadlib.launchpad import Launchpad
 
 
 def _get_name_from_changelog(changelog):
@@ -33,6 +32,7 @@ def submit(
         slot,
         dry,
         ppa_string,
+        submit_id,
         force=False
         ):
     # Retrieve the directory of this script
@@ -108,7 +108,7 @@ def submit(
         # it possible to increment `x` and have launchpad recognize it as a new
         # version.
         full_version = '%s-%s-%s%d' % \
-                (version, tree_hash[:8], ubuntu_release, resubmission)
+            (version, tree_hash[:8], ubuntu_release, resubmission)
         if slot:
             chlog_version = slot + ':' + full_version
         else:
@@ -121,9 +121,10 @@ def submit(
 
   * Initial release
 
- -- Nico Schlömer <nico.schloemer@gmail.com>  %s'''
+ -- %s  %s'''
                         % (name, chlog_version,
                            ubuntu_release,
+                           submit_id,
                            utcnow.strftime('%a, %d %b %Y %T +0000')
                            ))
         changelog.close()
@@ -201,6 +202,12 @@ def _parse_cmd_arguments():
         action='store_true',
         default=False
         )
+    parser.add_argument(
+        '-i', '--submit-id',
+        help='submission ID (e.g., John Doe <john@doe.com>)',
+        type=str,
+        required=True
+        )
     return parser.parse_args()
 
 
@@ -214,5 +221,6 @@ if __name__ == '__main__':
         args.slot,
         args.dry,
         args.ppa,
+        args.submit_id,
         args.force
         )

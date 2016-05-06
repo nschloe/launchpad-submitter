@@ -30,4 +30,5 @@ rm -rf "$DIR"
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppa nschloe/mixxx-nightly \
+  --submit-id 'Nico Schlömer <nico.schloemer@gmail.com>' \
   "$@"
