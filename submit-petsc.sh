@@ -50,16 +50,18 @@ done
 
 DIR="/tmp/petsc"
 rm -rf "$DIR"
-"$THIS_DIR/create-debian-repo" \
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
   --source "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
 cd "$DEBIAN_DIR" && git checkout . && git clean -f -d -x
 
-"$THIS_DIR/launchpad-submit" \
+"$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --ppa nschloe/petsc-nightly \
+  --debuild-params="-p$THIS_DIR/mygpg" \
+  --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
   "$@"

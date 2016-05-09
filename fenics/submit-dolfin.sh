@@ -20,32 +20,36 @@ sed -i "/slepc-dev/d" control
 
 DIR="/tmp/dolfin"
 rm -rf "$DIR"
-"$THIS_DIR/../create-debian-repo" \
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
   --source "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-"$THIS_DIR/../launchpad-submit" \
+"$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily \
   --version "$FULL_VERSION" \
   --ppa nschloe/fenics-nightly \
+  --debuild-params="-p$THIS_DIR/../mygpg" \
+  --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
   "$@"
 
 cd "$DEBIAN_DIR" && git checkout .
 sed -i "/python-netcdf/d" control
 
 rm -rf "$DIR"
-"$THIS_DIR/../create-debian-repo" \
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
   --source "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-"$THIS_DIR/../launchpad-submit" \
+"$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases xenial yakkety \
   --version "$FULL_VERSION" \
   --ppa nschloe/fenics-nightly \
+  --debuild-params="-p$THIS_DIR/../mygpg" \
+  --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
   "$@"
 
 cd "$DEBIAN_DIR" && git checkout .

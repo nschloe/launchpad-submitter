@@ -20,16 +20,18 @@ sed -i "/mshrable/d" libmshr-dev.install
 
 DIR="/tmp/mshr"
 rm -rf "$DIR"
-"$THIS_DIR/../create-debian-repo" \
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
   --source "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
 cd "$DEBIAN_DIR" && git checkout .
 
-"$THIS_DIR/../launchpad-submit" \
+"$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppa nschloe/fenics-nightly \
+  --debuild-params="-p$THIS_DIR/../mygpg" \
+  --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
   "$@"

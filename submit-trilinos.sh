@@ -20,7 +20,7 @@ sed -i '/SuperLU/d' rules
 
 DIR="/tmp/trilinos"
 rm -rf "$DIR"
-"$THIS_DIR/create-debian-repo" \
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
   --source "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
@@ -28,25 +28,29 @@ rm -rf "$DIR"
 cd "$DEBIAN_DIR" && git checkout .
 
 # trusty
-"$THIS_DIR/launchpad-submit" \
+"$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty \
   --version "$FULL_VERSION" \
   --ppa nschloe/trilinos-nightly \
+  --debuild-params="-p$THIS_DIR/mygpg" \
+  --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
   "$@"
 
 # submit for the rest
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 rm -rf "$DIR"
-"$THIS_DIR/create-debian-repo" \
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
   --source "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-"$THIS_DIR/launchpad-submit" \
+"$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version "$FULL_VERSION" \
   --ppa nschloe/trilinos-nightly \
+  --debuild-params="-p$THIS_DIR/mygpg" \
+  --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
   "$@"
