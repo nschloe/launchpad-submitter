@@ -5,6 +5,12 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+DIR=$(
+  "$HOME/rcs/launchpad-tools/create-debian-repo" \
+    --source "git@github.com:trilinos/Trilinos.git" \
+    --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git"
+  )
+
 # SOURCE_DIR="$HOME/software/vtk/pristine/"
 SOURCE_DIR="$HOME/software/vtk/source-nschloe/"
 cd "$SOURCE_DIR" && git pull
