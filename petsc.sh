@@ -5,10 +5,11 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$("$HOME/rcs/launchpad-tools/create-debian-repo" \
+DIR=$(mktemp -d)
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
    --source "git@bitbucket.org:petsc/petsc.git" \
-   --debian "git://anonscm.debian.org/git/debian-science/packages/petsc.git"
-  )
+   --debian "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
+   --out "$DIR"
 
 echo "$DIR"
 
@@ -27,14 +28,11 @@ DEBIAN_SOVERSION=$(head -n 1 "$DIR/debian/changelog" | sed 's/[^0-9]*\([0-9]\.[0
 # Some comments here:
 #   * We cannot enable sowing since it requires downloading the software at
 #     configure time which isn't possible on launchpad.
-#   * No sowing, no fortran interface (Matt Knepley, Apr 2016).
+#   * No sowing => no fortran interface (Matt Knepley, Apr 2016).
 #   * SuperLU is outdated in Debian.
 sed -i "/build-no-rpath.patch/d" "$DIR/debian/patches/series"
 sed -i "/docs.patch/d" "$DIR/debian/patches/series"
 sed -i "/example-src-dir.patch/d" "$DIR/debian/patches/series"
-sed -i "/hypre.patch/d" "$DIR/debian/patches/series"
-sed -i "/soname_extension/d" "$DIR/debian/patches/series"
-sed -i "/install_python_RDict_upstream_5a4feeed41cb1af9234d439bb06ea004d3cfa5c6/d" "$DIR/debian/patches/series"
 sed -i "/with-fortran-interfaces/d" "$DIR/debian/rules"
 sed -i "/--with-superlu=1/d" "$DIR/debian/rules"
 sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/\*html/d" "$DIR/debian/rules"
@@ -44,7 +42,7 @@ sed -i "/makefile.html/d" "$DIR/debian/petsc$DEBIAN_VERSION-doc.docs"
 sed -i "/docs/d" "$DIR/debian/petsc$DEBIAN_VERSION-doc.docs"
 cd "$DIR/debian"
 rename "s/$DEBIAN_VERSION/$UPSTREAM_VERSION/" ./*
-git add *
+git add ./*
 for i in ./*; do
   [ -f "$i" ] && sed -i "s/$DEBIAN_VERSION/$UPSTREAM_VERSION/g" "$i"
   [ -f "$i" ] && sed -i "s/$DEBIAN_SOVERSION/$UPSTREAM_SOVERSION/g" "$i"
