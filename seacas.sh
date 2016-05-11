@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "git@github.com:gdsjaar/seacas.git" \
+  --orig "git@github.com:gdsjaar/seacas.git" \
   --out "$DIR"
 
 VERSION=$(grep "SEACASProj_VERSION " "$DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")

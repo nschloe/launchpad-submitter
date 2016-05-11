@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "git@github.com:Kitware/VTK.git" \
+  --orig "git@github.com:Kitware/VTK.git" \
   --debian "git://anonscm.debian.org/debian-science/packages/vtk6.git" \
   --out "$DIR"
 

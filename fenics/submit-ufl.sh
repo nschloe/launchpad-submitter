@@ -17,7 +17,7 @@ cd "$DEBIAN_DIR" && git pull
 DIR="/tmp/ufl"
 rm -rf "$DIR"
 "$THIS_DIR/../create-debian-repo" \
-  --source "$SOURCE_DIR" \
+  --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 

@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-   --source "git@bitbucket.org:petsc/petsc.git" \
+   --orig "git@bitbucket.org:petsc/petsc.git" \
    --debian "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
    --out "$DIR"
 

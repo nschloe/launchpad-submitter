@@ -21,7 +21,7 @@ sed -i "/mshrable/d" libmshr-dev.install
 DIR="/tmp/mshr"
 rm -rf "$DIR"
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "$SOURCE_DIR" \
+  --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 

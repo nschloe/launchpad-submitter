@@ -26,7 +26,7 @@ rename 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/' *; \
 for i in *; do sed -i 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/g' \"\$i\"; done \
 "
 "$THIS_DIR/launchpad-submit" \
-  --source-dir "$SOURCE_DIR" \
+  --orig-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases trusty wily \

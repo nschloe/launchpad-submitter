@@ -6,8 +6,9 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
+echo "Working directory: $DIR"
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-   --source "https://onelab.info/svn/gmsh/trunk" \
+   --orig "https://onelab.info/svn/gmsh/trunk" \
    --debian "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" \
    --out "$DIR"
 
@@ -17,6 +18,7 @@ MINOR=$(grep 'set(GMSH_MINOR_VERSION ' "$DIR/CMakeLists.txt" | sed 's/^[^0-9]*\(
 PATCH=$(grep 'set(GMSH_PATCH_VERSION ' "$DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
+sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DIR/debian/control"
 sed -i "/140_fix_java.patch/d" "$DIR/debian/patches/series"
 sed -i "/150_fix_texifile.patch/d" "$DIR/debian/patches/series"
 cd "$DIR" && git commit -a -m "update patches"
@@ -25,7 +27,8 @@ VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 "$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
-  --version "$VERSION" \
+  --version-override "$VERSION" \
+  --version-append-hash \
   --ppa nschloe/gmsh-nightly \
   --debuild-params="-p$THIS_DIR/mygpg" \
   --debfullname "Nico Schlömer" \

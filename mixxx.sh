@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-   --source "git@github.com:mixxxdj/mixxx.git" \
+   --orig "git@github.com:mixxxdj/mixxx.git" \
    --debian "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
    --out "$DIR"
 
@@ -26,7 +26,8 @@ cd "$DIR" && git commit -a -m "update patches"
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --ppa nschloe/mixxx-nightly \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
+  --version-append-hash \
   --debfullname "Nico Schlömer" \
   --debemail "nico.schloemer@gmail.com" \
   --debuild-params="-p$THIS_DIR/mygpg" \

@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "git@github.com:Unidata/netcdf-fortran.git" \
+  --orig "git@github.com:Unidata/netcdf-fortran.git" \
   --debian "git://anonscm.debian.org/git/pkg-grass/netcdf-fortran.git" \
   --out "$DIR"
 

@@ -21,7 +21,7 @@ sed -i "/slepc-dev/d" control
 DIR="/tmp/dolfin"
 rm -rf "$DIR"
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "$SOURCE_DIR" \
+  --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
@@ -39,7 +39,7 @@ sed -i "/python-netcdf/d" control
 
 rm -rf "$DIR"
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "$SOURCE_DIR" \
+  --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 

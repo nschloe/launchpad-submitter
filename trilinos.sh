@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "git@github.com:trilinos/Trilinos.git" \
+  --orig "git@github.com:trilinos/Trilinos.git" \
   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   --out "$DIR"
 
@@ -39,7 +39,7 @@ DIR=$(mktemp -d)
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$HOME/rcs/launchpad-tools/create-debian-repo" \
-  --source "git@github.com:trilinos/Trilinos.git" \
+  --orig "git@github.com:trilinos/Trilinos.git" \
   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   --out "$DIR"
 

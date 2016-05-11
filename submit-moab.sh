@@ -20,7 +20,7 @@ sed -i "/ENABLE_PARMETIS/d" rules
 sed -i "/MOAB_BUILD_MBPART/d" rules
 
 "$THIS_DIR/launchpad-submit" \
-  --source-dir "$SOURCE_DIR" \
+  --orig-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty \
   --version "$FULL_VERSION" \

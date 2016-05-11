@@ -20,7 +20,7 @@ sed -i "/ufc-1.pc/d" rules
 DIR="/tmp/ffc"
 rm -rf "$DIR"
 "$THIS_DIR/../create-debian-repo" \
-  --source "$SOURCE_DIR" \
+  --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
