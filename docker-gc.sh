@@ -4,10 +4,10 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(
-  "$HOME/rcs/launchpad-tools/create-debian-repo" \
-    --source "git@github.com:spotify/docker-gc.git"
-  )
+DIR=$(mktemp -d)
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
+  --source "git@github.com:spotify/docker-gc.git" \
+  --out "$DIR"
 
 VERSION=$(cat "$DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
@@ -22,3 +22,5 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
   --debfullname "Nico Schlömer" \
   --debemail "nico.schloemer@gmail.com" \
   "$@"
+
+rm -rf "$DIR"

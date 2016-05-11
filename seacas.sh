@@ -5,10 +5,10 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(
-  "$HOME/rcs/launchpad-tools/create-debian-repo" \
-    --source "git@github.com:gdsjaar/seacas.git"
-  )
+DIR=$(mktemp -d)
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
+  --source "git@github.com:gdsjaar/seacas.git" \
+  --out "$DIR"
 
 VERSION=$(grep "SEACASProj_VERSION " "$DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
@@ -22,3 +22,5 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
   --debfullname "Nico Schlömer" \
   --debemail "nico.schloemer@gmail.com" \
   "$@"
+
+rm -rf "$DIR"

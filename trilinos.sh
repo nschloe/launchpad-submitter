@@ -5,11 +5,11 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(
-  "$HOME/rcs/launchpad-tools/create-debian-repo" \
-    --source "git@github.com:trilinos/Trilinos.git" \
-    --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git"
-  )
+DIR=$(mktemp -d)
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
+  --source "git@github.com:trilinos/Trilinos.git" \
+  --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
+  --out "$DIR"
 
 VERSION=$(grep "Trilinos_VERSION " "$DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
@@ -34,13 +34,14 @@ cd "$DIR" && git commit -a -m "update debian"
 rm -rf "$DIR"
 
 # submit for the rest
+DIR=$(mktemp -d)
+
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DIR=$(
-  "$HOME/rcs/launchpad-tools/create-debian-repo" \
-    --source "git@github.com:trilinos/Trilinos.git" \
-    --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git"
-  )
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
+  --source "git@github.com:trilinos/Trilinos.git" \
+  --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
+  --out "$DIR"
 
 "$HOME/rcs/launchpad-tools/launchpad-submit" \
   --directory "$DIR" \

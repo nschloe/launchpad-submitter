@@ -5,11 +5,11 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(
-  "$HOME/rcs/launchpad-tools/create-debian-repo" \
-    --source "git@github.com:Unidata/netcdf-cxx4.git" \
-    --debian "git://anonscm.debian.org/git/pkg-grass/netcdf-cxx.git"
-  )
+DIR=$(mktemp -d)
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
+  --source "git@github.com:Unidata/netcdf-cxx4.git" \
+  --debian "git://anonscm.debian.org/git/pkg-grass/netcdf-cxx.git" \
+  --out "$DIR"
 
 VERSION=$(grep "^AC_INIT" $DIR/configure.ac | sed "s/[^\[]*\[[^]]*\][^\[]*\[\([^]]*\)\].*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"

@@ -5,10 +5,11 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$("$HOME/rcs/launchpad-tools/create-debian-repo" \
+DIR=$(mktemp -d)
+"$HOME/rcs/launchpad-tools/create-debian-repo" \
    --source "git@github.com:mixxxdj/mixxx.git" \
-   --debian "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git"
-  )
+   --debian "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
+   --out "$DIR"
 
 VERSION=$(grep "define VERSION" "$DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
