@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpad-tools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/create-debian-repo" \
   --orig "git@github.com:trilinos/Trilinos.git" \
   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   --out "$DIR"
@@ -21,10 +21,11 @@ sed -i '/SuperLU/d' "$DIR/debian/rules"
 cd "$DIR" && git commit -a -m "update debian"
 
 # trusty
-"$HOME/rcs/launchpad-tools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
+  --version-append-hash \
   --ppa nschloe/trilinos-nightly \
   --debuild-params="-p$THIS_DIR/mygpg" \
   --debfullname "Nico Schlömer" \
@@ -38,15 +39,16 @@ DIR=$(mktemp -d)
 
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-"$HOME/rcs/launchpad-tools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/create-debian-repo" \
   --orig "git@github.com:trilinos/Trilinos.git" \
   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   --out "$DIR"
 
-"$HOME/rcs/launchpad-tools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
+  --version-append-hash \
   --ppa nschloe/trilinos-nightly \
   --debuild-params="-p$THIS_DIR/mygpg" \
   --debfullname "Nico Schlömer" \

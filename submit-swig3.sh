@@ -13,7 +13,7 @@ FULL_VERSION="3.0.8-ppa0"
   --orig-dir "$SOURCE_DIR" \
   --debian-dir "$HOME/rcs/debian-packages/swig/debian/" \
   --ubuntu-releases trusty wily \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --ppa nschloe/swig-backports \
   --submit-hashes-file "$THIS_DIR/swig-submit-hash.dat" \
   "$@"

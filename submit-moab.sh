@@ -23,7 +23,7 @@ sed -i "/MOAB_BUILD_MBPART/d" rules
   --orig-dir "$SOURCE_DIR" \
   --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --ppa nschloe/moab-nightly \
   "$@"
 
@@ -32,6 +32,6 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/launchpad-submit" \
   --directory "$SOURCE_DIR" \
   --ubuntu-releases wily xenial yakkety \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --ppa nschloe/moab-nightly \
   "$@"

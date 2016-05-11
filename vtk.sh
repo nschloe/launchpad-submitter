@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpad-tools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/create-debian-repo" \
   --orig "git@github.com:Kitware/VTK.git" \
   --debian "git://anonscm.debian.org/debian-science/packages/vtk6.git" \
   --out "$DIR"
@@ -40,10 +40,11 @@ sed -i "/vtk_netcdfcpp.h/d" "$DIR/debian/rules"
 rename "s/6\.3/$MAJOR.$MINOR/" ./*
 cd "$DIR" && git commit -a -m "update debian"
 
-"$HOME/rcs/launchpad-tools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
-  --version "$VERSION" \
+  --version-override "$VERSION" \
+  --version-append-hash \
   --ppa nschloe/vtk-nightly \
   --debuild-params="-p$THIS_DIR/mygpg" \
   --debfullname "Nico Schlömer" \

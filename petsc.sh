@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpad-tools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/create-debian-repo" \
    --orig "git@bitbucket.org:petsc/petsc.git" \
    --debian "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
    --out "$DIR"
@@ -49,10 +49,11 @@ for i in ./*; do
 done
 cd "$DIR" && git commit -a -m "update debian"
 
-"$HOME/rcs/launchpad-tools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
-  --version "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
+  --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
+  --version-append-hash \
   --ppa nschloe/petsc-nightly \
   --debuild-params="-p$THIS_DIR/mygpg" \
   --debfullname "Nico Schlömer" \

@@ -30,7 +30,7 @@ for i in *; do sed -i 's/$DEBIAN_VERSION/$UPSTREAM_VERSION/g' \"\$i\"; done \
   --debian-dir "$DEBIAN_DIR" \
   --debian-prepare "$DEBIAN_PREPARE" \
   --ubuntu-releases trusty wily \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --ppa nschloe/petsc-backports \
   --submit-hashes-file "$THIS_DIR/petsc-submit-hash.dat" \
   "$@"

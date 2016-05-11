@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpad-tools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/create-debian-repo" \
    --orig "git@github.com:mixxxdj/mixxx.git" \
    --debian "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
    --out "$DIR"
@@ -22,11 +22,11 @@ sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DIR/deb
 sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DIR/debian/control"
 cd "$DIR" && git commit -a -m "update patches"
 
-"$HOME/rcs/launchpad-tools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --ppa nschloe/mixxx-nightly \
-  --version-override "$FULL_VERSION" \
+  --version-override-override "$FULL_VERSION" \
   --version-append-hash \
   --debfullname "Nico Schlömer" \
   --debemail "nico.schloemer@gmail.com" \

@@ -16,6 +16,6 @@ FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 "$THIS_DIR/../launchpad-submit" \
   --directory "$HOME/rcs/debian-packages/fenics/fenics/" \
   --ubuntu-releases trusty wily xenial yakkety \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --ppa nschloe/fenics-nightly \
   "$@"

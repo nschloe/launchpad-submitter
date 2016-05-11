@@ -27,7 +27,7 @@ rm -rf "$DIR"
 "$THIS_DIR/../launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
-  --version "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --ppa nschloe/fenics-nightly \
   "$@"
 
