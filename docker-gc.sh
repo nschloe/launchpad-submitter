@@ -5,14 +5,14 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
   --orig "git@github.com:spotify/docker-gc.git" \
   --out "$DIR"
 
 VERSION=$(cat "$DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$FULL_VERSION" \

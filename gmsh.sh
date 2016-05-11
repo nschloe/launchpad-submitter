@@ -7,7 +7,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 echo "Working directory: $DIR"
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
    --orig "https://onelab.info/svn/gmsh/trunk" \
    --debian "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" \
    --out "$DIR"
@@ -24,7 +24,7 @@ sed -i "/150_fix_texifile.patch/d" "$DIR/debian/patches/series"
 cd "$DIR" && git commit -a -m "update patches"
 
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override-override "$VERSION" \

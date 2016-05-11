@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
   --orig "git@github.com:trilinos/Trilinos.git" \
   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   --out "$DIR"
@@ -21,7 +21,7 @@ sed -i '/SuperLU/d' "$DIR/debian/rules"
 cd "$DIR" && git commit -a -m "update debian"
 
 # trusty
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty \
   --version-override "$FULL_VERSION" \
@@ -39,12 +39,12 @@ DIR=$(mktemp -d)
 
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
   --orig "git@github.com:trilinos/Trilinos.git" \
   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   --out "$DIR"
 
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version-override "$FULL_VERSION" \

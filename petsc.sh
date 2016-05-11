@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
    --orig "git@bitbucket.org:petsc/petsc.git" \
    --debian "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
    --out "$DIR"
@@ -49,7 +49,7 @@ for i in ./*; do
 done
 cd "$DIR" && git commit -a -m "update debian"
 
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases wily xenial yakkety \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

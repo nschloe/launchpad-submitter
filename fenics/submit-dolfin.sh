@@ -20,12 +20,12 @@ sed -i "/slepc-dev/d" control
 
 DIR="/tmp/dolfin"
 rm -rf "$DIR"
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
   --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases trusty wily \
   --version-override "$FULL_VERSION" \
@@ -38,12 +38,12 @@ cd "$DEBIAN_DIR" && git checkout .
 sed -i "/python-netcdf/d" control
 
 rm -rf "$DIR"
-"$HOME/rcs/launchpadtools/create-debian-repo" \
+"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
   --orig "$SOURCE_DIR" \
   --debian "$DEBIAN_DIR" \
   --out "$DIR"
 
-"$HOME/rcs/launchpadtools/launchpad-submit" \
+"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --directory "$DIR" \
   --ubuntu-releases xenial yakkety \
   --version-override "$FULL_VERSION" \
