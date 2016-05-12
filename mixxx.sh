@@ -5,32 +5,42 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
-   --orig "git@github.com:mixxxdj/mixxx.git" \
-   --debian "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
-   --out "$DIR"
+ORIG_DIR=$(mktemp -d)
+"$HOME/rcs/launchpadtools/tools/cloner" \
+   --source "git@github.com:mixxxdj/mixxx.git" \
+   --out "$ORIG_DIR"
 
-VERSION=$(grep "define VERSION" "$DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
+VERSION=$(grep "define VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-sed -i "/0004-soundtouch.patch/d" "$DIR/debian/patches/ubuntu.series"
-sed -i "/0005-hidapi.patch/d" "$DIR/debian/patches/ubuntu.series"
-sed -i "/0006-opengles.patch/d" "$DIR/debian/patches/ubuntu.series"
-sed -i "/1001-buildsystem.patch/d" "$DIR/debian/patches/ubuntu.series"
-sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DIR/debian/control"
-sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DIR/debian/control"
-cd "$DIR" && git commit -a -m "update patches"
+DEBIAN_DIR=$(mktemp -d)
+"$HOME/rcs/launchpadtools/tools/cloner" \
+   --source "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
+   --out "$DEBIAN_DIR"
+
+sed -i "/0004-soundtouch.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
+sed -i "/0004-soundtouch.patch/d" "$DEBIAN_DIR/debian/patches/series"
+sed -i "/0005-hidapi.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
+sed -i "/0005-hidapi.patch/d" "$DEBIAN_DIR/debian/patches/series"
+sed -i "/0006-opengles.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
+sed -i "/0006-opengles.patch/d" "$DEBIAN_DIR/debian/patches/series"
+sed -i "/1001-buildsystem.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
+sed -i "/1001-buildsystem.patch/d" "$DEBIAN_DIR/debian/patches/series"
+sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/debian/control"
+sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/debian/control"
 
 "$HOME/rcs/launchpadtools/tools/launchpad-submit" \
-  --directory "$DIR" \
+  --orig "$ORIG_DIR" \
+  --debian "$DEBIAN_DIR/debian" \
   --ubuntu-releases trusty wily xenial yakkety \
   --ppa nschloe/mixxx-nightly \
-  --version-override-override "$FULL_VERSION" \
+  --version-override "$FULL_VERSION" \
   --version-append-hash \
+  --update-patches \
   --debfullname "Nico Schlömer" \
   --debemail "nico.schloemer@gmail.com" \
   --debuild-params="-p$THIS_DIR/mygpg" \
   "$@"
 
-rm -rf "$DIR"
+rm -rf "$ORIG_DIR"
+rm -rf "$DEBIAN_DIR"

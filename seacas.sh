@@ -6,15 +6,15 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/create-debian-repo" \
-  --orig "git@github.com:gdsjaar/seacas.git" \
+"$HOME/rcs/launchpadtools/tools/cloner" \
+  --source "git@github.com:gdsjaar/seacas.git" \
   --out "$DIR"
 
 VERSION=$(grep "SEACASProj_VERSION " "$DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 "$HOME/rcs/launchpadtools/tools/launchpad-submit" \
-  --directory "$DIR" \
+  --orig "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
