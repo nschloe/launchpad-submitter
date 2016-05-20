@@ -7,16 +7,16 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
 "$HOME/rcs/launchpadtools/tools/cloner" \
-   --source "git@github.com:mixxxdj/mixxx.git" \
-   --out "$ORIG_DIR"
+   "git@github.com:mixxxdj/mixxx.git" \
+   "$ORIG_DIR"
 
 VERSION=$(grep "define VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
 "$HOME/rcs/launchpadtools/tools/cloner" \
-   --source "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
-   --out "$DEBIAN_DIR"
+   "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
+   "$DEBIAN_DIR"
 
 sed -i "/0004-soundtouch.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
 sed -i "/0004-soundtouch.patch/d" "$DEBIAN_DIR/debian/patches/series"

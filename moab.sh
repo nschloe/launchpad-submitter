@@ -1,14 +1,14 @@
 #!/bin/sh -ue
 
-# Set SSH agent variables.
-. "$HOME/.keychain/$(/bin/hostname)-sh"
+## Set SSH agent variables.
+#. "$HOME/.keychain/$(/bin/hostname)-sh"
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
 "$HOME/rcs/launchpadtools/tools/cloner" \
-   --source "git@bitbucket.org:fathomteam/moab.git" \
-   --out "$DIR"
+  "git@bitbucket.org:fathomteam/moab.git" \
+  "$DIR"
 
 VERSION=$(grep AC_INIT "$DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\)\].*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"

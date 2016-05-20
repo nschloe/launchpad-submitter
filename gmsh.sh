@@ -7,8 +7,8 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
 "$HOME/rcs/launchpadtools/tools/cloner" \
-   --source "https://onelab.info/svn/gmsh/trunk" \
-   --out "$ORIG_DIR"
+   "https://onelab.info/svn/gmsh/trunk" \
+   "$ORIG_DIR"
 
 # get version
 MAJOR=$(grep 'set(GMSH_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
@@ -18,8 +18,8 @@ VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
 "$HOME/rcs/launchpadtools/tools/cloner" \
-   --source "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" \
-   --out "$DEBIAN_DIR"
+   "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" \
+   "$DEBIAN_DIR"
 
 sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/debian/control"
 sed -i "/140_fix_java.patch/d" "$DEBIAN_DIR/debian/patches/series"

@@ -18,8 +18,6 @@ DEBIAN_DIR=$(mktemp -d)
   "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   "$DEBIAN_DIR"
 
-exit 1
-
 # sed -i '/libhdf5-openmpi-dev/d' "$DIR/debian/control"
 # sed -i '/HDF5/d' "$DIR/debian/rules"
 # sed -i '/libsuperlu-dev/d' "$DIR/debian/control"
