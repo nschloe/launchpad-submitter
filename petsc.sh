@@ -1,5 +1,5 @@
 #!/bin/sh -ue
-
+#
 # Set SSH agent variables.
 . "$HOME/.keychain/$(/bin/hostname)-sh"
 

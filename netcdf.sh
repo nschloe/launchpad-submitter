@@ -18,6 +18,8 @@ DEBIAN_DIR=$(mktemp -d)
   "git://anonscm.debian.org/git/pkg-grass/netcdf.git" \
   "$DEBIAN_DIR"
 
+sed -i "/source_date_epoch.patch/d" "$DEBIAN_DIR/debian/patches/series"
+
 "$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
