@@ -28,6 +28,7 @@ sed -i "/python-netcdf/d" "$DEBIAN_DIR/debian/control"
   --debian "$DEBIAN_DIR/debian" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$FULL_VERSION" \
+  --version-append-hash \
   --ppa nschloe/fenics-nightly \
   --debuild-params="-p$THIS_DIR/../mygpg" \
   --debfullname "Nico Schlömer" \
