@@ -6,9 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone \
-   "git@github.com:dealii/dealii.git" \
-   "$ORIG_DIR"
+clone "git@github.com:dealii/dealii.git" "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(cat "$ORIG_DIR/VERSION")
 
