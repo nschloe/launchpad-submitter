@@ -30,9 +30,6 @@ DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/debian/changelog" | sed 's/[^0-9]*\([0
 #     configure time which isn't possible on launchpad.
 #   * No sowing => no fortran interface (Matt Knepley, Apr 2016).
 #   * SuperLU is outdated in Debian.
-sed -i "/build-no-rpath.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/docs.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/example-src-dir.patch/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "/with-fortran-interfaces/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/--with-superlu=1/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/\*html/d" "$DEBIAN_DIR/debian/rules"

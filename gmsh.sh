@@ -20,8 +20,6 @@ clone \
    "$DEBIAN_DIR"
 
 sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/debian/control"
-sed -i "/140_fix_java.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/150_fix_texifile.patch/d" "$DEBIAN_DIR/debian/patches/series"
 
 launchpad-submit \
   --orig "$ORIG_DIR" \

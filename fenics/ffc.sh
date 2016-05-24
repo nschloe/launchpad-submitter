@@ -16,7 +16,6 @@ clone \
    "git://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
    "$DEBIAN_DIR"
 
-sed -i "/fix-ufc-config.patch/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/debian/rules"
 
 launchpad-submit \

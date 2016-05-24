@@ -14,14 +14,6 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR=$(mktemp -d)
 clone "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" "$DEBIAN_DIR"
 
-sed -i "/0004-soundtouch.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
-sed -i "/0004-soundtouch.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/0005-hidapi.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
-sed -i "/0005-hidapi.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/0006-opengles.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
-sed -i "/0006-opengles.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/1001-buildsystem.patch/d" "$DEBIAN_DIR/debian/patches/ubuntu.series"
-sed -i "/1001-buildsystem.patch/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/debian/control"
 sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/debian/control"
 

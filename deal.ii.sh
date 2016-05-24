@@ -17,15 +17,10 @@ clone \
    "git://anonscm.debian.org/git/debian-science/packages/deal.ii.git" \
    "$DEBIAN_DIR"
 
-sed -i "/fix_suitesparse.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/use_local_deal_ico.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/fix_parameter_handler_cxx11.patch/d" "$DEBIAN_DIR/debian/patches/series"
-sed -i "/use_fPIC_instead_of_fpic.patch/d" "$DEBIAN_DIR/debian/patches/series"
-
-#  --update-patches \
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
+  --update-patches \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

@@ -18,8 +18,6 @@ clone \
    "git://anonscm.debian.org/git/debian-science/packages/eigen3.git" \
    "$DEBIAN_DIR"
 
-sed -i "/09_fix_1144.patch/d" "$DEBIAN_DIR/debian/patches/series"
-
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \

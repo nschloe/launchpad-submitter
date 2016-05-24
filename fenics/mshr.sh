@@ -18,7 +18,6 @@ clone \
    "git://anonscm.debian.org/git/debian-science/packages/fenics/mshr.git" \
    "$DEBIAN_DIR"
 
-sed -i "/build_cgal_component_library/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "/mshrable/d" "$DEBIAN_DIR/debian/libmshr-dev.install"
 
 launchpad-submit \

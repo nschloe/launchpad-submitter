@@ -18,7 +18,6 @@ clone \
    "git://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
    "$DEBIAN_DIR"
 
-sed -i "/python-netcdf/d" "$DEBIAN_DIR/debian/control"
 # sed -i "/slepc-dev/d"
 
 launchpad-submit \
