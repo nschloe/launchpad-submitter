@@ -22,7 +22,7 @@ launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --update-patches \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases xenial yakkety \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --ppa nschloe/cmake-nightly \
