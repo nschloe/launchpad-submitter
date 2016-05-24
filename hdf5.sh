@@ -18,7 +18,7 @@ launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --update-patches \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases xenial yakkety \
   --ppa nschloe/hdf5-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
