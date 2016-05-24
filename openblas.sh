@@ -25,7 +25,7 @@ sed -i "/shared-blas-lapack.patch/d" "$DEBIAN_DIR/debian/patches/series"
 "$HOME/rcs/launchpadtools/tools/launchpad-submit" \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases xenial yakkety \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \
