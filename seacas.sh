@@ -1,5 +1,8 @@
 #!/bin/sh -ue
 
+# Set SSH agent variables.
+. "$HOME/.keychain/$(/bin/hostname)-sh"
+
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)

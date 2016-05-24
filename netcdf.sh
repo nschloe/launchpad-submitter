@@ -1,19 +1,18 @@
 #!/bin/sh -ue
 
+# Set SSH agent variables.
+. "$HOME/.keychain/$(/bin/hostname)-sh"
+
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone \
-  "git@github.com:Unidata/netcdf-c.git" \
-  "$ORIG_DIR"
+clone "git@github.com:Unidata/netcdf-c.git" "$ORIG_DIR"
 
 VERSION=$(grep "^AC_INIT" "$ORIG_DIR/configure.ac" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
-clone \
-  "git://anonscm.debian.org/git/pkg-grass/netcdf.git" \
-  "$DEBIAN_DIR"
+clone "git://anonscm.debian.org/git/pkg-grass/netcdf.git" "$DEBIAN_DIR"
 
 sed -i "/source_date_epoch.patch/d" "$DEBIAN_DIR/debian/patches/series"
 

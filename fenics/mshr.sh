@@ -6,9 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone \
-  "git@bitbucket.org:fenics-project/mshr.git" \
-  "$ORIG_DIR"
+clone "git@bitbucket.org:fenics-project/mshr.git" "$ORIG_DIR"
 
 MAJOR=$(grep 'MSHR_VERSION_MAJOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 MINOR=$(grep 'MSHR_VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
