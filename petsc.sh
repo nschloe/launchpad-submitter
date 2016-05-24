@@ -6,9 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
-   "git@bitbucket.org:petsc/petsc.git" \
-   "$ORIG_DIR"
+clone "git@bitbucket.org:petsc/petsc.git" "$ORIG_DIR"
 
 VERSION_MAJOR=$(grep '#define PETSC_VERSION_MAJOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 VERSION_MINOR=$(grep '#define PETSC_VERSION_MINOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
@@ -20,7 +18,7 @@ UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
 UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
+clone \
    "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
    "$DEBIAN_DIR"
 
@@ -49,7 +47,7 @@ for i in ./*; do
   [ -f "$i" ] && sed -i "s/$DEBIAN_SOVERSION/$UPSTREAM_SOVERSION/g" "$i"
 done
 
-"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --ubuntu-releases wily xenial yakkety \

@@ -6,9 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
-  "git@bitbucket.org:fenics-project/dolfin.git" \
-  "$ORIG_DIR"
+clone "git@bitbucket.org:fenics-project/dolfin.git" "$ORIG_DIR"
 
 MAJOR=$(grep 'DOLFIN_VERSION_MAJOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
@@ -16,14 +14,14 @@ MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
+clone \
    "git://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
    "$DEBIAN_DIR"
 
 sed -i "/python-netcdf/d" "$DEBIAN_DIR/debian/control"
 # sed -i "/slepc-dev/d"
 
-"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --ubuntu-releases trusty wily xenial yakkety \
@@ -44,7 +42,7 @@ sed -i "/python-netcdf/d" "$DEBIAN_DIR/debian/control"
 #   --debian "$DEBIAN_DIR" \
 #   --out "$DIR"
 ##
-# "$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+# launchpad-submit \
 #   --directory "$DIR" \
 #   --ubuntu-releases xenial yakkety \
 #   --version-override "$FULL_VERSION" \

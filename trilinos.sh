@@ -6,15 +6,13 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
-  "git@github.com:trilinos/Trilinos.git" \
-  "$ORIG_DIR"
+clone "git@github.com:trilinos/Trilinos.git" "$ORIG_DIR"
 
 VERSION=$(grep "Trilinos_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
+clone \
   "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   "$DEBIAN_DIR"
 
@@ -25,7 +23,7 @@ DEBIAN_DIR=$(mktemp -d)
 # cd "$DIR" && git commit -a -m "update debian"
 #
 # # trusty
-# "$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+# launchpad-submit \
 #   --directory "$DIR" \
 #   --ubuntu-releases trusty \
 #   --version-override "$FULL_VERSION" \
@@ -48,7 +46,7 @@ DEBIAN_DIR=$(mktemp -d)
 #   --debian "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
 #   --out "$DIR"
 
-"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --ubuntu-releases trusty wily xenial yakkety \

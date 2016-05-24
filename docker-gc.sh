@@ -5,14 +5,14 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
+clone \
   "git@github.com:spotify/docker-gc.git" \
   "$DIR"
 
 VERSION=$(cat "$DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+launchpad-submit \
   --orig "$DIR" \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$FULL_VERSION" \

@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
+clone \
    "git@github.com:xianyi/OpenBLAS.git" \
    "$ORIG_DIR"
 
@@ -13,7 +13,7 @@ PATCH=$(grep 'set(OpenBLAS_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
-"$HOME/rcs/launchpadtools/tools/cloner" \
+clone \
    "git://anonscm.debian.org/git/debian-science/packages/openblas.git" \
    "$DEBIAN_DIR"
 
@@ -22,7 +22,7 @@ sed -i "/always-run-testsuite.patch/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "/no-embedded-lapack.patch/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "/shared-blas-lapack.patch/d" "$DEBIAN_DIR/debian/patches/series"
 
-"$HOME/rcs/launchpadtools/tools/launchpad-submit" \
+launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --ubuntu-releases xenial yakkety \
