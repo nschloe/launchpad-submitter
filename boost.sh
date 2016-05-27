@@ -1,12 +1,9 @@
 #!/bin/sh -ue
 
-# Set SSH agent variables.
-. "$HOME/.keychain/$(/bin/hostname)-sh"
-
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "git@github.com:boostorg/boost.git" "$ORIG_DIR"
+clone "https://github.com/boostorg/boost.git" "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(grep 'BOOST_VERSION' "$ORIG_DIR/Jamroot" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/' -)
 UPSTREAM_VERSION_SHORT=$(echo "$UPSTREAM_VERSION" | sed 's/\([0-9]*\.[0-9]*\).*/\1/' -)

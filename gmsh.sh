@@ -1,14 +1,10 @@
 #!/bin/sh -ue
 
-# Set SSH agent variables.
-. "$HOME/.keychain/$(/bin/hostname)-sh"
-
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
 clone "https://onelab.info/svn/gmsh/trunk" "$ORIG_DIR"
 
-# get version
 MAJOR=$(grep 'set(GMSH_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(GMSH_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 PATCH=$(grep 'set(GMSH_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
@@ -31,5 +27,4 @@ launchpad-submit \
   --ppa nschloe/gmsh-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
 
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"
+rm -rf "$ORIG_DIR" "$DEBIAN_DIR"

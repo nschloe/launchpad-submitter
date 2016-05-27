@@ -23,5 +23,4 @@ launchpad-submit \
   --ppa nschloe/cmake-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
 
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"
+rm -rf "$ORIG_DIR" "$DEBIAN_DIR"
