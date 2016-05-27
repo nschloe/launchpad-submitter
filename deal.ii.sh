@@ -15,6 +15,7 @@ clone \
 sed -i '/doc\/doxygen\/deal.II\/images/d' "$DEBIAN_DIR/debian/rules"
 sed -i '/getElementById/,+2 d' "$DEBIAN_DIR/debian/rules"
 sed -i '/step-35/d' "$DEBIAN_DIR/debian/rules"
+sed -i '/glossary/d' "$DEBIAN_DIR/debian/rules"
 
 launchpad-submit \
   --orig "$ORIG_DIR" \
