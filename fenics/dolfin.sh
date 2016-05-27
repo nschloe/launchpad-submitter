@@ -27,28 +27,7 @@ launchpad-submit \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \
-  --debuild-params="-p$THIS_DIR/../mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
-
-# cd "$DEBIAN_DIR" && git checkout .
-# sed -i "/python-netcdf/d" control
-#
-# rm -rf "$DIR"
-# "$HOME/rcs/launchpadtools/tools/create-debian-repo" \
-#   --orig "$SOURCE_DIR" \
-#   --debian "$DEBIAN_DIR" \
-#   --out "$DIR"
-##
-# launchpad-submit \
-#   --directory "$DIR" \
-#   --ubuntu-releases xenial yakkety \
-#   --version-override "$FULL_VERSION" \
-#   --ppa nschloe/fenics-nightly \
-#   --debuild-params="-p$THIS_DIR/../mygpg" \
-#   --submit-id "Nico Schlömer <nico.schloemer@gmail.com>" \
-#   "$@"
+  --debuild-params="-p$THIS_DIR/../mygpg"
 
 rm -rf "$ORIG_DIR"
 rm -rf "$DEBIAN_DIR"

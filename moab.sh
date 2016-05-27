@@ -17,9 +17,6 @@ launchpad-submit \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/moab-nightly \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
+  --debuild-params="-p$THIS_DIR/mygpg"
 
 rm -rf "$DIR"

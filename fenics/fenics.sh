@@ -20,7 +20,4 @@ launchpad-submit \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \
   --ubuntu-releases trusty wily xenial yakkety \
-  --debuild-params="-p$THIS_DIR/../mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
+  --debuild-params="-p$THIS_DIR/../mygpg"

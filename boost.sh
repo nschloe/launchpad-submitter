@@ -22,18 +22,14 @@ for i in ./*; do
   [ -f "$i" ] && sed -i "s/$DEBIAN_VERSION_SHORT/$UPSTREAM_VERSION_SHORT/g" "$i"
 done
 
-#  --ubuntu-releases trusty wily \
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases wily xenial yakkety \
   --update-patches \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --ppa nschloe/boost-nightly \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  "$@"
+  --debuild-params="-p$THIS_DIR/mygpg"
 
 rm -rf "$ORIG_DIR" "$DEBIAN_DIR"

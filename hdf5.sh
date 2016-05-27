@@ -22,10 +22,7 @@ launchpad-submit \
   --ppa nschloe/hdf5-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  "$@"
+  --debuild-params="-p$THIS_DIR/mygpg"
 
 rm -rf "$ORIG_DIR"
 rm -rf "$DEBIAN_DIR"

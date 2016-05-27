@@ -52,10 +52,7 @@ launchpad-submit \
   --version-append-hash \
   --update-patches \
   --ppa nschloe/petsc-nightly \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
+  --debuild-params="-p$THIS_DIR/mygpg"
 
 rm -rf "$ORIG_DIR"
 rm -rf "$DEBIAN_DIR"

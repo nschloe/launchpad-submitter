@@ -1,5 +1,5 @@
 #!/bin/sh -ue
-#
+
 # Set SSH agent variables.
 . "$HOME/.keychain/$(/bin/hostname)-sh"
 
@@ -17,6 +17,7 @@ clone \
 
 sed -i '/doc\/doxygen\/deal.II\/images/d' "$DEBIAN_DIR/debian/rules"
 sed -i '/getElementById/,+2 d' "$DEBIAN_DIR/debian/rules"
+sed -i '/step-35/d' "$DEBIAN_DIR/debian/rules"
 
 launchpad-submit \
   --orig "$ORIG_DIR" \
@@ -26,10 +27,7 @@ launchpad-submit \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --ppa nschloe/deal.ii-nightly \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
+  --debuild-params="-p$THIS_DIR/mygpg"
 
 rm -rf "$ORIG_DIR"
 rm -rf "$DEBIAN_DIR"
