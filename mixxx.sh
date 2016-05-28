@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "git@github.com:mixxxdj/mixxx.git" "$ORIG_DIR"
+clone "https://github.com/mixxxdj/mixxx.git" "$ORIG_DIR"
 
 VERSION=$(grep "define VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"

@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "git@github.com:Kitware/VTK.git" "$ORIG_DIR"
+clone "https://github.com/Kitware/VTK.git" "$ORIG_DIR"
 
 # get version
 MAJOR=$(grep VTK_MAJOR_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')

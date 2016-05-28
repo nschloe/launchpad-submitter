@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "git@github.com:xianyi/OpenBLAS.git" "$ORIG_DIR"
+clone "https://github.com/xianyi/OpenBLAS.git" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(OpenBLAS_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(OpenBLAS_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')

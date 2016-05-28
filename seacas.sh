@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-clone "git@github.com:gdsjaar/seacas.git" "$DIR"
+clone "https://github.com/gsjaardema/seacas.git" "$DIR"
 
 VERSION=$(grep "SEACASProj_VERSION " "$DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
