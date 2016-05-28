@@ -18,6 +18,7 @@ sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/debian/rules"
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
+  --update-patches \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

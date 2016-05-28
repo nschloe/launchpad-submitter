@@ -20,6 +20,7 @@ sed -i "/mshrable/d" "$DEBIAN_DIR/debian/libmshr-dev.install"
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
+  --update-patches \
   --ubuntu-releases trusty wily xenial yakkety \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
