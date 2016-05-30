@@ -17,8 +17,8 @@ VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR=$(mktemp -d)
 clone "git://anonscm.debian.org/debian-science/packages/vtk6.git" "$DEBIAN_DIR"
 
-find . -type f -print0 | xargs -0 sed -i "s/6\.3\.0+dfsg1-[0-9]/$VERSION/g"
-find . -type f -print0 | xargs -0 sed -i "s/6\.3/$MAJOR.$MINOR/g"
+find "$DEBIAN_DIR/debian" -type f -print0 | xargs -0 sed -i "s/6\.3\.0+dfsg1-[0-9]/$VERSION/g"
+find "$DEBIAN_DIR/debian" -type f -print0 | xargs -0 sed -i "s/6\.3/$MAJOR.$MINOR/g"
 sed -i "/vtkMarchingCubesCases.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
 sed -i "/FTGL.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
 sed -i "/50_use_system_utf8.patch/d" "$DEBIAN_DIR/debian/patches/series"
@@ -29,7 +29,7 @@ sed -i "/-DVTK_USE_SYSTEM_GL2PS=ON/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/-DVTK_USE_SYSTEM_GLEW=ON/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/-DVTK_USE_SYSTEM_LIBPROJ4=ON/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/vtk_netcdfcpp.h/d" "$DEBIAN_DIR/debian/rules"
-rename "s/6\.3/$MAJOR.$MINOR/" ./*
+cd "$DEBIAN_DIR/debian" && rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
 launchpad-submit \
   --orig "$ORIG_DIR" \
