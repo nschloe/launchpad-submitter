@@ -6,7 +6,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-clone "https://github.com/docker/docker.git" "$DIR"
+clone "https://github.com/spotify/docker-gc.git" "$DIR"
 
 VERSION=$(cat "$DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
