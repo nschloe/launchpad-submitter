@@ -6,7 +6,9 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "ssh://hg@bitbucket.org/eigen/eigen" "$ORIG_DIR"
+# HG doesn't properly update yet. (bug?)
+# clone "ssh://hg@bitbucket.org/eigen/eigen" "$ORIG_DIR"
+clone "https://github.com/RLovelett/eigen.git" "$ORIG_DIR"
 
 MAJOR=$(grep '#define EIGEN_WORLD_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep '#define EIGEN_MAJOR_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
