@@ -17,8 +17,12 @@ VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR=$(mktemp -d)
 clone "git://anonscm.debian.org/debian-science/packages/vtk6.git" "$DEBIAN_DIR"
 
+# Replace version everywhere except the changelog
+cp "$DEBIAN_DIR/debian/changelog" "/tmp/changelog"
 find "$DEBIAN_DIR/debian" -type f -print0 | xargs -0 sed -i "s/6\.3\.0+dfsg1-[0-9]/$VERSION/g"
 find "$DEBIAN_DIR/debian" -type f -print0 | xargs -0 sed -i "s/6\.3/$MAJOR.$MINOR/g"
+rm -f "$DEBIAN_DIR/debian/changelog" && cp "/tmp/changelog" "$DEBIAN_DIR/debian/changelog"
+#
 sed -i "/vtkMarchingCubesCases.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
 sed -i "/FTGL.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
 sed -i "/50_use_system_utf8.patch/d" "$DEBIAN_DIR/debian/patches/series"
