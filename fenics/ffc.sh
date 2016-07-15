@@ -5,7 +5,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 ORIG_DIR=$(mktemp -d)
 clone "https://nschloe@bitbucket.org/fenics-project/ffc.git" "$ORIG_DIR"
 
-VERSION=$(grep '__version__ =' "$ORIG_DIR/ffc/__init__.py" | sed 's/.*\([0-9]\.[0-9]\.[0-9]\).*/\1/')
+VERSION=$(grep '__version__ =' "$ORIG_DIR/ffc/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
