@@ -3,17 +3,15 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "https://nschloe@bitbucket.org/fenics-project/ffc.git" "$ORIG_DIR"
+clone "https://nschloe@bitbucket.org/fenics-project/dijitso.git" "$ORIG_DIR"
 
-VERSION=$(grep '__version__ =' "$ORIG_DIR/ffc/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
+VERSION=$(grep '__version__ =' "$ORIG_DIR/dijitso/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
 clone \
-   "git://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
+   "git@github.com:nschloe/debian-dijitso.git" \
    "$DEBIAN_DIR"
-
-# sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/debian/rules"
 
 launchpad-submit \
   --orig "$ORIG_DIR" \
