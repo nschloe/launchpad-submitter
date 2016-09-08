@@ -5,10 +5,28 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 ORIG_DIR=$(mktemp -d)
 clone "https://github.com/CGAL/cgal.git" "$ORIG_DIR"
 
-MAJOR=$(cat "$ORIG_DIR/Maintenance/release_building/MAJOR_NUMBER")
-MINOR=$(cat "$ORIG_DIR/Maintenance/release_building/MINOR_NUMBER")
-PATCH=$(cat "$ORIG_DIR/Maintenance/release_building/BUGFIX_NUMBER")
-VERSION="$MAJOR.$MINOR.$PATCH"
+# Create the release dir
+rm -rf /tmp/CGAL-*
+rm -rf /tmp/tmp/
+rm -f /tmp/release_creation.lock
+cd /tmp/
+bash "$ORIG_DIR/Scripts/developer_scripts/create_new_release" "$ORIG_DIR" --verbose
+cd /tmp/tmp/
+echo 1
+tar xf CGAL-last.tar.gz
+echo 2
+TARFILE=$(cat /tmp/tmp/LATEST)
+echo 3
+DIRECTORY="/tmp/tmp/${TARFILE%.tar.gz}"
+echo 4
+if [ ! -d "$DIRECTORY" ]; then
+  echo "Couldn't find directory $DIRECTORY."
+  exit 1
+fi
+echo 5
+ORIG_DIR="$DIRECTORY"
+
+VERSION=$(cat "$ORIG_DIR/VERSION")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
