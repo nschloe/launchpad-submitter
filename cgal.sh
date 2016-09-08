@@ -32,6 +32,14 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR=$(mktemp -d)
 clone "git@github.com:nschloe/cgal-debian.git" "$DEBIAN_DIR"
 
+cd "$DEBIAN_DIR/debian"
+rename "s/11v5/12/" ./*
+rename "s/11/12/" ./*
+for i in ./*; do
+  [ -f "$i" ] && sed -i "s/11v5/12/g" "$i"
+  [ -f "$i" ] && sed -i "s/11/12/g" "$i"
+done
+
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
