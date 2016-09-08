@@ -12,6 +12,10 @@ clone \
    "svn://svn.debian.org/svn/pkg-swig/branches/swig3.0" \
    "$DEBIAN_DIR"
 
+# remove PHP (unsupported in ubuntu)
+sed -i "/php5-cgi,/d" "$DEBIAN_DIR/debian/control"
+sed -i "/php5-dev,/d" "$DEBIAN_DIR/debian/control"
+
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
