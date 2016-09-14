@@ -6,10 +6,8 @@ ORIG_DIR=$(mktemp -d)
 clone "https://github.com/Kitware/ParaView.git" "$ORIG_DIR"
 
 # get version
-MAJOR=$(grep 'set (PARAVIEW_VERSION_MAJOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^.*\([0-9]\).*/\1/')
-MINOR=$(grep 'set (PARAVIEW_VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^.*\([0-9]\).*/\1/')
-PATCH=$(grep 'set (PARAVIEW_VERSION_PATCH ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^.*\([0-9]\).*/\1/')
-VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
+UPSTREAM_VERSION=$(cat "$ORIG_DIR/version.txt")
+VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
 clone "git://anonscm.debian.org/debian-science/packages/paraview.git" "$DEBIAN_DIR"
