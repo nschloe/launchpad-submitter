@@ -24,6 +24,7 @@ find "$DEBIAN_DIR/debian" -type f -print0 | xargs -0 sed -i "s/6\.3/$MAJOR.$MINO
 rm -f "$DEBIAN_DIR/debian/changelog" && cp "/tmp/changelog" "$DEBIAN_DIR/debian/changelog"
 #
 sed -i "/vtkMarchingCubesCases.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
+sed -i "/exportheader.cmake.in/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
 sed -i "/FTGL.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
 sed -i "/50_use_system_utf8.patch/d" "$DEBIAN_DIR/debian/patches/series"
 sed -i "/vtkftglConfig.h/d" "$DEBIAN_DIR/debian/libvtk6-dev.install"
@@ -33,12 +34,13 @@ sed -i "/-DVTK_USE_SYSTEM_GL2PS=ON/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/-DVTK_USE_SYSTEM_GLEW=ON/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/-DVTK_USE_SYSTEM_LIBPROJ4=ON/d" "$DEBIAN_DIR/debian/rules"
 sed -i "/vtk_netcdfcpp.h/d" "$DEBIAN_DIR/debian/rules"
+sed -i "s/libqt5webkit5-dev,/libqt5webkit5-dev, libqt5x11extras5-dev,/g" "$DEBIAN_DIR/debian/control"
 cd "$DEBIAN_DIR/debian" && rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases wily xenial yakkety \
+  --ubuntu-releases xenial yakkety \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
