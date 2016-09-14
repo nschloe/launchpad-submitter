@@ -12,25 +12,20 @@ rm -f /tmp/release_creation.lock
 cd /tmp/
 bash "$ORIG_DIR/Scripts/developer_scripts/create_new_release" "$ORIG_DIR" --verbose
 cd /tmp/tmp/
-echo 1
 tar xf CGAL-last.tar.gz
-echo 2
 TARFILE=$(cat /tmp/tmp/LATEST)
-echo 3
 DIRECTORY="/tmp/tmp/${TARFILE%.tar.gz}"
-echo 4
 if [ ! -d "$DIRECTORY" ]; then
   echo "Couldn't find directory $DIRECTORY."
   exit 1
 fi
-echo 5
 ORIG_DIR="$DIRECTORY"
 
 VERSION=$(cat "$ORIG_DIR/VERSION")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR=$(mktemp -d)
-clone "git@github.com:nschloe/cgal-debian.git" "$DEBIAN_DIR"
+clone "https://github.com/nschloe/cgal-debian.git" "$DEBIAN_DIR"
 
 cd "$DEBIAN_DIR/debian"
 rename "s/11v5/12/" ./*
