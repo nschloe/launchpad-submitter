@@ -13,7 +13,7 @@ clone \
    "git://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
    "$DEBIAN_DIR"
 
-# sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/debian/rules"
+sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/debian/rules"
 
 launchpad-submit \
   --orig "$ORIG_DIR" \
