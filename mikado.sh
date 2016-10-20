@@ -12,7 +12,7 @@ VERSION="$MAJOR.$MINOR.$PATCH"
 
 launchpad-submit \
   --orig "$DIR" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --ppa nschloe/mikado-nightly \

@@ -10,7 +10,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 launchpad-submit \
   --orig "$DIR" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/seacas-nightly \

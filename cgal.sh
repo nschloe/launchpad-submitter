@@ -38,7 +38,7 @@ done
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases xenial yakkety zesty \
   --ppa nschloe/cgal-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

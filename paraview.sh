@@ -15,7 +15,7 @@ clone "git://anonscm.debian.org/debian-science/packages/paraview.git" "$DEBIAN_D
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

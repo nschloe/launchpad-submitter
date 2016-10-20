@@ -23,7 +23,7 @@ clone \
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \

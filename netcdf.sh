@@ -14,7 +14,7 @@ clone "git://anonscm.debian.org/git/pkg-grass/netcdf.git" "$DEBIAN_DIR"
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases precise trusty wily xenial yakkety \
+  --ubuntu-releases precise trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --update-patches \

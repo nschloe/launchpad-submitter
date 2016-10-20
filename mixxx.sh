@@ -17,7 +17,7 @@ sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/debian/control"
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --ppa nschloe/mixxx-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

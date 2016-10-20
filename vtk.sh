@@ -40,7 +40,7 @@ cd "$DEBIAN_DIR/debian" && rename "s/6\.3/$MAJOR.$MINOR/" ./*
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases xenial yakkety \
+  --ubuntu-releases xenial yakkety zesty \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

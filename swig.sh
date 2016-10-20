@@ -19,7 +19,7 @@ sed -i "/php5-dev,/d" "$DEBIAN_DIR/debian/control"
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty xenial yakkety \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --update-patches \

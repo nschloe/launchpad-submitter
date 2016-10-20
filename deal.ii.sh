@@ -21,7 +21,7 @@ launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --update-patches \
-  --ubuntu-releases yakkety \
+  --ubuntu-releases yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --ppa nschloe/deal.ii-nightly \
