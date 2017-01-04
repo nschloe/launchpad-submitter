@@ -13,10 +13,13 @@ clone \
    "https://anonscm.debian.org/git/python-modules/packages/matplotlib.git" \
    "$DEBIAN_DIR"
 
+# add colorspacious to dependencies
+sed -i "s/python3-all-dev,/python3-all-dev, python-colorspacious, python3-colorspacious, python-functools32,/g" "$DEBIAN_DIR/debian/control"
+
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --update-patches \
