@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-clone "https://nschloe@bitbucket.org/fathomteam/moab.git" "$DIR"
+clone "https://bitbucket.org/fathomteam/moab.git" "$DIR"
 
 VERSION=$(grep AC_INIT "$DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\)\].*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
