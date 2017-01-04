@@ -4,6 +4,8 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
 clone "https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git" "$ORIG_DIR"
+# note that libtool-bin is needed here
+cd "$ORIG_DIR" && ./autogen.sh
 
 VERSION=$(grep "^AC_INIT" "$ORIG_DIR/configure.ac" | sed "s/.*\[\([0-9][0-9\.]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
