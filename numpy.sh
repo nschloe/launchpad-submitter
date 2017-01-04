@@ -4,6 +4,7 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
 clone "https://github.com/numpy/numpy.git" "$ORIG_DIR"
+cd "$ORIG_DIR" && git submodule init && git submodule update
 
 MAJOR=$(grep 'MAJOR' "$ORIG_DIR/setup.py" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'MINOR' "$ORIG_DIR/setup.py" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
