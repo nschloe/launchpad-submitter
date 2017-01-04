@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "https://icl.cs.utk.edu/svn/lapack-dev/lapack/trunk" "$ORIG_DIR"
+clone "https://github.com/Reference-LAPACK/lapack.git" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(LAPACK_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(LAPACK_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
