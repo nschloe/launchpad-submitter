@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "https://svn.hdfgroup.uiuc.edu/hdf5/trunk/" "$ORIG_DIR"
+clone "https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git" "$ORIG_DIR"
 
 VERSION=$(grep "^AC_INIT" "$ORIG_DIR/configure.ac" | sed "s/.*\[\([0-9][0-9\.]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
@@ -15,7 +15,7 @@ launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
   --update-patches \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases yakkety zesty \
   --ppa nschloe/hdf5-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
