@@ -5,6 +5,18 @@ THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 ORIG_DIR=$(mktemp -d)
 clone "https://github.com/boostorg/boost.git" "$ORIG_DIR"
 
+cd "$ORIG_DIR"
+./bootstrap.sh
+./bjam headers
+# The above commands create the headers as symlinks.
+# Follow them <http://superuser.com/a/303574/227453>.
+tar -hcf boost.tar boost
+rm -rf boost
+tar -xf boost.tar
+rm -f boost.tar
+
+# FIXME https://svn.boost.org/trac/boost/ticket/12723
+
 UPSTREAM_VERSION=$(grep 'BOOST_VERSION' "$ORIG_DIR/Jamroot" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/' -)
 UPSTREAM_VERSION_SHORT=$(echo "$UPSTREAM_VERSION" | sed 's/\([0-9]*\.[0-9]*\).*/\1/' -)
 
@@ -22,7 +34,7 @@ done
 launchpad-submit \
   --orig "$ORIG_DIR" \
   --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases yakkety zesty \
   --update-patches \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
