@@ -2,8 +2,14 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "https://github.com/boostorg/boost.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+finish() { rm -rf "$TMP_DIR"; }
+trap finish EXIT
+
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://github.com/boostorg/boost.git" \
+  "$ORIG_DIR"
 
 cd "$ORIG_DIR"
 ./bootstrap.sh
@@ -20,8 +26,10 @@ rm -f boost.tar
 UPSTREAM_VERSION=$(grep 'BOOST_VERSION' "$ORIG_DIR/Jamroot" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/' -)
 UPSTREAM_VERSION_SHORT=$(echo "$UPSTREAM_VERSION" | sed 's/\([0-9]*\.[0-9]*\).*/\1/' -)
 
-DEBIAN_DIR=$(mktemp -d)
-clone "svn://svn.debian.org/pkg-boost/boost/trunk" "$DEBIAN_DIR"
+DEBIAN_DIR="$TMP_DIR/debian"
+clone --ignore-hidden \
+  "svn://svn.debian.org/pkg-boost/boost/trunk" \
+  "$DEBIAN_DIR"
 DEBIAN_VERSION_SHORT=$(head -n 1 "$DEBIAN_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
 DEBIAN_VERSION="$DEBIAN_VERSION_SHORT.0"
 
@@ -40,5 +48,3 @@ launchpad-submit \
   --version-append-hash \
   --ppa nschloe/boost-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
-
-rm -rf "$ORIG_DIR" "$DEBIAN_DIR"

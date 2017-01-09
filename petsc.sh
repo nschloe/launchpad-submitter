@@ -3,7 +3,7 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 ORIG_DIR=$(mktemp -d)
-clone "https://nschloe@bitbucket.org/petsc/petsc.git" "$ORIG_DIR"
+clone "https://bitbucket.org/petsc/petsc.git" "$ORIG_DIR"
 
 VERSION_MAJOR=$(grep '#define PETSC_VERSION_MAJOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 VERSION_MINOR=$(grep '#define PETSC_VERSION_MINOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)

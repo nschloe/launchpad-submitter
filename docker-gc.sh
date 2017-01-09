@@ -6,7 +6,12 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-clone "https://github.com/spotify/docker-gc.git" "$DIR"
+finish() { rm -rf "$DIR"; }
+trap finish EXIT
+
+clone --ignore-hidden\
+  "https://github.com/spotify/docker-gc.git" \
+  "$DIR"
 
 VERSION=$(cat "$DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
@@ -18,5 +23,3 @@ launchpad-submit \
   --version-append-hash \
   --ppa nschloe/docker-gc-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
-
-rm -rf "$DIR"

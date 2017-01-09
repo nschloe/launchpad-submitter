@@ -2,13 +2,19 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "https://github.com/dealii/dealii.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
+
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://github.com/dealii/dealii.git" \
+  "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(cat "$ORIG_DIR/VERSION")
 
-DEBIAN_DIR=$(mktemp -d)
-clone \
+DEBIAN_DIR="$TMP_DIR/debian"
+clone --ignore-hidden \
   "https://anonscm.debian.org/git/debian-science/packages/deal.ii.git" \
   "$DEBIAN_DIR"
 
@@ -26,5 +32,3 @@ launchpad-submit \
   --version-append-hash \
   --ppa nschloe/deal.ii-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
-
-rm -rf "$ORIG_DIR" "$DEBIAN_DIR"

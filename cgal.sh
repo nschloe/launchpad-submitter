@@ -2,8 +2,14 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "https://github.com/CGAL/cgal.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+finish() { rm -rf "$TMP_DIR"; }
+trap finish EXIT
+
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://github.com/CGAL/cgal.git" \
+  "$ORIG_DIR"
 
 # Create the release dir
 rm -rf /tmp/CGAL-*
@@ -24,8 +30,10 @@ ORIG_DIR="$DIRECTORY"
 VERSION=$(cat "$ORIG_DIR/VERSION")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR=$(mktemp -d)
-clone "https://github.com/nschloe/cgal-debian.git" "$DEBIAN_DIR"
+DEBIAN_DIR="$TMP_DIR/debian"
+clone --ignore-hidden \
+  "https://github.com/nschloe/cgal-debian.git" \
+  "$DEBIAN_DIR"
 
 cd "$DEBIAN_DIR/debian"
 rename "s/11v5/12/" ./*
@@ -36,14 +44,11 @@ for i in ./*; do
 done
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --ubuntu-releases xenial yakkety zesty \
   --ppa nschloe/cgal-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --update-patches \
   --debuild-params="-p$THIS_DIR/mygpg"
-
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"

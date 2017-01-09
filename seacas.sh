@@ -15,5 +15,3 @@ launchpad-submit \
   --version-append-hash \
   --ppa nschloe/seacas-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
-
-rm -rf "$DIR"
