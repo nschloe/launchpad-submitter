@@ -50,7 +50,7 @@ done
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
   --debian-dir "$DEBIAN_DIR/debian" \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --update-patches \
