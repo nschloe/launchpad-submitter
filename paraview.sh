@@ -16,7 +16,7 @@ VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
 clone --ignore-hidden \
-  "git://anonscm.debian.org/debian-science/packages/paraview.git" \
+  "https://anonscm.debian.org/git/debian-science/packages/paraview.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
