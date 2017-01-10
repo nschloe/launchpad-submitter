@@ -18,13 +18,14 @@ PATCH=$(grep 'MICRO' "$ORIG_DIR/setup.py" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "git://anonscm.debian.org/git/python-modules/packages/python-numpy.git" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "git://anonscm.debian.org/git/python-modules/packages/python-numpy.git" \
+  "$DEBIAN_DIR"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

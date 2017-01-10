@@ -14,17 +14,18 @@ clone --ignore-hidden \
 UPSTREAM_VERSION=$(grep 'AC_INIT(' "$ORIG_DIR/configure.ac" | sed 's/^[^0-9]*\([0-9\.]*\).*/\1/')
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "svn://svn.debian.org/svn/pkg-swig/branches/swig3.0" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "svn://svn.debian.org/svn/pkg-swig/branches/swig3.0" \
+  "$DEBIAN_DIR"
 
 # remove PHP (unsupported in ubuntu)
-sed -i "/php5-cgi,/d" "$DEBIAN_DIR/debian/control"
-sed -i "/php5-dev,/d" "$DEBIAN_DIR/debian/control"
+sed -i "/php5-cgi,/d" "$DEBIAN_DIR/control"
+sed -i "/php5-dev,/d" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

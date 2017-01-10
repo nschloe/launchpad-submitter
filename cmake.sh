@@ -17,13 +17,14 @@ PATCH=$(grep 'set(CMake_VERSION_RC ' "$ORIG_DIR/Source/CMakeVersion.cmake" | sed
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
+clone \
+  --subdirectory=debian/ \
   "https://anonscm.debian.org/git/pkg-cmake/cmake.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --update-patches \
   --ubuntu-releases xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

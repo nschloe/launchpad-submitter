@@ -17,15 +17,16 @@ MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "git://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "git://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
+  "$DEBIAN_DIR"
 
 # sed -i "/slepc-dev/d"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --update-patches \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \

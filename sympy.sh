@@ -14,13 +14,14 @@ clone --ignore-hidden \
 UPSTREAM_VERSION=$(sed 's/[^\"]*\"\([^\"]*\)\".*/\1/' "$ORIG_DIR/sympy/release.py")
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "git://anonscm.debian.org/git/debian-science/packages/sympy.git" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "git://anonscm.debian.org/git/debian-science/packages/sympy.git" \
+  "$DEBIAN_DIR"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

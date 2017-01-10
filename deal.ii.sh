@@ -14,18 +14,19 @@ clone --ignore-hidden \
 UPSTREAM_VERSION=$(cat "$ORIG_DIR/VERSION")
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
+clone \
+  --subdirectory=debian/ \
   "https://anonscm.debian.org/git/debian-science/packages/deal.ii.git" \
   "$DEBIAN_DIR"
 
-sed -i '/doc\/doxygen\/deal.II\/images/d' "$DEBIAN_DIR/debian/rules"
-sed -i '/getElementById/,+2 d' "$DEBIAN_DIR/debian/rules"
-sed -i '/step-35/d' "$DEBIAN_DIR/debian/rules"
-sed -i '/glossary/d' "$DEBIAN_DIR/debian/rules"
+sed -i '/doc\/doxygen\/deal.II\/images/d' "$DEBIAN_DIR/rules"
+sed -i '/getElementById/,+2 d' "$DEBIAN_DIR/rules"
+sed -i '/step-35/d' "$DEBIAN_DIR/rules"
+sed -i '/glossary/d' "$DEBIAN_DIR/rules"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --update-patches \
   --ubuntu-releases yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

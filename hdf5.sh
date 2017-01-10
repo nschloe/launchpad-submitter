@@ -17,13 +17,14 @@ VERSION=$(grep "^AC_INIT" "$ORIG_DIR/configure.ac" | sed "s/.*\[\([0-9][0-9\.]*\
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
+clone \
+  --subdirectory=debian/ \
   "git://anonscm.debian.org/git/pkg-grass/hdf5.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --update-patches \
   --ubuntu-releases yakkety zesty \
   --ppa nschloe/hdf5-nightly \

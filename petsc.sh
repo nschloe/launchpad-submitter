@@ -21,26 +21,27 @@ UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
 UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "https://anonscm.debian.org/git/debian-science/packages/petsc.git" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "https://anonscm.debian.org/git/debian-science/packages/petsc.git" \
+  "$DEBIAN_DIR"
 
-DEBIAN_VERSION=$(head -n 1 "$DEBIAN_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
-DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9]\.[0-9]\).*/\1/')
+DEBIAN_VERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
+DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9]\.[0-9]\).*/\1/')
 
 # Some comments here:
 #   * We cannot enable sowing since it requires downloading the software at
 #     configure time which isn't possible on launchpad.
 #   * No sowing => no fortran interface (Matt Knepley, Apr 2016).
 #   * SuperLU is outdated in Debian.
-sed -i "/with-fortran-interfaces/d" "$DEBIAN_DIR/debian/rules"
-sed -i "/--with-superlu=1/d" "$DEBIAN_DIR/debian/rules"
-sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/\*html/d" "$DEBIAN_DIR/debian/rules"
-sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/petsc\/\*\/\*html/d" "$DEBIAN_DIR/debian/rules"
-sed -i "s/--useThreads 0/--useThreads=0 --with-sowing=0/g" "$DEBIAN_DIR/debian/rules"
-sed -i "/makefile.html/d" "$DEBIAN_DIR/debian/petsc$DEBIAN_VERSION-doc.docs"
-sed -i "/docs/d" "$DEBIAN_DIR/debian/petsc$DEBIAN_VERSION-doc.docs"
-cd "$DEBIAN_DIR/debian"
+sed -i "/with-fortran-interfaces/d" "$DEBIAN_DIR/rules"
+sed -i "/--with-superlu=1/d" "$DEBIAN_DIR/rules"
+sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/\*html/d" "$DEBIAN_DIR/rules"
+sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/petsc\/\*\/\*html/d" "$DEBIAN_DIR/rules"
+sed -i "s/--useThreads 0/--useThreads=0 --with-sowing=0/g" "$DEBIAN_DIR/rules"
+sed -i "/makefile.html/d" "$DEBIAN_DIR/petsc$DEBIAN_VERSION-doc.docs"
+sed -i "/docs/d" "$DEBIAN_DIR/petsc$DEBIAN_VERSION-doc.docs"
+cd "$DEBIAN_DIR/"
 rename "s/$DEBIAN_VERSION/$UPSTREAM_VERSION/" ./*
 for i in ./*; do
   [ -f "$i" ] && sed -i "s/$DEBIAN_VERSION/$UPSTREAM_VERSION/g" "$i"
@@ -49,7 +50,7 @@ done
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

@@ -15,16 +15,17 @@ VERSION=$(grep "define MIXXX_VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
+clone \
+  --subdirectory=debian/ \
   "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
   "$DEBIAN_DIR"
 
-sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/debian/control"
-sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/debian/control"
+sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/control"
+sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --ppa nschloe/mixxx-nightly \
   --version-override "$FULL_VERSION" \

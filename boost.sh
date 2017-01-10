@@ -27,13 +27,14 @@ UPSTREAM_VERSION=$(grep 'BOOST_VERSION' "$ORIG_DIR/Jamroot" | sed 's/[^0-9]*\([0
 UPSTREAM_VERSION_SHORT=$(echo "$UPSTREAM_VERSION" | sed 's/\([0-9]*\.[0-9]*\).*/\1/' -)
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
+clone \
+  --subdirectory=debian/ \
   "svn://svn.debian.org/pkg-boost/boost/trunk" \
   "$DEBIAN_DIR"
-DEBIAN_VERSION_SHORT=$(head -n 1 "$DEBIAN_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
+DEBIAN_VERSION_SHORT=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
 DEBIAN_VERSION="$DEBIAN_VERSION_SHORT.0"
 
-cd "$DEBIAN_DIR/debian"
+cd "$DEBIAN_DIR"
 for i in ./*; do
   [ -f "$i" ] && sed -i "s/$DEBIAN_VERSION/$UPSTREAM_VERSION/g" "$i"
   [ -f "$i" ] && sed -i "s/$DEBIAN_VERSION_SHORT/$UPSTREAM_VERSION_SHORT/g" "$i"
@@ -41,7 +42,7 @@ done
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases yakkety zesty \
   --update-patches \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

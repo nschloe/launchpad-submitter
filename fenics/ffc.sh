@@ -15,15 +15,16 @@ VERSION=$(grep '__version__ =' "$ORIG_DIR/ffc/__init__.py" | sed 's/[^0-9]*\([0-
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "git://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "git://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
+  "$DEBIAN_DIR"
 
-sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/debian/rules"
+sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/rules"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --update-patches \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \

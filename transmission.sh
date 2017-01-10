@@ -16,13 +16,14 @@ UPSTREAM_VERSION=$(grep -i "set(TR_USER_AGENT_PREFIX" "$ORIG_DIR/CMakeLists.txt"
 VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
+clone \
+  --subdirectory=debian/ \
   "git://anonscm.debian.org/collab-maint/transmission.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$VERSION" \
   --version-append-hash \

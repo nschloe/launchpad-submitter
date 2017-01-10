@@ -15,16 +15,17 @@ cd "$ORIG_DIR"
 UPSTREAM_VERSION=$(python -c "import versioneer; print(versioneer.get_version())" | sed 's/+.*$//')
 
 DEBIAN_DIR="$TMP_DIR/debian"
-clone --ignore-hidden \
-   "https://anonscm.debian.org/git/python-modules/packages/matplotlib.git" \
-   "$DEBIAN_DIR"
+clone \
+  --subdirectory=debian/ \
+  "https://anonscm.debian.org/git/python-modules/packages/matplotlib.git" \
+  "$DEBIAN_DIR"
 
 # add colorspacious to dependencies
-sed -i "s/python3-all-dev,/python3-all-dev, python-colorspacious, python3-colorspacious, python-functools32,/g" "$DEBIAN_DIR/debian/control"
+sed -i "s/python3-all-dev,/python3-all-dev, python-colorspacious, python3-colorspacious, python-functools32,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR/debian" \
+  --debian-dir "$DEBIAN_DIR" \
   --ubuntu-releases yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
