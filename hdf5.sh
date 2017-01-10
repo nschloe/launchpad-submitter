@@ -22,8 +22,8 @@ clone --ignore-hidden \
   "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --update-patches \
   --ubuntu-releases yakkety zesty \
   --ppa nschloe/hdf5-nightly \

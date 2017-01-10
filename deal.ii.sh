@@ -24,8 +24,8 @@ sed -i '/step-35/d' "$DEBIAN_DIR/debian/rules"
 sed -i '/glossary/d' "$DEBIAN_DIR/debian/rules"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --update-patches \
   --ubuntu-releases yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

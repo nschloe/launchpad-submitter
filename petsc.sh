@@ -2,8 +2,14 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "https://bitbucket.org/petsc/petsc.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
+
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://bitbucket.org/petsc/petsc.git" \
+  "$ORIG_DIR"
 
 VERSION_MAJOR=$(grep '#define PETSC_VERSION_MAJOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 VERSION_MINOR=$(grep '#define PETSC_VERSION_MINOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
@@ -14,8 +20,8 @@ VERSION_SUBMINOR=$(grep '#define PETSC_VERSION_SUBMINOR' "$ORIG_DIR/include/pets
 UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
 UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
-DEBIAN_DIR=$(mktemp -d)
-clone \
+DEBIAN_DIR="$TMP_DIR/debian"
+clone --ignore-hidden \
    "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
    "$DEBIAN_DIR"
 
@@ -42,14 +48,11 @@ for i in ./*; do
 done
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --ubuntu-releases xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
   --update-patches \
   --ppa nschloe/petsc-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
-
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"

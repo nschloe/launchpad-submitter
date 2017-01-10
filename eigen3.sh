@@ -27,8 +27,8 @@ clone --ignore-hidden \
   "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \

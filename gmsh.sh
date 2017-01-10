@@ -24,8 +24,8 @@ clone --ignore-hidden \
 sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/debian/control"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$VERSION" \
   --version-append-hash \

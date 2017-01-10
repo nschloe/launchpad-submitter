@@ -40,8 +40,8 @@ for i in ./*; do
 done
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --ubuntu-releases yakkety zesty \
   --update-patches \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
