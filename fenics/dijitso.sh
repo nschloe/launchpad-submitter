@@ -2,26 +2,29 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "https://bitbucket.org/fenics-project/dijitso.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+finish() { rm -rf "$TMP_DIR"; }
+trap finish EXIT
+
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://bitbucket.org/fenics-project/dijitso.git" \
+  "$ORIG_DIR"
 
 VERSION=$(grep '__version__ =' "$ORIG_DIR/dijitso/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR=$(mktemp -d)
-clone \
+DEBIAN_DIR="$TMP_DIR/debian"
+clone --ignore-hidden \
    "git@github.com:nschloe/debian-dijitso.git" \
    "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
+  --orig-dir "$ORIG_DIR" \
+  --debian-dir "$DEBIAN_DIR/debian" \
   --update-patches \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \
   --debuild-params="-p$THIS_DIR/../mygpg"
-
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"
