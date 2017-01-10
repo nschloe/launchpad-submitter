@@ -6,7 +6,7 @@ TMP_DIR=$(mktemp -d)
 cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
-DIR=="$TMP_DIR"
+DIR="$TMP_DIR"
 clone --ignore-hidden \
   "https://github.com/gsjaardema/seacas.git" \
   "$DIR"

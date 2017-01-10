@@ -22,7 +22,7 @@ UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR="$TMP_DIR/debian"
 clone --ignore-hidden \
-   "git://anonscm.debian.org/git/debian-science/packages/petsc.git" \
+   "https://anonscm.debian.org/git/debian-science/packages/petsc.git" \
    "$DEBIAN_DIR"
 
 DEBIAN_VERSION=$(head -n 1 "$DEBIAN_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')

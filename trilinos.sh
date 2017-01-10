@@ -15,7 +15,7 @@ VERSION=$(grep "Trilinos_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([
 
 DEBIAN_DIR="$TMP_DIR/debian"
 clone --ignore-hidden \
-  "git://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
+  "https://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
   "$DEBIAN_DIR"
 # clone --ignore-hidden \
 #   "$HOME/rcs/debian-packages/trilinos/" \

@@ -20,7 +20,7 @@ VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/debian"
 clone --ignore-hidden \
-  "git://anonscm.debian.org/debian-science/packages/vtk6.git" \
+  "https://anonscm.debian.org/git/debian-science/packages/vtk6.git" \
   "$DEBIAN_DIR"
 
 # Replace version everywhere except the changelog
