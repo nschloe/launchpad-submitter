@@ -17,7 +17,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR="$TMP_DIR/debian"
 clone \
   --subdirectory=debian/ \
-  "git@github.com:nschloe/debian-dijitso.git" \
+  "https://github.com/nschloe/debian-dijitso.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
