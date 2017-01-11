@@ -6,8 +6,8 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
-finish() { rm -rf "$TMP_DIR"; }
-trap finish EXIT
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
 
 # HG doesn't properly update yet. (bug?)
 ORIG_DIR="$TMP_DIR/orig"
@@ -21,15 +21,14 @@ MINOR=$(grep '#define EIGEN_MAJOR_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macro
 PATCH=$(grep '#define EIGEN_MINOR_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "git://anonscm.debian.org/git/debian-science/packages/eigen3.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \

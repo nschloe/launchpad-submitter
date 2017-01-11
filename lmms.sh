@@ -16,15 +16,14 @@ MINOR=$(grep 'SET(VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\(
 RELEASE=$(grep 'SET(VERSION_RELEASE ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$RELEASE~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "https://anonscm.debian.org/git/debian-edu/pkg-team/lmms.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \

@@ -15,7 +15,7 @@ PATCH=$(grep "set(Mikado_PATCH_VERSION " "$DIR/CMakeLists.txt" | sed 's/[^0-9]*\
 VERSION="$MAJOR.$MINOR.$PATCH"
 
 launchpad-submit \
-  --orig-dir "$DIR" \
+  --work-dir "$DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

@@ -17,7 +17,7 @@ UPSTREAM_VERSION=$(python -c "import versioneer; print(versioneer.get_version())
 # clean up versioneer.pyc
 git clean -f -x -d
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "https://anonscm.debian.org/git/python-modules/packages/matplotlib.git" \
@@ -27,8 +27,7 @@ clone \
 sed -i "s/python3-all-dev,/python3-all-dev, python-colorspacious, python3-colorspacious, python-functools32,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

@@ -14,15 +14,14 @@ clone --ignore-hidden \
 VERSION=$(grep '__version__ =' "$ORIG_DIR/dijitso/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "https://github.com/nschloe/debian-dijitso.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --update-patches \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \

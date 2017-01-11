@@ -26,7 +26,7 @@ rm -f boost.tar
 UPSTREAM_VERSION=$(grep 'BOOST_VERSION' "$ORIG_DIR/Jamroot" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/' -)
 UPSTREAM_VERSION_SHORT=$(echo "$UPSTREAM_VERSION" | sed 's/\([0-9]*\.[0-9]*\).*/\1/' -)
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "svn://svn.debian.org/pkg-boost/boost/trunk" \
@@ -41,8 +41,7 @@ for i in ./*; do
 done
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases yakkety zesty \
   --update-patches \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

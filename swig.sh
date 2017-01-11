@@ -24,8 +24,7 @@ sed -i "/php5-cgi,/d" "$DEBIAN_DIR/control"
 sed -i "/php5-dev,/d" "$DEBIAN_DIR/control"
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \

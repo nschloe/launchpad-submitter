@@ -22,7 +22,7 @@ clone --ignore-hidden \
   "$FENICS_DIR"
 
 launchpad-submit \
-  --orig-dir "$FENICS_DIR" \
+  --work-dir "$FENICS_DIR" \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \

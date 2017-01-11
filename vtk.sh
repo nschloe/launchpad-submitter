@@ -18,7 +18,7 @@ PATCH=$(grep VTK_BUILD_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\(
 # For launchpad to accept new submissions, the string has to increment.
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "https://anonscm.debian.org/git/debian-science/packages/vtk6.git" \
@@ -45,8 +45,7 @@ sed -i "s/libqt5webkit5-dev,/libqt5webkit5-dev, libqt5x11extras5-dev,/g" "$DEBIA
 cd "$DEBIAN_DIR/" && rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases xenial yakkety zesty \
   --version-override "$VERSION" \
   --version-append-hash \

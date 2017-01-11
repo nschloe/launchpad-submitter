@@ -41,7 +41,7 @@ MINOR=$(grep 'set(LLVM_VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-
 PATCH=$(grep 'set(LLVM_VERSION_PATCH ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH"
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "svn://anonscm.debian.org/svn/pkg-llvm/llvm-toolchain/branches/snapshot/" \
@@ -50,8 +50,7 @@ clone \
 sed -i "/asan_symbolize.py/d" "$DEBIAN_DIR/rules"
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --update-patches \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \

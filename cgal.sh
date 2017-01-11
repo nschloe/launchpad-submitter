@@ -30,7 +30,7 @@ ORIG_DIR="$DIRECTORY"
 VERSION=$(cat "$ORIG_DIR/VERSION")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "https://github.com/nschloe/cgal-debian.git" \
@@ -45,8 +45,7 @@ for i in ./*; do
 done
 
 launchpad-submit \
-  --orig-dir "$ORIG_DIR" \
-  --debian-dir "$DEBIAN_DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases xenial yakkety zesty \
   --ppa nschloe/cgal-nightly \
   --version-override "$FULL_VERSION" \
