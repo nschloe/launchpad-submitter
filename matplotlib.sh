@@ -7,12 +7,15 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
+# Can't --ignore-hidden here -- we need the .git directory for versioneer
+clone \
   "https://github.com/matplotlib/matplotlib.git" \
   "$ORIG_DIR"
 
 cd "$ORIG_DIR"
 UPSTREAM_VERSION=$(python -c "import versioneer; print(versioneer.get_version())" | sed 's/+.*$//')
+# clean up versioneer.pyc
+git clean -f -x -d
 
 DEBIAN_DIR="$TMP_DIR/debian"
 clone \
