@@ -23,7 +23,6 @@ clone \
 
 # Explicitly disable Intrepid2 so nightly build will go through.
 # To be removed once Intrepid2 is in a release.
-sed -i "s/-DTrilinos_ENABLE_Mesquite:BOOL=OFF/-DTrilinos_ENABLE_Mesquite:BOOL=OFF -DTrilinos_ENABLE_Intrepid2:BOOL=OFF/g" "$DEBIAN_DIR/rules"
 sed -i "s/-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON/-DCMAKE_SKIP_RPATH:BOOL=ON -DCMAKE_SHARED_LINKER_FLAGS:STRING=\"-Wl,--no-undefined\"/g" "$DEBIAN_DIR/rules"
 
 launchpad-submit \
