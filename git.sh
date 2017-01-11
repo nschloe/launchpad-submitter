@@ -14,12 +14,12 @@ clone --ignore-hidden \
 
 cd "$ORIG_DIR"
 ./GIT-VERSION-GEN > /dev/null 2>&1
-UPSTREAM_VERSION=$(cat GIT-VERSION-FILE | sed 's/[^0-9]*\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/g')
+UPSTREAM_VERSION=$(cat GIT-VERSION-FILE | sed 's/[^0-9]*\([0-9]\+\(\.[0-9]\+\)\+\).*/\1/g')
 
 DEBIAN_DIR="$TMP_DIR/debian"
 GIT_SSL_NO_VERIFY=1 clone \
   --subdirectory=debian/ \
-  "https://repo.or.cz/r/git/debian.git/" \
+  "https://repo.or.cz/r/git/debian.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \
