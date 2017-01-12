@@ -6,14 +6,14 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-finish() { rm -rf "$DIR"; }
-trap finish EXIT
+cleanup() { rm -rf "$DIR"; }
+trap cleanup EXIT
 
-clone --ignore-hidden\
+clone --ignore-hidden \
   "https://github.com/spotify/docker-gc.git" \
-  "$DIR"
+  "$DIR/orig"
 
-VERSION=$(cat "$DIR/version.txt")
+VERSION=$(cat "$DIR/orig/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 launchpad-submit \

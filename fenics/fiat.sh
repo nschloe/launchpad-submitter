@@ -21,7 +21,7 @@ clone \
   "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig-dir "$TMP_DIR" \
+  --work-dir "$TMP_DIR" \
   --update-patches \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
