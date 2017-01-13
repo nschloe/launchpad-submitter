@@ -6,16 +6,16 @@ TMP_DIR=$(mktemp -d)
 cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
-DIR="$TMP_DIR"
+ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
   "https://github.com/gsjaardema/seacas.git" \
-  "$DIR"
+  "$ORIG_DIR"
 
-VERSION=$(grep "SEACASProj_VERSION " "$DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
+VERSION=$(grep "SEACASProj_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 launchpad-submit \
-  --work-dir "$DIR" \
+  --work-dir "$TMP_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

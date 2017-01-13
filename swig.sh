@@ -13,7 +13,7 @@ clone --ignore-hidden \
 
 UPSTREAM_VERSION=$(grep 'AC_INIT(' "$ORIG_DIR/configure.ac" | sed 's/^[^0-9]*\([0-9\.]*\).*/\1/')
 
-DEBIAN_DIR="$TMP_DIR/debian"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
   "svn://svn.debian.org/svn/pkg-swig/branches/swig3.0" \

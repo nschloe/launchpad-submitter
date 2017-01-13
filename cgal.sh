@@ -3,8 +3,8 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
-finish() { rm -rf "$TMP_DIR"; }
-trap finish EXIT
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
@@ -12,15 +12,12 @@ clone --ignore-hidden \
   "$ORIG_DIR"
 
 # Create the release dir
-rm -rf /tmp/CGAL-*
-rm -rf /tmp/tmp/
-rm -f /tmp/release_creation.lock
-cd /tmp/
+cd "$TMP_DIR"
 bash "$ORIG_DIR/Scripts/developer_scripts/create_new_release" "$ORIG_DIR" --verbose
-cd /tmp/tmp/
+cd "$TMP_DIR/tmp/"
 tar xf CGAL-last.tar.gz
-TARFILE=$(cat /tmp/tmp/LATEST)
-DIRECTORY="/tmp/tmp/${TARFILE%.tar.gz}"
+TARFILE=$(cat "$TMP_DIR/tmp/LATEST")
+DIRECTORY="$TMP_DIR/tmp/${TARFILE%.tar.gz}"
 if [ ! -d "$DIRECTORY" ]; then
   echo "Couldn't find directory $DIRECTORY."
   exit 1

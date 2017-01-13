@@ -3,8 +3,8 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
-finish() { rm -rf "$TMP_DIR"; }
-trap finish EXIT
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
@@ -17,7 +17,7 @@ FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
+  "https://anonscm.debian.org/git/debian-science/packages/fenics/ffc.git" \
   "$DEBIAN_DIR"
 
 sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/rules"

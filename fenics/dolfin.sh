@@ -19,7 +19,7 @@ FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
+  "https://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
   "$DEBIAN_DIR"
 
 # sed -i "/slepc-dev/d"
