@@ -25,10 +25,10 @@ clone \
   "$DEBIAN_DIR"
 
 # Replace version everywhere except the changelog
-cp "$DEBIAN_DIR/changelog" "/tmp/changelog"
+mv "$DEBIAN_DIR/changelog" "$TMP_DIR/changelog"
 find "$DEBIAN_DIR" -type f -print0 | xargs -0 sed -i "s/6\.3\.0+dfsg1-[0-9]/$VERSION/g"
 find "$DEBIAN_DIR" -type f -print0 | xargs -0 sed -i "s/6\.3/$MAJOR.$MINOR/g"
-rm -f "$DEBIAN_DIR/changelog" && cp "/tmp/changelog" "$DEBIAN_DIR/changelog"
+mv "$TMP_DIR/changelog" "$DEBIAN_DIR/changelog"
 #
 sed -i "/vtkMarchingCubesCases.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/exportheader.cmake.in/d" "$DEBIAN_DIR/libvtk6-dev.install"
