@@ -7,13 +7,15 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
+# cannot use --ignore-hidden since the create_new_release script uses info from
+# git
+clone \
   "https://github.com/CGAL/cgal.git" \
   "$ORIG_DIR"
 
 # Create the release dir
 cd "$TMP_DIR"
-bash "$ORIG_DIR/Scripts/developer_scripts/create_new_release" "$ORIG_DIR" --verbose
+"$ORIG_DIR/Scripts/developer_scripts/create_new_release" "$ORIG_DIR" --verbose
 cd "$TMP_DIR/tmp/"
 tar xf CGAL-last.tar.gz
 TARFILE=$(cat "$TMP_DIR/tmp/LATEST")
