@@ -8,16 +8,16 @@ trap finish EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
-  "https://bitbucket.org/fenics-project/fiat.git" \
+  "https://bitbucket.org/fenics-project/dijitso.git" \
   "$ORIG_DIR"
 
-VERSION=$(grep '__version__ =' "$ORIG_DIR/FIAT/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
+VERSION=$(grep '__version__ =' "$ORIG_DIR/dijitso/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/debian-science/packages/fenics/fiat.git" \
+  "https://github.com/nschloe/debian-dijitso.git" \
   "$DEBIAN_DIR"
 
 launchpad-submit \

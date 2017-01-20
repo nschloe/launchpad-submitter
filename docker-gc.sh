@@ -6,20 +6,20 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DIR=$(mktemp -d)
-clone "git@github.com:spotify/docker-gc.git" "$DIR"
+cleanup() { rm -rf "$DIR"; }
+trap cleanup EXIT
 
-VERSION=$(cat "$DIR/version.txt")
+clone --ignore-hidden \
+  "https://github.com/spotify/docker-gc.git" \
+  "$DIR/orig"
+
+VERSION=$(cat "$DIR/orig/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 launchpad-submit \
-  --orig "$DIR" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --work-dir "$DIR" \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/docker-gc-nightly \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
-
-rm -rf "$DIR"
+  --debuild-params="-p$THIS_DIR/mygpg"

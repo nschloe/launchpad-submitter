@@ -1,34 +1,33 @@
 #!/bin/sh -ue
 
-# Set SSH agent variables.
-. "$HOME/.keychain/$(/bin/hostname)-sh"
-
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "git@github.com:mixxxdj/mixxx.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
 
-VERSION=$(grep "define VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://github.com/mixxxdj/mixxx.git" \
+  "$ORIG_DIR"
+
+VERSION=$(grep "define MIXXX_VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR=$(mktemp -d)
-clone "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" "$DEBIAN_DIR"
+DEBIAN_DIR="$TMP_DIR/orig/debian"
+clone \
+  --subdirectory=debian/ \
+  "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" \
+  "$DEBIAN_DIR"
 
-sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/debian/control"
-sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/debian/control"
+sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/control"
+sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --work-dir "$TMP_DIR" \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --ppa nschloe/mixxx-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --update-patches \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  "$@"
-
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"
+  --debuild-params="-p$THIS_DIR/mygpg"

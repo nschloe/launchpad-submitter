@@ -8,27 +8,26 @@ trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
-  "https://github.com/dealii/dealii.git" \
+  "https://github.com/swig/swig.git" \
   "$ORIG_DIR"
 
-UPSTREAM_VERSION=$(cat "$ORIG_DIR/VERSION")
+UPSTREAM_VERSION=$(grep 'AC_INIT(' "$ORIG_DIR/configure.ac" | sed 's/^[^0-9]*\([0-9\.]*\).*/\1/')
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/deal.ii.git" \
+  "svn://svn.debian.org/svn/pkg-swig/branches/swig3.0" \
   "$DEBIAN_DIR"
 
-sed -i '/doc\/doxygen\/deal.II\/images/d' "$DEBIAN_DIR/rules"
-sed -i '/getElementById/,+2 d' "$DEBIAN_DIR/rules"
-sed -i '/step-35/d' "$DEBIAN_DIR/rules"
-sed -i '/glossary/d' "$DEBIAN_DIR/rules"
+# remove PHP (unsupported in ubuntu)
+sed -i "/php5-cgi,/d" "$DEBIAN_DIR/control"
+sed -i "/php5-dev,/d" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --update-patches \
-  --ubuntu-releases yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
-  --ppa nschloe/deal.ii-nightly \
+  --update-patches \
+  --ppa nschloe/swig-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

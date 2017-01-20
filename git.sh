@@ -3,32 +3,30 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
+# cleanup even if launchpad-submit fails
 cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
-  "https://github.com/dealii/dealii.git" \
+  "https://github.com/git/git.git" \
   "$ORIG_DIR"
 
-UPSTREAM_VERSION=$(cat "$ORIG_DIR/VERSION")
+cd "$ORIG_DIR"
+./GIT-VERSION-GEN > /dev/null 2>&1
+UPSTREAM_VERSION=$(cat GIT-VERSION-FILE | sed 's/[^0-9]*\([0-9]\+\(\.[0-9]\+\)\+\).*/\1/g')
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
+GIT_SSL_NO_VERIFY=1 clone \
   --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/deal.ii.git" \
+  "https://repo.or.cz/r/git/debian.git" \
   "$DEBIAN_DIR"
-
-sed -i '/doc\/doxygen\/deal.II\/images/d' "$DEBIAN_DIR/rules"
-sed -i '/getElementById/,+2 d' "$DEBIAN_DIR/rules"
-sed -i '/step-35/d' "$DEBIAN_DIR/rules"
-sed -i '/glossary/d' "$DEBIAN_DIR/rules"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases yakkety zesty \
+  --ubuntu-releases xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
   --version-append-hash \
-  --ppa nschloe/deal.ii-nightly \
+  --ppa nschloe/git-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

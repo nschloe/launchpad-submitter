@@ -1,25 +1,23 @@
 #!/bin/sh -ue
 
-# Set SSH agent variables.
-. "$HOME/.keychain/$(/bin/hostname)-sh"
-
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(mktemp -d)
-clone "git@bitbucket.org:fathomteam/moab.git" "$DIR"
+TMP_DIR=$(mktemp -d)
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
 
-VERSION=$(grep AC_INIT "$DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\)\].*/\1/")
+ORIG_DIR="$TMP_DIR/orig"
+clone --ignore-hidden \
+  "https://bitbucket.org/fathomteam/moab.git" \
+  "$ORIG_DIR"
+
+VERSION=$(grep AC_INIT "$ORIG_DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\)\].*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 launchpad-submit \
-  --orig "$DIR" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --work-dir "$TMP_DIR" \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/moab-nightly \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
-
-rm -rf "$DIR"
+  --debuild-params="-p$THIS_DIR/mygpg"

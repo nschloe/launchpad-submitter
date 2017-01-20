@@ -5,31 +5,33 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ORIG_DIR=$(mktemp -d)
-clone "git@github.com:RLovelett/eigen.git" "$ORIG_DIR"
+TMP_DIR=$(mktemp -d)
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
+
+# HG doesn't properly update yet. (bug?)
+ORIG_DIR="$TMP_DIR/orig"
+# clone "ssh://hg@bitbucket.org/eigen/eigen" "$ORIG_DIR"
+clone --ignore-hidden \
+  "https://github.com/RLovelett/eigen.git" \
+  "$ORIG_DIR"
 
 MAJOR=$(grep '#define EIGEN_WORLD_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep '#define EIGEN_MAJOR_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 PATCH=$(grep '#define EIGEN_MINOR_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR=$(mktemp -d)
+DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
-   "git://anonscm.debian.org/git/debian-science/packages/eigen3.git" \
-   "$DEBIAN_DIR"
+  --subdirectory=debian/ \
+  "git://anonscm.debian.org/git/debian-science/packages/eigen3.git" \
+  "$DEBIAN_DIR"
 
 launchpad-submit \
-  --orig "$ORIG_DIR" \
-  --debian "$DEBIAN_DIR/debian" \
-  --ubuntu-releases trusty wily xenial yakkety \
+  --work-dir "$TMP_DIR" \
+  --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \
   --ppa nschloe/eigen-nightly \
-  --debuild-params="-p$THIS_DIR/mygpg" \
-  --debfullname "Nico Schlömer" \
-  --debemail "nico.schloemer@gmail.com" \
-  "$@"
-
-rm -rf "$ORIG_DIR"
-rm -rf "$DEBIAN_DIR"
+  --debuild-params="-p$THIS_DIR/mygpg"

@@ -8,23 +8,26 @@ trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 clone --ignore-hidden \
-  "https://github.com/Kitware/ParaView.git" \
+  "https://github.com/transmission/transmission.git" \
   "$ORIG_DIR"
 
-UPSTREAM_VERSION=$(cat "$ORIG_DIR/version.txt")
+# get version
+UPSTREAM_VERSION=$(grep -i "set(TR_USER_AGENT_PREFIX" "$ORIG_DIR/CMakeLists.txt" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/')
 VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 clone \
   --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/paraview.git" \
+  "git://anonscm.debian.org/collab-maint/transmission.git" \
   "$DEBIAN_DIR"
+
+sed -i "s/Build-Depends:/Build-Depends: xfslibs-dev,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases xenial yakkety zesty \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
-  --ppa nschloe/paraview-nightly \
+  --ppa nschloe/transmission-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
