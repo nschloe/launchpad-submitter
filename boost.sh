@@ -3,13 +3,13 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
-finish() { rm -rf "$TMP_DIR"; }
-trap finish EXIT
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/boostorg/boost.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/boost"
+git -C "$CACHE" pull || git clone --recursive "https://github.com/boostorg/boost.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 cd "$ORIG_DIR"
 ./bootstrap.sh
@@ -26,11 +26,11 @@ rm -f boost.tar
 UPSTREAM_VERSION=$(grep 'BOOST_VERSION' "$ORIG_DIR/Jamroot" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/' -)
 UPSTREAM_VERSION_SHORT=$(echo "$UPSTREAM_VERSION" | sed 's/\([0-9]*\.[0-9]*\).*/\1/' -)
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "svn://svn.debian.org/pkg-boost/boost/trunk" \
-  "$DEBIAN_DIR"
+DEBIAN_DIR="$ORIG_DIR/debian"
+CACHE="$HOME/.cache/repo/boost-debian"
+(cd "$CACHE" && svn up) || svn co "svn://svn.debian.org/pkg-boost/boost/trunk" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
+
 DEBIAN_VERSION_SHORT=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
 DEBIAN_VERSION="$DEBIAN_VERSION_SHORT.0"
 

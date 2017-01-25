@@ -7,20 +7,18 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/xianyi/OpenBLAS.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/openblas"
+git -C "$CACHE" pull || git clone "https://github.com/xianyi/OpenBLAS.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(OpenBLAS_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(OpenBLAS_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 PATCH=$(grep 'set(OpenBLAS_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/debian-science/packages/openblas.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/openblas-debian"
+git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/openblas.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

@@ -7,17 +7,15 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/sympy/sympy.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/sympy"
+git -C "$CACHE" pull || git clone "https://github.com/sympy/sympy.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(sed 's/[^\"]*\"\([^\"]*\)\".*/\1/' "$ORIG_DIR/sympy/release.py")
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/debian-science/packages/sympy.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/sympy-debian"
+git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/sympy.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

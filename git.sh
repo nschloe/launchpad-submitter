@@ -3,24 +3,21 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
-# cleanup even if launchpad-submit fails
 cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/git/git.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/git"
+git -C "$CACHE" pull || git clone "https://github.com/git/git.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 cd "$ORIG_DIR"
 ./GIT-VERSION-GEN > /dev/null 2>&1
-UPSTREAM_VERSION=$(cat GIT-VERSION-FILE | sed 's/[^0-9]*\([0-9]\+\(\.[0-9]\+\)\+\).*/\1/g')
+UPSTREAM_VERSION=$(sed 's/[^0-9]*\([0-9]\+\(\.[0-9]\+\)\+\).*/\1/g' GIT-VERSION-FILE)
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-GIT_SSL_NO_VERIFY=1 clone \
-  --subdirectory=debian/ \
-  "https://repo.or.cz/r/git/debian.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/git-debian"
+GIT_SSL_NO_VERIFY=1 git -C "$CACHE" pull || GIT_SSL_NO_VERIFY=1 git clone "https://repo.or.cz/r/git/debian.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

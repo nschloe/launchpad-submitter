@@ -7,9 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://bitbucket.org/petsc/petsc.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/petsc"
+git -C "$CACHE" pull || git clone "https://bitbucket.org/petsc/petsc.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION_MAJOR=$(grep '#define PETSC_VERSION_MAJOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 VERSION_MINOR=$(grep '#define PETSC_VERSION_MINOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
@@ -21,10 +21,9 @@ UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
 UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/petsc.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/petsc-debian"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/petsc.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 DEBIAN_VERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9\.]*[0-9]\).*/\1/')
 DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9]\.[0-9]\).*/\1/')

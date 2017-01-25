@@ -7,18 +7,16 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/Kitware/ParaView.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/paraview"
+git -C "$CACHE" pull || git clone "https://github.com/Kitware/ParaView.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(cat "$ORIG_DIR/version.txt")
 VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/paraview.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/paraview-debian"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/paraview.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

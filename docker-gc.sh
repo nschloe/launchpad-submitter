@@ -5,19 +5,20 @@
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR=$(mktemp -d)
-cleanup() { rm -rf "$DIR"; }
+WORK_DIR=$(mktemp -d)
+cleanup() { rm -rf "$WORK_DIR"; }
 trap cleanup EXIT
 
-clone --ignore-hidden \
-  "https://github.com/spotify/docker-gc.git" \
-  "$DIR/orig"
+ORIG_DIR="$WORK_DIR/orig"
+CACHE="$HOME/.cache/repo/docker-gc"
+git -C "$CACHE" pull || git clone "https://github.com/spotify/docker-gc.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
-VERSION=$(cat "$DIR/orig/version.txt")
+VERSION=$(cat "$ORIG_DIR/version.txt")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 launchpad-submit \
-  --work-dir "$DIR" \
+  --work-dir "$WORK_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

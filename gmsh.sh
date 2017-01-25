@@ -7,9 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://onelab.info/svn/gmsh/trunk" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/gmsh"
+(cd "$CACHE" && svn up) || svn co "https://onelab.info/svn/gmsh/trunk" "$CACHE"
+rsync -a "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(GMSH_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(GMSH_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
@@ -17,10 +17,9 @@ PATCH=$(grep 'set(GMSH_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/gmsh-debian"
+git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/control"
 

@@ -7,20 +7,18 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/Reference-LAPACK/lapack.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/lapack"
+git -C "$CACHE" pull || git clone "https://github.com/Reference-LAPACK/lapack.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(LAPACK_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(LAPACK_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 PATCH=$(grep 'set(LAPACK_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/lapack.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/lapack-debian"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/lapack.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

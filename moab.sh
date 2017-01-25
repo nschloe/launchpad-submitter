@@ -7,9 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://bitbucket.org/fathomteam/moab.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/moab"
+git -C "$CACHE" pull || git clone "https://bitbucket.org/fathomteam/moab.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep AC_INIT "$ORIG_DIR/configure.ac" | sed "s/.*\[MOAB\],\[\([^]]*\)\].*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"

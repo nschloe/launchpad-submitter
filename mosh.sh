@@ -7,9 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/mobile-shell/mosh.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/mosh"
+git -C "$CACHE" pull || git clone "https://github.com/mobile-shell/mosh.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep AC_INIT "$ORIG_DIR/configure.ac" | sed "s/[^0-9]*\([^]]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"

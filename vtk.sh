@@ -7,9 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/Kitware/VTK.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/vtk"
+git -C "$CACHE" pull || git clone "https://github.com/Kitware/VTK.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep VTK_MAJOR_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
 MINOR=$(grep VTK_MINOR_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
@@ -19,10 +19,9 @@ PATCH=$(grep VTK_BUILD_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\(
 VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/vtk6.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/vtk-debian"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/vtk6.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 # Replace version everywhere except the changelog
 mv "$DEBIAN_DIR/changelog" "$TMP_DIR/changelog"

@@ -7,9 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/numpy/numpy.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/numpy"
+git -C "$CACHE" pull || git clone "https://github.com/numpy/numpy.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 cd "$ORIG_DIR" && git submodule init && git submodule update
 
 MAJOR=$(grep 'MAJOR' "$ORIG_DIR/setup.py" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
@@ -17,11 +17,9 @@ MINOR=$(grep 'MINOR' "$ORIG_DIR/setup.py" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 PATCH=$(grep 'MICRO' "$ORIG_DIR/setup.py" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH"
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "git://anonscm.debian.org/git/python-modules/packages/python-numpy.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/numpy-debian"
+git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/python-modules/packages/python-numpy.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

@@ -7,7 +7,7 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
+clone \
   "https://bitbucket.org/fenics-project/dolfin.git" \
   "$ORIG_DIR"
 
@@ -16,7 +16,7 @@ MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-
 MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
+DEBIAN_DIR="$ORIG_DIR/debian"
 clone \
   --subdirectory=debian/ \
   "https://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \

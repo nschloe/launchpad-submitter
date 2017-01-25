@@ -3,27 +3,22 @@
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 TMP_DIR=$(mktemp -d)
-cleanup() { rm -rf "$TMP_DIR"; }
-trap cleanup EXIT
+# cleanup() { rm -rf "$TMP_DIR"; }
+# trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://github.com/trilinos/Trilinos.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/trilinos"
+git -C "$CACHE" pull || git clone "https://github.com/trilinos/Trilinos.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep "Trilinos_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/trilinos.git" \
-  "$DEBIAN_DIR"
-#   "$HOME/rcs/debian-packages/trilinos/" \
-#   "$DEBIAN_DIR"
+# CACHE="$HOME/.cache/repo/trilinos-debian"
+# git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/trilinos.git" "$CACHE"
+# rsync -a "$CACHE/debian" "$ORIG_DIR"
+rsync -a "$HOME/rcs/debian/trilinos/debian" "$ORIG_DIR"
 
-# Explicitly disable Intrepid2 so nightly build will go through.
-# To be removed once Intrepid2 is in a release.
-sed -i "s/-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON/-DCMAKE_SKIP_RPATH:BOOL=ON -DCMAKE_SHARED_LINKER_FLAGS:STRING=\"-Wl,--no-undefined\"/g" "$DEBIAN_DIR/rules"
+#sed -i "s/-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON/-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=OFF -DCMAKE_SHARED_LINKER_FLAGS:STRING=\"-Wl,--no-undefined\"/g" "$DEBIAN_DIR/rules"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

@@ -7,11 +7,9 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-# cannot use --ignore-hidden since the create_new_release script uses info from
-# git
-clone \
-  "https://github.com/CGAL/cgal.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/cgal"
+git -C "$CACHE" pull || git clone "https://github.com/CGAL/cgal.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 # Create the release dir
 cd "$TMP_DIR"
@@ -30,10 +28,9 @@ VERSION=$(cat "$ORIG_DIR/VERSION")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://github.com/nschloe/cgal-debian.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/cgal-debian"
+git -C "$CACHE" pull || git clone "https://github.com/nschloe/cgal-debian.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 cd "$DEBIAN_DIR"
 rename "s/11v5/12/" ./*
