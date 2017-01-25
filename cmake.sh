@@ -20,6 +20,9 @@ CACHE="$HOME/.cache/repo/cmake-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/pkg-cmake/cmake.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+DEBIAN_DIR="$ORIG_DIR/debian"
+sed -i "s/Build-Depends:/Build-Depends: librhash-dev,/" "$DEBIAN_DIR/control"
+
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
