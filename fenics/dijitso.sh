@@ -7,18 +7,16 @@ finish() { rm -rf "$TMP_DIR"; }
 trap finish EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone --ignore-hidden \
-  "https://bitbucket.org/fenics-project/dijitso.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/dijitso"
+git -C "$CACHE" pull || git clone "https://bitbucket.org/fenics-project/dijitso.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep '__version__ =' "$ORIG_DIR/dijitso/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$TMP_DIR/orig/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://github.com/nschloe/debian-dijitso.git" \
-  "$DEBIAN_DIR"
+CACHE="$HOME/.cache/repo/dijitso-debian"
+git -C "$CACHE" pull || git clone "https://github.com/nschloe/debian-dijitso.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

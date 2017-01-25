@@ -7,22 +7,18 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
-clone \
-  "https://bitbucket.org/fenics-project/dolfin.git" \
-  "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/dolfin"
+git -C "$CACHE" pull || git clone "https://bitbucket.org/fenics-project/dolfin.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep 'DOLFIN_VERSION_MAJOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'DOLFIN_VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-9]\).*/\1/')
 FULL_VERSION="$MAJOR.$MINOR.$MICRO~$(date +"%Y%m%d%H%M%S")"
 
-DEBIAN_DIR="$ORIG_DIR/debian"
-clone \
-  --subdirectory=debian/ \
-  "https://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" \
-  "$DEBIAN_DIR"
-
-# sed -i "/slepc-dev/d"
+CACHE="$HOME/.cache/repo/dolfin-debian"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
