@@ -9,7 +9,7 @@ trap cleanup EXIT
 ORIG_DIR="$TMP_DIR/orig"
 CACHE="$HOME/.cache/repo/gmsh"
 (cd "$CACHE" && svn up) || svn co "https://onelab.info/svn/gmsh/trunk" "$CACHE"
-rsync -a "$CACHE" "$ORIG_DIR"
+rsync -a "$CACHE/" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(GMSH_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(GMSH_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
