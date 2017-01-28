@@ -14,7 +14,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 cd "$ORIG_DIR"
 UPSTREAM_VERSION=$(python -c "import versioneer; print(versioneer.get_version())" | sed 's/+.*$//')
 # convert 2.0.0rc1 to 2.0.0~rc1 to fit with Debian versioning
-UPSTREAM_VERSION=$(echo "$UPSTREAM_VERSION" | sed 's/alpha/~alpha/' | sed 's/beta/~beta/' | sed 's/rc/~rc/')
+UPSTREAM_VERSION=$(sanitize-debian-version "$UPSTREAM_VERSION")
 
 # clean up versioneer.pyc
 git clean -f -x -d

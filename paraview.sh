@@ -12,6 +12,7 @@ git -C "$CACHE" pull || git clone "https://github.com/Kitware/ParaView.git" "$CA
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(cat "$ORIG_DIR/version.txt")
+UPSTREAM_VERSION=$(sanitize-debian-version "$UPSTREAM_VERSION")
 VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
 
 CACHE="$HOME/.cache/repo/paraview-debian"
