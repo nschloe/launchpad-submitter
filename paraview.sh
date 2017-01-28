@@ -21,7 +21,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases zesty \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
