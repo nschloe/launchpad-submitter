@@ -20,6 +20,12 @@ CACHE="$HOME/.cache/repo/lmms-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-edu/pkg-team/lmms.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+DEBIAN_DIR="$ORIG_DIR/debian"
+sed -i '/data.lmms\.png/d' "$DEBIAN_DIR/lmms.install"
+sed -i '/CoolSongs/d' "$DEBIAN_DIR/lmms-common.install"
+sed -i '/Demos/d' "$DEBIAN_DIR/lmms-common.install"
+sed -i '/Shorties/d' "$DEBIAN_DIR/lmms-common.install"
+
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases xenial yakkety zesty \
