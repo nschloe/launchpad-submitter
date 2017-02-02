@@ -14,6 +14,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 VERSION=$(grep "SEACASProj_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
 
+DEBIAN_DIR="$ORIG_DIR/debian"
 sed -i "s/-DTPL_ENABLE_ParMETIS:BOOL=ON/-DTPL_ENABLE_ParMETIS:BOOL=OFF/g" "$DEBIAN_DIR/rules"
 
 launchpad-submit \
