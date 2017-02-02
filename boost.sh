@@ -9,7 +9,9 @@ trap cleanup EXIT
 ORIG_DIR="$TMP_DIR/orig"
 CACHE="$HOME/.cache/repo/boost"
 git -C "$CACHE" pull || git clone --recursive "https://github.com/boostorg/boost.git" "$CACHE"
-git clone --shared "$CACHE" "$ORIG_DIR"
+# Don't local `git clone --shared` here since that doesn't consider the
+# submodules.
+rsync -a "$CACHE/" "$ORIG_DIR"
 
 cd "$ORIG_DIR"
 ./bootstrap.sh
