@@ -36,6 +36,7 @@ sed -i "/50_use_system_utf8.patch/d" "$DEBIAN_DIR/patches/series"
 sed -i "/vtkftglConfig.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/vtk_netcdf.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/vtk_netcdfcpp.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
+sed -i "/vtkPointAccumulator.hxx/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/-DVTK_USE_SYSTEM_GL2PS=ON/d" "$DEBIAN_DIR/rules"
 sed -i "/-DVTK_USE_SYSTEM_GLEW=ON/d" "$DEBIAN_DIR/rules"
 sed -i "/-DVTK_USE_SYSTEM_LIBPROJ4=ON/d" "$DEBIAN_DIR/rules"
@@ -45,7 +46,7 @@ cd "$DEBIAN_DIR/" && rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases zesty \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
