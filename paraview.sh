@@ -19,7 +19,8 @@ CACHE="$HOME/.cache/repo/paraview-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/paraview.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
-sed -i "s/Build-Depends:/Build-Depends: gfortran,/" "$DEBIAN_DIR/control"
+DEBIAN_DIR="$ORIG_DIR/debian"
+sed -i "s/Build-Depends:/Build-Depends: gfortran, libvtk6-dev,/" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
