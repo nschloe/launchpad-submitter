@@ -32,7 +32,6 @@ mv "$TMP_DIR/changelog" "$DEBIAN_DIR/changelog"
 sed -i "/vtkMarchingCubesCases.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/exportheader.cmake.in/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/FTGL.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
-sed -i "/50_use_system_utf8.patch/d" "$DEBIAN_DIR/patches/series"
 sed -i "/vtkftglConfig.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/vtk_netcdf.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
 sed -i "/vtk_netcdfcpp.h/d" "$DEBIAN_DIR/libvtk6-dev.install"
@@ -42,6 +41,7 @@ sed -i "/-DVTK_USE_SYSTEM_GLEW=ON/d" "$DEBIAN_DIR/rules"
 sed -i "/-DVTK_USE_SYSTEM_LIBPROJ4=ON/d" "$DEBIAN_DIR/rules"
 sed -i "/vtk_netcdfcpp.h/d" "$DEBIAN_DIR/rules"
 sed -i "s/libqt5webkit5-dev,/libqt5webkit5-dev, libqt5x11extras5-dev,/g" "$DEBIAN_DIR/control"
+sed -i "/50_use_system_utf8.patch/d" "$DEBIAN_DIR/patches/series"
 cd "$DEBIAN_DIR/" && rename "s/6\.3/$MAJOR.$MINOR/" ./*
 
 launchpad-submit \
