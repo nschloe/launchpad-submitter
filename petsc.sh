@@ -15,10 +15,11 @@ VERSION_MAJOR=$(grep '#define PETSC_VERSION_MAJOR' "$ORIG_DIR/include/petscversi
 VERSION_MINOR=$(grep '#define PETSC_VERSION_MINOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 VERSION_SUBMINOR=$(grep '#define PETSC_VERSION_SUBMINOR' "$ORIG_DIR/include/petscversion.h" | sed 's/[^0-9]*//' -)
 
+# Note:
 # PETSc adds a 0 to the minor version for development to distinguish it from
-# the release.
-UPSTREAM_SOVERSION=$VERSION_MAJOR.0$VERSION_MINOR
-UPSTREAM_VERSION=$VERSION_MAJOR.0$VERSION_MINOR.$VERSION_SUBMINOR
+# the release. Don't do that here; we append +git<date>.
+UPSTREAM_SOVERSION=$VERSION_MAJOR.$VERSION_MINOR
+UPSTREAM_VERSION=$VERSION_MAJOR.$VERSION_MINOR.$VERSION_SUBMINOR
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/petsc-debian"
@@ -50,7 +51,7 @@ done
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases zesty \
-  --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
+  --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
   --update-patches \
   --ppa nschloe/petsc-nightly \

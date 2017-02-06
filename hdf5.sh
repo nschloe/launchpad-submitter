@@ -14,7 +14,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 cd "$ORIG_DIR" && ./autogen.sh
 
 VERSION=$(grep "^AC_INIT" "$ORIG_DIR/configure.ac" | sed "s/.*\[\([0-9][0-9\.]*\).*/\1/")
-FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
+FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/hdf5-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/pkg-grass/hdf5.git" "$CACHE"

@@ -30,7 +30,7 @@ sed -i "s/python3-all-dev,/python3-all-dev, python-colorspacious, python3-colors
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases yakkety zesty \
-  --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
+  --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
   --update-patches \
   --ppa nschloe/matplotlib-nightly \

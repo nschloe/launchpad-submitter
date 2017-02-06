@@ -13,7 +13,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 
 UPSTREAM_VERSION=$(cat "$ORIG_DIR/version.txt")
 UPSTREAM_VERSION=$(sanitize-debian-version "$UPSTREAM_VERSION")
-VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
+VERSION="$UPSTREAM_VERSION+git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/paraview-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/paraview.git" "$CACHE"

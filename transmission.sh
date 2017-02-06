@@ -13,7 +13,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 
 # get version
 UPSTREAM_VERSION=$(grep -i "set(TR_USER_AGENT_PREFIX" "$ORIG_DIR/CMakeLists.txt" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/')
-VERSION="$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")"
+VERSION="$UPSTREAM_VERSION+git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/transmission-debian"

@@ -16,7 +16,7 @@ MINOR=$(grep VTK_MINOR_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\(
 PATCH=$(grep VTK_BUILD_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
 # Create a day-to-day version number of the form 4.3.1.2~201211230030.
 # For launchpad to accept new submissions, the string has to increment.
-VERSION="$MAJOR.$MINOR.$PATCH~$(date +"%Y%m%d%H%M%S")"
+VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/vtk-debian"

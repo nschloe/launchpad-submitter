@@ -14,7 +14,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 MAJOR=$(grep 'SET(VERSION_MAJOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'SET(VERSION_MINOR ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 RELEASE=$(grep 'SET(VERSION_RELEASE ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
-UPSTREAM_VERSION="$MAJOR.$MINOR.$RELEASE~$(date +"%Y%m%d%H%M%S")"
+UPSTREAM_VERSION="$MAJOR.$MINOR.$RELEASE~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/lmms-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-edu/pkg-team/lmms.git" "$CACHE"

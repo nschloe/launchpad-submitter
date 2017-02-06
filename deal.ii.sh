@@ -27,7 +27,7 @@ launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
   --ubuntu-releases yakkety zesty \
-  --version-override "$UPSTREAM_VERSION~$(date +"%Y%m%d%H%M%S")" \
+  --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
   --ppa nschloe/deal.ii-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

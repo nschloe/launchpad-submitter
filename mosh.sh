@@ -12,7 +12,7 @@ git -C "$CACHE" pull || git clone "https://github.com/mobile-shell/mosh.git" "$C
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep AC_INIT "$ORIG_DIR/configure.ac" | sed "s/[^0-9]*\([^]]*\).*/\1/")
-FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
+FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \

@@ -12,7 +12,7 @@ git -C "$CACHE" pull || git clone "https://github.com/mixxxdj/mixxx.git" "$CACHE
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep "define MIXXX_VERSION" "$ORIG_DIR/src/defs_version.h" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
-FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
+FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/mixxx-debian"

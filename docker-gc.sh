@@ -15,7 +15,7 @@ git -C "$CACHE" pull || git clone "https://github.com/spotify/docker-gc.git" "$C
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(cat "$ORIG_DIR/version.txt")
-FULL_VERSION="$VERSION~$(date +"%Y%m%d%H%M%S")"
+FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 launchpad-submit \
   --work-dir "$WORK_DIR" \

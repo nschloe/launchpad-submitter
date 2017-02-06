@@ -19,7 +19,7 @@ VERSION="$MAJOR.$MINOR.$PATCH"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty \
-  --version-override "$VERSION~$(date +"%Y%m%d%H%M%S")" \
+  --version-override "$VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
   --ppa nschloe/mikado-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
