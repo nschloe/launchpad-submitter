@@ -51,7 +51,7 @@ sed -i "/asan_symbolize.py/d" "$DEBIAN_DIR/rules"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases xenial yakkety zesty \
   --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
   --ppa nschloe/llvm-nightly \
