@@ -8,13 +8,13 @@ trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 CACHE="$HOME/.cache/repo/gmsh"
-(cd "$CACHE" && svn up) || svn co "https://onelab.info/svn/gmsh/trunk" "$CACHE"
-rsync -a --exclude ".svn" "$CACHE/" "$ORIG_DIR"
+git -C "$CACHE" pull || git clone "https://github.com/live-clones/gmsh.git" "$CACHE"
+git clone --shared "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep 'set(GMSH_MAJOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 MINOR=$(grep 'set(GMSH_MINOR_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
 PATCH=$(grep 'set(GMSH_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
-VERSION="$MAJOR.$MINOR.$PATCH+svn$(date +"%Y%m%d")"
+VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/gmsh-debian"

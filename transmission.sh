@@ -8,8 +8,10 @@ trap cleanup EXIT
 
 ORIG_DIR="$TMP_DIR/orig"
 CACHE="$HOME/.cache/repo/transmission"
-git -C "$CACHE" pull || git clone "https://github.com/transmission/transmission.git" "$CACHE"
-git clone --shared "$CACHE" "$ORIG_DIR"
+git -C "$CACHE" pull || git clone --recursive "https://github.com/transmission/transmission.git" "$CACHE"
+# Don't use local `git clone --shared` here since that doesn't consider the
+# submodules.
+rsync -a "$CACHE/" "$ORIG_DIR"
 
 # get version
 UPSTREAM_VERSION=$(grep -i "set(TR_USER_AGENT_PREFIX" "$ORIG_DIR/CMakeLists.txt" | sed 's/[^0-9]*\([0-9\.]*\).*/\1/')
