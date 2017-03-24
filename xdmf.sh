@@ -22,9 +22,6 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 DEBIAN_DIR="$ORIG_DIR/debian"
 sed -i "s/Examples/examples/g" "$DEBIAN_DIR/libxdmf-dev.examples"
 sed -i "/Data/d" "$DEBIAN_DIR/libxdmf-dev.examples"
-# better install directories
-cp "$THIS_DIR/xdmf-27.diff" "$DEBIAN_DIR/patches/install-dirs.patch"
-echo "install-dirs.patch" >> "$DEBIAN_DIR/patches/series"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
