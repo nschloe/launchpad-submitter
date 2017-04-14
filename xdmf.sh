@@ -12,7 +12,7 @@ git -C "$CACHE" pull || git clone "https://gitlab.kitware.com/xdmf/xdmf.git" "$C
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 # No idea how to extract version yet. Set 3.0.
-VERSION="3.0+git$(date +"%Y%m%d")"
+VERSION="3.0+git$(date +"%Y%m%d%H%M")"
 
 # TODO use debian upstream
 CACHE="$HOME/.cache/repo/xdmf-debian"
