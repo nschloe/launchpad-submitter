@@ -24,7 +24,7 @@ sed -i "/ufc-1.pc/d" "$DEBIAN_DIR/rules"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \

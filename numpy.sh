@@ -23,7 +23,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
   --update-patches \

@@ -40,7 +40,7 @@ done
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases xenial yakkety zesty artful \
   --ppa nschloe/cgal-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

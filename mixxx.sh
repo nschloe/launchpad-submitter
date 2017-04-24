@@ -24,7 +24,7 @@ sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --ppa nschloe/mixxx-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

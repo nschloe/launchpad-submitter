@@ -26,7 +26,7 @@ sed -i '/glossary/d' "$DEBIAN_DIR/rules"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases yakkety zesty \
+  --ubuntu-releases yakkety zesty artful \
   --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
   --ppa nschloe/deal.ii-nightly \

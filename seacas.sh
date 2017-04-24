@@ -19,7 +19,7 @@ sed -i "s/-DTPL_ENABLE_ParMETIS:BOOL=ON/-DTPL_ENABLE_ParMETIS:BOOL=OFF/g" "$DEBI
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/seacas-nightly \

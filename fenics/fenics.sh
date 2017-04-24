@@ -27,5 +27,5 @@ launchpad-submit \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --debuild-params="-p$THIS_DIR/../mygpg"

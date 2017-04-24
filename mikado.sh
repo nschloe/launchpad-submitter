@@ -18,7 +18,7 @@ VERSION="$MAJOR.$MINOR.$PATCH"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
   --ppa nschloe/mikado-nightly \

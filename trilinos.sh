@@ -23,7 +23,7 @@ rsync -a "$HOME/rcs/debian/trilinos/debian" "$ORIG_DIR"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases xenial yakkety zesty \
+  --ubuntu-releases xenial yakkety zesty artful \
   --version-override "$VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
   --ppa nschloe/trilinos-nightly \

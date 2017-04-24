@@ -18,12 +18,13 @@ PATCH=$(grep VTK_BUILD_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\(
 VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/vtk7-debian"
-git -C "$CACHE" pull || git clone "https://github.com/nschloe/debian-vtk7.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/vtk6.git" "$CACHE"
+# git -C "$CACHE" pull || git clone "https://github.com/nschloe/debian-vtk7.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases zesty \
+  --ubuntu-releases zesty artful \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

@@ -25,7 +25,7 @@ sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

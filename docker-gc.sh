@@ -19,7 +19,7 @@ FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 launchpad-submit \
   --work-dir "$WORK_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty \
+  --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/docker-gc-nightly \
