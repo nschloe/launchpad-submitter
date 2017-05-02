@@ -24,6 +24,12 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 # remove overly strict conditions
 sed -i 's/python-ffc (<< 2016.3.0),//g' "$ORIG_DIR/debian/control"
 sed -i 's/python-dijitso (<< 2016.3.0),//g' "$ORIG_DIR/debian/control"
+
+sed -i 's/python-ffc (>= ${source:Upstream-Version}), python-ffc (<< ${source:Next-Upstream-Version})/python-ffc/g' "$ORIG_DIR/debian/control"
+sed -i 's/python-dijitso (>= ${source:Upstream-Version}), python-dijitso (<< ${source:Next-Upstream-Version})/python-dijitso/g' "$ORIG_DIR/debian/control"
+sed -i 's/python-instant (>= ${source:Upstream-Version}), python-instant (<< ${source:Next-Upstream-Version})/python-instant/g' "$ORIG_DIR/debian/control"
+sed -i 's/python-ufl (>= ${source:Upstream-Version}), python-ufl (<< ${source:Next-Upstream-Version})/python-ufl/g' "$ORIG_DIR/debian/control"
+
 # sed -i 's/python-dev,/python-dev, python3-dev, python3, python3-minimal,/g' "$ORIG_DIR/debian/control"
 # sed -i 's/--with python2/--with python3/g' "$ORIG_DIR/debian/rules"
 sed -i 's/-D CMAKE_SKIP_RPATH:BOOL=ON/-D CMAKE_SKIP_RPATH:BOOL=ON -DDOLFIN_USE_PYTHON3:BOOL=OFF/g' "$ORIG_DIR/debian/rules"
