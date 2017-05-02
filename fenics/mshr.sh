@@ -21,12 +21,14 @@ CACHE="$HOME/.cache/repo/mshr-debian"
 git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/fenics/mshr.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+sed -i 's/Build-Depends:/Build-Depends: python-petsc4py, python-slepc4py,/g' "$ORIG_DIR/debian/control"
+
 sed -i "/mshrable/d" "$DEBIAN_DIR/libmshr-dev.install"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases trusty xenial yakkety zesty artful \
+  --ubuntu-releases yakkety zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \
