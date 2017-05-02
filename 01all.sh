@@ -2,6 +2,8 @@
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+cd "$THIS_DIR" && git pull
+
 "$THIS_DIR/boost.sh"
 "$THIS_DIR/cgal.sh"
 "$THIS_DIR/cmake.sh"
