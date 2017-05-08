@@ -40,6 +40,8 @@ sed -i "s/libdolfin$DEBIAN_VERSION/libdolfin$MAJOR.$MINOR/g" "$ORIG_DIR/debian/c
 cd "$ORIG_DIR/debian"
 rename "s/$DEBIAN_VERSION/$MAJOR.$MINOR/" ./*
 
+# No xenial:
+# Missing build dependencies: python-slepc4py
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
