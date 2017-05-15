@@ -12,11 +12,13 @@ git -C "$CACHE" pull || git clone "https://bitbucket.org/fenics-project/fiat.git
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep 'version =' "$ORIG_DIR/setup.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
-FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
+FULL_VERSION="$VERSION~git$(date +"%Y%m%d%H%M")"
 
 CACHE="$HOME/.cache/repo/fiat-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/fiat.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
+
+sed -i "s/pkg_resources.get_distribution(\"FIAT\").version/'$VERSION'/" "$ORIG_DIR/FIAT/__init__.py"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
