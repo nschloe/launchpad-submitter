@@ -15,7 +15,7 @@ VERSION=$(grep "^AC_INIT" "$ORIG_DIR/configure.ac" | sed "s/[^\[]*\[[^]]*\][^\[]
 FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/netcdfcxx-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/pkg-grass/netcdf-cxx.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/pkg-grass/netcdf-cxx.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \

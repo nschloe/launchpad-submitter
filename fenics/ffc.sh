@@ -11,7 +11,7 @@ CACHE="$HOME/.cache/repo/ffc"
 git -C "$CACHE" pull || git clone "https://bitbucket.org/fenics-project/ffc.git" "$CACHE"
 git clone --shared "$CACHE" "$ORIG_DIR"
 
-VERSION=$(grep '__version__ =' "$ORIG_DIR/ffc/__init__.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
+VERSION=$(grep -i 'version =' "$ORIG_DIR/setup.py" | sed 's/[^0-9]*\([0-9]*\.[0-9]\.[0-9]\).*/\1/')
 FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"

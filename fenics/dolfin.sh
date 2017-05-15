@@ -37,7 +37,7 @@ sed -i 's/python3-ufl (>= ${source:Upstream-Version}), python3-ufl (<< ${source:
 # sed -i 's/--with python2/--with python3/g' "$ORIG_DIR/debian/rules"
 # sed -i 's/-D CMAKE_SKIP_RPATH:BOOL=ON/-D CMAKE_SKIP_RPATH:BOOL=ON -DDOLFIN_USE_PYTHON3:BOOL=OFF/g' "$ORIG_DIR/debian/rules"
 
-DEBIAN_VERSION=$(head -n1 ~/.cache/repo/dolfin-debian/debian/changelog | sed 's/[^0-9]*\([0-9]*\.[0-9]\).*/\1/')
+DEBIAN_VERSION=$(head -n1 "$ORIG_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9]*\.[0-9]\).*/\1/')
 sed -i "s/libdolfin$DEBIAN_VERSION/libdolfin$MAJOR.$MINOR/g" "$ORIG_DIR/debian/control"
 
 cd "$ORIG_DIR/debian"

@@ -2,7 +2,8 @@
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd "$THIS_DIR" && git pull
+# Don't automatically update this repo; cron might not have access rights.
+# cd "$THIS_DIR" && git pull
 
 "$THIS_DIR/boost.sh"
 "$THIS_DIR/cgal.sh"
