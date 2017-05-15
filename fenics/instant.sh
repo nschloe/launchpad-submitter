@@ -15,7 +15,7 @@ VERSION=$(grep '__version__ =' "$ORIG_DIR/instant/__init__.py" | sed 's/[^0-9]*\
 FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/instant-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/fenics/instant.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/instant.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \

@@ -18,7 +18,7 @@ FULL_VERSION="$MAJOR.$MINOR.$MICRO~git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/mshr-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/fenics/mshr.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/mshr.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 sed -i 's/Build-Depends:/Build-Depends: python-petsc4py, python-slepc4py,/g' "$ORIG_DIR/debian/control"

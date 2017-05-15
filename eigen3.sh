@@ -21,7 +21,7 @@ PATCH=$(grep '#define EIGEN_MINOR_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macro
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/eigen-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/eigen3.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/eigen3.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \

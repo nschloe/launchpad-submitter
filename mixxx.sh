@@ -16,7 +16,7 @@ FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/mixxx-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/pkg-multimedia/mixxx.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/pkg-multimedia/mixxx.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 sed -i "s/libsoundtouch-dev (>= 1.8.0)/libsoundtouch-dev (>= 1.7.1)/g" "$DEBIAN_DIR/control"

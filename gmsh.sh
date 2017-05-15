@@ -18,7 +18,7 @@ VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/gmsh-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/gmsh.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/gmsh.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/control"

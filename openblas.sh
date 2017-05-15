@@ -17,7 +17,7 @@ PATCH=$(grep 'set(OpenBLAS_PATCH_VERSION ' "$ORIG_DIR/CMakeLists.txt" | sed 's/^
 UPSTREAM_VERSION="$MAJOR.$MINOR.$PATCH~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/openblas-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/openblas.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/openblas.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \

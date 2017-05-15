@@ -14,7 +14,7 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 UPSTREAM_VERSION=$(sed 's/[^\"]*\"\([^\"]*\)\".*/\1/' "$ORIG_DIR/sympy/release.py")
 
 CACHE="$HOME/.cache/repo/sympy-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/sympy.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/sympy.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \

@@ -15,7 +15,7 @@ VERSION=$(grep '__version__ =' "$ORIG_DIR/ufl/__init__.py" | sed 's/[^0-9]*\([0-
 FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/ufl-debian"
-git -C "$CACHE" pull || git clone "git://anonscm.debian.org/git/debian-science/packages/fenics/ufl.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/ufl.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 launchpad-submit \
