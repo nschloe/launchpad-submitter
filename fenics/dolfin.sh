@@ -50,7 +50,7 @@ mv python-dolfin.install python3-dolfin.install
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases zesty \
+  --ubuntu-releases zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --ppa nschloe/fenics-nightly \
