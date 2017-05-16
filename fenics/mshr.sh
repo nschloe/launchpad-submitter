@@ -31,7 +31,9 @@ rename "s/python-/python3-/" ./*
 sed -i 's/Build-Depends:/Build-Depends: python-petsc4py, python-slepc4py,/g' "$ORIG_DIR/debian/control"
 sed -i '/X-Python-Version: >= 2.5/a X-Python3-Version: >= 3.4' "$ORIG_DIR/debian/control"
 #
-sed -i 's/python-ffc/python3-ffc/g' "$ORIG_DIR/debian/control"
+sed -i "s/libmshr$DEBIAN_VERSION/libmshr$MAJOR.$MINOR/g" "$ORIG_DIR/debian/control"
+# Only python-ffc installs ufc.h, so we need that alongside python3-ffc.
+sed -i 's/python-ffc/python-ffc, python3-ffc/g' "$ORIG_DIR/debian/control"
 sed -i 's/python-numpy/python3-numpy/g' "$ORIG_DIR/debian/control"
 sed -i 's/python-mshr/python3-mshr/g' "$ORIG_DIR/debian/control"
 sed -i 's/python-dolfin/python3-dolfin/g' "$ORIG_DIR/debian/control"
