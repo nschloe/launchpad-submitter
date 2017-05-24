@@ -21,17 +21,21 @@ CACHE="$HOME/.cache/repo/dolfin-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
-# remove overly strict conditions
-sed -i 's/python3-ffc (<< 2016.3.0),//g' "$ORIG_DIR/debian/control"
-sed -i 's/python3-dijitso (<< 2016.3.0),//g' "$ORIG_DIR/debian/control"
+# Untie the dependencies from the exact version
+DEBIAN_DIR="$ORIG_DIR/debian"
+sed -i "s/python-ffc/python-ffc,/g" "$DEBIAN_DIR/control"
+sed -i "s/python3-ffc.*/python3-ffc,/g" "$DEBIAN_DIR/control"
+sed -i "s/python-fiat/python-fiat,/g" "$DEBIAN_DIR/control"
+sed -i "s/python3-fiat.*/python3-fiat,/g" "$DEBIAN_DIR/control"
+sed -i "s/python-instant.*/python-instant,/g" "$DEBIAN_DIR/control"
+sed -i "s/python3-instant.*/python3-instant,/g" "$DEBIAN_DIR/control"
+sed -i "s/python-ufl.*/python-ufl,/g" "$DEBIAN_DIR/control"
+sed -i "s/python3-ufl.*/python3-ufl,/g" "$DEBIAN_DIR/control"
+sed -i "s/python-dijitso.*/python-dijitso,/g" "$DEBIAN_DIR/control"
+sed -i "s/python3-dijitso.*/python3-dijitso,/g" "$DEBIAN_DIR/control"
 
 # vtk7
 sed -i 's/libvtk6/libvtk7/g' "$ORIG_DIR/debian/control"
-
-sed -i 's/python3-ffc (>= ${source:Upstream-Version}), python3-ffc (<< ${source:Next-Upstream-Version})/python3-ffc/g' "$ORIG_DIR/debian/control"
-sed -i 's/python3-dijitso (>= ${source:Upstream-Version}), python3-dijitso (<< ${source:Next-Upstream-Version})/python3-dijitso/g' "$ORIG_DIR/debian/control"
-sed -i 's/python3-instant (>= ${source:Upstream-Version}), python3-instant (<< ${source:Next-Upstream-Version})/python3-instant/g' "$ORIG_DIR/debian/control"
-sed -i 's/python3-ufl (>= ${source:Upstream-Version}), python3-ufl (<< ${source:Next-Upstream-Version})/python3-ufl/g' "$ORIG_DIR/debian/control"
 
 # sed -i 's/python-dev,/python-dev, python3-dev, python3, python3-minimal,/g' "$ORIG_DIR/debian/control"
 # sed -i 's/--with python2/--with python3/g' "$ORIG_DIR/debian/rules"
