@@ -54,5 +54,6 @@ launchpad-submit \
   --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
   --update-patches \
+  --launchpad-login nschloe \
   --ppa nschloe/petsc-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

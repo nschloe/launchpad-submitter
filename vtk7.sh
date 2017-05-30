@@ -27,5 +27,6 @@ launchpad-submit \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
+  --launchpad-login nschloe \
   --ppa nschloe/vtk7-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

@@ -26,5 +26,6 @@ launchpad-submit \
   --ubuntu-releases xenial yakkety zesty artful \
   --version-override "$VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/trilinos-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

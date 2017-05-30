@@ -48,5 +48,6 @@ launchpad-submit \
   --update-patches \
   --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/boost-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

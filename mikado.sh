@@ -21,5 +21,6 @@ launchpad-submit \
   --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/mikado-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

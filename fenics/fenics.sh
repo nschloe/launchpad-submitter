@@ -26,6 +26,7 @@ launchpad-submit \
   --work-dir "$FENICS_DIR" \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/fenics-nightly \
   --ubuntu-releases trusty xenial yakkety zesty artful \
   --debuild-params="-p$THIS_DIR/../mygpg"

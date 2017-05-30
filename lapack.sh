@@ -29,5 +29,6 @@ launchpad-submit \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \
+  --launchpad-login nschloe \
   --ppa nschloe/lapack-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

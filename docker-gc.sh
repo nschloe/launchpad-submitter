@@ -22,5 +22,6 @@ launchpad-submit \
   --ubuntu-releases trusty xenial yakkety zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/docker-gc-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

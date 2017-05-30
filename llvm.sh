@@ -54,5 +54,6 @@ launchpad-submit \
   --ubuntu-releases xenial yakkety zesty artful \
   --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d")" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/llvm-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"

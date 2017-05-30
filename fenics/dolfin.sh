@@ -57,5 +57,6 @@ launchpad-submit \
   --ubuntu-releases zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
+  --launchpad-login nschloe \
   --ppa nschloe/fenics-nightly \
   --debuild-params="-p$THIS_DIR/../mygpg"

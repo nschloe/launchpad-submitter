@@ -41,6 +41,7 @@ done
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases xenial yakkety zesty artful \
+  --launchpad-login nschloe \
   --ppa nschloe/cgal-nightly \
   --version-override "$FULL_VERSION" \
   --version-append-hash \

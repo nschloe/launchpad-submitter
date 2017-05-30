@@ -24,5 +24,6 @@ launchpad-submit \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --update-patches \
+  --launchpad-login nschloe \
   --ppa nschloe/netcdf-nightly \
   --debuild-params="-p$THIS_DIR/mygpg"
