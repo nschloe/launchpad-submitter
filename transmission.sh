@@ -19,7 +19,7 @@ VERSION="$UPSTREAM_VERSION+git$(date +"%Y%m%d")"
 
 DEBIAN_DIR="$TMP_DIR/orig/debian"
 CACHE="$HOME/.cache/repo/transmission-debian"
-git -C "$CACHE" pull || git clone "https://anonscm.debian.org/collab-maint/transmission.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/collab-maint/transmission.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 sed -i "s/Build-Depends:/Build-Depends: xfslibs-dev,/g" "$DEBIAN_DIR/control"
