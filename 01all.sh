@@ -2,8 +2,15 @@
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# add ssh info for SFTP
+# <https://serverfault.com/a/236437/132462>
+. $HOME/.keychain/`/bin/hostname`-sh
+
 # Don't automatically update this repo; cron might not have access rights.
 # cd "$THIS_DIR" && git pull
+
+# Check out <https://unix.stackexchange.com/a/368141/40432> on how to add the
+# server key in advance.
 
 "$THIS_DIR/boost.sh"
 "$THIS_DIR/cgal.sh"
