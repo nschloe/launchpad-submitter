@@ -27,7 +27,7 @@ launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
   --ubuntu-releases xenial yakkety zesty artful \
-  --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d")" \
+  --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
   --launchpad-login nschloe \
   --ppa nschloe/cmake-nightly \

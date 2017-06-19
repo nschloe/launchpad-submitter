@@ -14,8 +14,8 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 MAJOR=$(grep VTK_MAJOR_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
 MINOR=$(grep VTK_MINOR_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
 PATCH=$(grep VTK_BUILD_VERSION "$ORIG_DIR/CMake/vtkVersion.cmake" | sed 's/^.*\([0-9]\).*/\1/')
-# VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d%H%M")"
-VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d")"
+VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d%H%M")"
+# VERSION="$MAJOR.$MINOR.$PATCH+git$(date +"%Y%m%d")"
 
 CACHE="$HOME/.cache/repo/vtk7-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/vtk7.git" "$CACHE"

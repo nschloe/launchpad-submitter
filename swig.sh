@@ -25,7 +25,7 @@ sed -i "/php5-dev,/d" "$DEBIAN_DIR/control"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases trusty xenial yakkety zesty artful \
-  --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d")" \
+  --version-override "$UPSTREAM_VERSION~git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
   --update-patches \
   --launchpad-login nschloe \

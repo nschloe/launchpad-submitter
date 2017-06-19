@@ -22,7 +22,7 @@ ORIG_DIR="$TMP_DIR/orig"
 mv "$DIRECTORY" "$ORIG_DIR"
 
 VERSION=$(cat "$ORIG_DIR/VERSION")
-FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
+FULL_VERSION="$VERSION~git$(date +"%Y%m%d%H%M")"
 
 DEBIAN_DIR="$ORIG_DIR/debian"
 CACHE="$HOME/.cache/repo/cgal-debian"
