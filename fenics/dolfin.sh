@@ -48,7 +48,6 @@ sed -i "s/\${source:Next-Upstream-Version}/$NEXT_VERSION/g" "$ORIG_DIR/debian/co
 
 cd "$ORIG_DIR/debian"
 rename "s/$DEBIAN_VERSION/$MAJOR.$MINOR/" ./*
-mv python-dolfin.install python3-dolfin.install
 
 # No xenial:
 # Missing build dependencies: python-slepc4py
