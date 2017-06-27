@@ -42,6 +42,9 @@ sed -i "s/$DEBIAN_NEXT_VERSION/$NEXT_VERSION/g" "$ORIG_DIR/debian/control"
 #
 DEBIAN_FULL_VERSION=$(head -n1 "$ORIG_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9]*\.[0-9].[0-9]\).*/\1/')
 sed -i "s/$DEBIAN_FULL_VERSION/$MAJOR.$MINOR.$MICRO~/g" "$ORIG_DIR/debian/control"
+#
+sed -i "s/\${source:Upstream-Version}/$MAJOR.$MINOR.$MICRO~/g" "$ORIG_DIR/debian/control"
+sed -i "s/\${source:Next-Upstream-Version}/$NEXT_VERSION/g" "$ORIG_DIR/debian/control"
 
 cd "$ORIG_DIR/debian"
 rename "s/$DEBIAN_VERSION/$MAJOR.$MINOR/" ./*

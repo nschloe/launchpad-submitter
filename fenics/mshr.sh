@@ -46,7 +46,7 @@ sed -i "/mshrable/d" "$DEBIAN_DIR/libmshr-dev.install"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases yakkety zesty artful \
+  --ubuntu-releases zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

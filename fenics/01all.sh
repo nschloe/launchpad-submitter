@@ -10,7 +10,8 @@ THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sleep 3600
 "$THIS_DIR/ffc.sh"
 sleep 3600
-"$THIS_DIR/mshr.sh"
 "$THIS_DIR/dolfin.sh"
+sleep 3600
+"$THIS_DIR/mshr.sh"
 sleep 3600
 "$THIS_DIR/fenics.sh"
