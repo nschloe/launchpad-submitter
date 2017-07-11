@@ -24,9 +24,10 @@ CACHE="$HOME/.cache/repo/eigen-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/eigen3.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+# no trusty, xenial: need debhelper 10
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty artful \
+  --ubuntu-releases yakkety zesty artful \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \
