@@ -12,7 +12,7 @@ trap cleanup EXIT
 # HG doesn't properly update yet. (bug?)
 ORIG_DIR="$TMP_DIR/orig"
 CACHE="$HOME/.cache/repo/eigen"
-git -C "$CACHE" pull || git clone "https://github.com/RLovelett/eigen.git" "$CACHE"
+git -C "$CACHE" pull || git clone "https://github.com/live-clones/eigen.git" "$CACHE"
 git clone --shared "$CACHE" "$ORIG_DIR"
 
 MAJOR=$(grep '#define EIGEN_WORLD_VERSION ' "$ORIG_DIR/Eigen/src/Core/util/Macros.h" | sed 's/^[^0-9]*\([0-9]*\).*/\1/')
