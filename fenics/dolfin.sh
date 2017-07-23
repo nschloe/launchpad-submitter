@@ -51,7 +51,7 @@ rename "s/$DEBIAN_VERSION/$MAJOR.$MINOR/" ./*
 
 # No xenial:
 # Missing build dependencies: python-slepc4py
-#  --ubuntu-releases yakkety zesty artful \
+#  --ubuntu-releases zesty artful \
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \

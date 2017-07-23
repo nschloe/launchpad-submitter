@@ -33,7 +33,7 @@ sed -i "s/python3-dijitso.*/python3-dijitso,/g" "$DEBIAN_DIR/control"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases trusty xenial yakkety zesty artful \
+  --ubuntu-releases trusty xenial zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

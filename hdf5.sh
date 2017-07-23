@@ -23,7 +23,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases yakkety zesty artful \
+  --ubuntu-releases zesty artful \
   --launchpad-login nschloe \
   --ppa nschloe/hdf5-nightly \
   --version-override "$FULL_VERSION" \

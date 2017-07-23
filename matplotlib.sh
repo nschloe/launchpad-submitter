@@ -29,7 +29,7 @@ sed -i "s/python3-all-dev,/python3-all-dev, python-colorspacious, python3-colors
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases yakkety zesty artful \
+  --ubuntu-releases zesty artful \
   --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
   --update-patches \

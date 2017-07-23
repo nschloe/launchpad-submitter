@@ -16,7 +16,7 @@ FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty artful \
+  --ubuntu-releases trusty xenial zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

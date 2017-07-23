@@ -44,7 +44,7 @@ done
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases yakkety zesty artful \
+  --ubuntu-releases zesty artful \
   --update-patches \
   --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \

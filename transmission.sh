@@ -26,7 +26,7 @@ sed -i "s/Build-Depends:/Build-Depends: xfslibs-dev,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases xenial yakkety zesty artful \
+  --ubuntu-releases xenial zesty artful \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

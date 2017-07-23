@@ -28,7 +28,7 @@ sed -i '/Shorties/d' "$DEBIAN_DIR/lmms-common.install"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases xenial yakkety zesty artful \
+  --ubuntu-releases xenial zesty artful \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \

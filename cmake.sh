@@ -26,7 +26,7 @@ sed -i "s/Build-Depends:/Build-Depends: librhash-dev,/" "$DEBIAN_DIR/control"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases xenial yakkety zesty artful \
+  --ubuntu-releases xenial zesty artful \
   --version-override "$UPSTREAM_VERSION+git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
   --launchpad-login nschloe \

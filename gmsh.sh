@@ -27,7 +27,7 @@ sed -i "s/-DENABLE_OSMESA:BOOL=OFF/-DENABLE_OSMESA:BOOL=OFF -DENABLE_OCC:BOOL=OF
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial yakkety zesty artful \
+  --ubuntu-releases trusty xenial zesty artful \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
