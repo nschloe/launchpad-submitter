@@ -11,9 +11,15 @@ CACHE="$HOME/.cache/repo/cgal"
 git -C "$CACHE" pull || git clone "https://github.com/CGAL/cgal.git" "$CACHE"
 git clone --shared "$CACHE" "$CLONE_DIR"
 
+# extract version number
+cd "$CLONE_DIR"
+# `git describe` returns something like releases/CGAL-4.10-1997-g82b2e0f337.
+# Extract "CGAL-4.10" from that.
+VERSION=$(git describe | sed 's/[^\/]*\/\(CGAL-[0-9]\+\.[0-9]\+\).*/\1/')
+
 # Create the release dir
-cd "$TMP_DIR"
-"$CLONE_DIR/Scripts/developer_scripts/create_new_release" "$CLONE_DIR"
+cd "$CLONE_DIR"
+"$CLONE_DIR/Scripts/developer_scripts/create_internal_release" -r "$VERSION" "$CLONE_DIR"
 cd "$TMP_DIR/tmp/"
 tar xf CGAL-last.tar.gz
 TARFILE=$(cat "$TMP_DIR/tmp/LATEST")

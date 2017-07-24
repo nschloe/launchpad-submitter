@@ -22,7 +22,7 @@ git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 # remove vtk dependency
-sed -i 's/libvtk6-dev//g' "$ORIG_DIR/debian/control"
+sed -i '/libvtk6/d' "$ORIG_DIR/debian/control"
 
 DEBIAN_VERSION=$(head -n1 "$ORIG_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9]*\.[0-9]\).*/\1/')
 sed -i "s/libdolfin$DEBIAN_VERSION/libdolfin$MAJOR.$MINOR/g" "$ORIG_DIR/debian/control"
