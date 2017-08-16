@@ -20,9 +20,11 @@ CACHE="$HOME/.cache/repo/openblas-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/openblas.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+# xenial: Missing build dependencies: debhelper (>= 10), liblapack-pic (>=
+# 3.7.0)
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases xenial zesty artful \
+  --ubuntu-releases zesty artful \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \
