@@ -6,26 +6,31 @@ TMP_DIR=$(mktemp -d)
 cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
-CLONE_DIR="$TMP_DIR/clone"
+# Some CGAL scripts do indeed assume that the directory is called `trunk`
+CLONE_DIR="$TMP_DIR/trunk"
 CACHE="$HOME/.cache/repo/cgal"
 git -C "$CACHE" pull || git clone "https://github.com/CGAL/cgal.git" "$CACHE"
 git clone --shared "$CACHE" "$CLONE_DIR"
 
 # extract version number
 cd "$CLONE_DIR"
-# `git describe` returns something like releases/CGAL-4.10-1997-g82b2e0f337.
-# Extract "CGAL-4.10" from that.
-VERSION=$(git describe | sed 's/[^\/]*\/\(CGAL-[0-9]\+\.[0-9]\+\).*/\1/')
+MAJOR=$(cat "$CLONE_DIR/Maintenance/release_building/MAJOR_NUMBER")
+MINOR=$(cat "$CLONE_DIR/Maintenance/release_building/MINOR_NUMBER")
+PATCH=$(cat "$CLONE_DIR/Maintenance/release_building/BUGFIX_NUMBER")
+VERSION="CGAL-$MAJOR.$MINOR.$PATCH"
+# # `git describe` returns something like releases/CGAL-4.10-1997-g82b2e0f337.
+# # Extract "CGAL-4.10" from that.
+# VERSION=$(git describe | sed 's/[^\/]*\/\(CGAL-[0-9]\+\.[0-9]\+\).*/\1/')
 
 # Create the release dir
-cd "$CLONE_DIR"
-"$CLONE_DIR/Scripts/developer_scripts/create_internal_release" -r "$VERSION" "$CLONE_DIR"
-cd "$TMP_DIR/tmp/"
-tar xf CGAL-last.tar.gz
-TARFILE=$(cat "$TMP_DIR/tmp/LATEST")
-DIRECTORY="$TMP_DIR/tmp/${TARFILE%.tar.gz}"
+cd "$TMP_DIR"
+"./trunk/Scripts/developer_scripts/create_internal_release" -r "$VERSION" "$CLONE_DIR"
+# cd "$TMP_DIR/tmp/"
+# tar xf CGAL-last.tar.gz
+#TARFILE=$(cat "$TMP_DIR/tmp/LATEST")
+#DIRECTORY="$TMP_DIR/tmp/${TARFILE%.tar.gz}"
 ORIG_DIR="$TMP_DIR/orig"
-mv "$DIRECTORY" "$ORIG_DIR"
+mv "$VERSION" "$ORIG_DIR"
 
 VERSION=$(cat "$ORIG_DIR/VERSION")
 FULL_VERSION="$VERSION~git$(date +"%Y%m%d%H%M")"
