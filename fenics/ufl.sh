@@ -23,7 +23,7 @@ sed -i "s/pkg_resources.get_distribution(\"ufl\").version/'$VERSION'/" "$ORIG_DI
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases trusty xenial zesty artful \
+  --ubuntu-releases zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

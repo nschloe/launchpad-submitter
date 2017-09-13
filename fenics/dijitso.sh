@@ -24,7 +24,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases trusty xenial zesty artful \
+  --ubuntu-releases zesty artful \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \
