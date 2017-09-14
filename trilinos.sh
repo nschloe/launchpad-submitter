@@ -13,10 +13,10 @@ git clone --shared "$CACHE" "$ORIG_DIR"
 
 VERSION=$(grep "Trilinos_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([0-9][\.0-9]*\).*/\1/")
 
-# CACHE="$HOME/.cache/repo/trilinos-debian"
-# git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/trilinos.git" "$CACHE"
-# rsync -a "$CACHE/debian" "$ORIG_DIR"
-rsync -a "$HOME/rcs/debian/trilinos/debian" "$ORIG_DIR"
+CACHE="$HOME/.cache/repo/trilinos-debian"
+git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/trilinos.git" "$CACHE"
+rsync -a "$CACHE/debian" "$ORIG_DIR"
+# rsync -a "$HOME/rcs/debian/trilinos/debian" "$ORIG_DIR"
 
 #sed -i "s/-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON/-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=OFF -DCMAKE_SHARED_LINKER_FLAGS:STRING=\"-Wl,--no-undefined\"/g" "$DEBIAN_DIR/rules"
 
