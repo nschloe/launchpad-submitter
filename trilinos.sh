@@ -24,7 +24,7 @@ launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
   --ubuntu-releases xenial zesty artful \
-  --version-override "$VERSION~git$(date +"%Y%m%d")" \
+  --version-override "$VERSION~git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
   --launchpad-login nschloe \
   --ppa nschloe/trilinos-nightly \
