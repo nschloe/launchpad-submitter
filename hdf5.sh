@@ -20,6 +20,9 @@ CACHE="$HOME/.cache/repo/hdf5-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/pkg-grass/hdf5.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+# some fixes
+sed -i "s/cpplus_RM/d" "$DEBIAN_DIR/rules"
+
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
