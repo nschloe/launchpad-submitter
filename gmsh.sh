@@ -21,13 +21,14 @@ CACHE="$HOME/.cache/repo/gmsh-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/gmsh.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
-sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/control"
+# sed -i "s/Build-Depends:/Build-Depends: libmetis-dev,/" "$DEBIAN_DIR/control"
 # disable occ
-sed -i "s/-DENABLE_OSMESA:BOOL=OFF/-DENABLE_OSMESA:BOOL=OFF -DENABLE_OCC:BOOL=OFF/" "$DEBIAN_DIR/rules"
+# sed -i "s/-DENABLE_OSMESA:BOOL=OFF/-DENABLE_OSMESA:BOOL=OFF -DENABLE_OCC:BOOL=OFF/" "$DEBIAN_DIR/rules"
 
+# Everything before artful: linker errors
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial zesty artful \
+  --ubuntu-releases artful \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
