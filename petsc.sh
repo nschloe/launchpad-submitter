@@ -32,13 +32,13 @@ DEBIAN_SOVERSION=$(head -n 1 "$DEBIAN_DIR/changelog" | sed 's/[^0-9]*\([0-9]\.[0
 # Some comments here:
 #   * We cannot enable sowing since it requires downloading the software at
 #     configure time which isn't possible on launchpad.
+sed -i "s/--useThreads 0/--useThreads=0 --with-sowing=0/g" "$DEBIAN_DIR/rules"
 #   * No sowing => no fortran interface (Matt Knepley, Apr 2016).
+sed -i "s/--with-fortran-interfaces=1/--with-fortran-bindings=0/g" "$DEBIAN_DIR/rules"
 #   * SuperLU is outdated in Debian.
-sed -i "/with-fortran-interfaces/d" "$DEBIAN_DIR/rules"
 sed -i "/--with-superlu=1/d" "$DEBIAN_DIR/rules"
 sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/\*html/d" "$DEBIAN_DIR/rules"
 sed -i "/\$(PETSC_DIR_DEBUG_PREFIX)\/include\/petsc\/\*\/\*html/d" "$DEBIAN_DIR/rules"
-sed -i "s/--useThreads 0/--useThreads=0 --with-sowing=0/g" "$DEBIAN_DIR/rules"
 sed -i "/makefile.html/d" "$DEBIAN_DIR/petsc$DEBIAN_VERSION-doc.docs"
 sed -i "/docs/d" "$DEBIAN_DIR/petsc$DEBIAN_VERSION-doc.docs"
 cd "$DEBIAN_DIR/"

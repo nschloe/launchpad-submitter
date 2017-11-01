@@ -21,6 +21,9 @@ CACHE="$HOME/.cache/repo/vtk7-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/vtk7.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+# # add missing dependencies
+# sed -i "s/Build-Depends:/Build-Depends: libqt5x11extras5-dev,/" "$ORIG_DIR/debian/control"
+
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --ubuntu-releases zesty artful \
