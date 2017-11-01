@@ -24,7 +24,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 # 3.7.0)
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \

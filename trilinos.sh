@@ -23,7 +23,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases xenial zesty artful \
+  --ubuntu-releases xenial zesty artful bionic \
   --version-override "$VERSION~git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
   --launchpad-login nschloe \

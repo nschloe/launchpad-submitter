@@ -28,7 +28,7 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 # Everything before artful: linker errors
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases artful \
+  --ubuntu-releases artful bionic \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

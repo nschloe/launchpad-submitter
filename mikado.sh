@@ -18,7 +18,7 @@ VERSION="$MAJOR.$MINOR.$PATCH"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial zesty artful \
+  --ubuntu-releases trusty xenial zesty artful bionic \
   --version-override "$VERSION+git$(date +"%Y%m%d")" \
   --version-append-hash \
   --launchpad-login nschloe \

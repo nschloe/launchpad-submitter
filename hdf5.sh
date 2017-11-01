@@ -26,7 +26,7 @@ sed -i "s/cpplus_RM/d" "$DEBIAN_DIR/rules"
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --launchpad-login nschloe \
   --ppa nschloe/hdf5-nightly \
   --version-override "$FULL_VERSION" \

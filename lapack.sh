@@ -25,7 +25,7 @@ sed -i '/cleanall/d' "$DEBIAN_DIR/rules"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \

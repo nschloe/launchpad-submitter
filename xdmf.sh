@@ -25,7 +25,7 @@ sed -i "/Data/d" "$DEBIAN_DIR/libxdmf-dev.examples"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \

@@ -23,7 +23,7 @@ sed -i "s/pkg_resources.get_distribution(\"FIAT\").version/'$VERSION'/" "$ORIG_D
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

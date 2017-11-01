@@ -51,7 +51,7 @@ done
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases xenial zesty artful \
+  --ubuntu-releases xenial zesty artful bionic \
   --launchpad-login nschloe \
   --ppa nschloe/cgal-nightly \
   --version-override "$FULL_VERSION" \

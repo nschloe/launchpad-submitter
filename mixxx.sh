@@ -24,7 +24,7 @@ sed -i "s/scons,/scons, libupower-glib-dev,/g" "$DEBIAN_DIR/control"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases trusty xenial zesty artful \
+  --ubuntu-releases trusty xenial zesty artful bionic \
   --launchpad-login nschloe \
   --ppa nschloe/mixxx-nightly \
   --version-override "$FULL_VERSION" \

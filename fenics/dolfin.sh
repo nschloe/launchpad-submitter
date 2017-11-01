@@ -51,11 +51,11 @@ rename "s/$DEBIAN_VERSION/$MAJOR.$MINOR/" ./*
 
 # No xenial:
 # Missing build dependencies: python-slepc4py
-#  --ubuntu-releases zesty artful \
+#  --ubuntu-releases zesty artful bionic \
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --version-override "$FULL_UPSTREAM_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

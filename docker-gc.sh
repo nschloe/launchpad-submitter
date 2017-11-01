@@ -19,7 +19,7 @@ FULL_VERSION="$VERSION~git$(date +"%Y%m%d")"
 
 launchpad-submit \
   --work-dir "$WORK_DIR" \
-  --ubuntu-releases trusty xenial zesty artful \
+  --ubuntu-releases trusty xenial zesty artful bionic \
   --version-override "$FULL_VERSION" \
   --version-append-hash \
   --launchpad-login nschloe \

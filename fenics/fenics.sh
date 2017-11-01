@@ -26,6 +26,6 @@ launchpad-submit \
   --version-append-hash \
   --launchpad-login nschloe \
   --ppa nschloe/fenics-nightly \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --debuild-params="-p$THIS_DIR/../mygpg"
 

@@ -24,7 +24,7 @@ sed -i "s/Build-Depends:/Build-Depends: gfortran, libvtk6-dev,/" "$DEBIAN_DIR/co
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases zesty artful \
+  --ubuntu-releases zesty artful bionic \
   --version-override "$VERSION" \
   --version-append-hash \
   --update-patches \
