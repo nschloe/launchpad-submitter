@@ -13,7 +13,6 @@ VERSION=$(grep "Trilinos_VERSION " "$ORIG_DIR/Version.cmake" | sed "s/[^0-9]*\([
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --update-patches \
   --ubuntu-releases bionic \
   --version-override "$VERSION~git$(date +"%Y%m%d%H%M")" \
   --version-append-hash \
