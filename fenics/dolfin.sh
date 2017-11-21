@@ -18,11 +18,8 @@ MICRO=$(grep 'DOLFIN_VERSION_MICRO ' "$ORIG_DIR/CMakeLists.txt" | sed 's/.*\([0-
 FULL_UPSTREAM_VERSION="$MAJOR.$MINOR.$MICRO~git$(date +"%Y%m%d%H%M")"
 
 CACHE="$HOME/.cache/repo/dolfin-debian"
-git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/fenics/dolfin.git" "$CACHE"
-rsync -a "$CACHE/debian" "$ORIG_DIR"
-
-# remove vtk dependency
-sed -i '/libvtk6/d' "$ORIG_DIR/debian/control"
+git -C "$CACHE" pull || git clone -b chris/new-uploads "https://bitbucket.org/fenics-project/fenics-developer-tools.git" "$CACHE"
+rsync -a "$CACHE/ppa/conf/dolfin/artful/debian" "$ORIG_DIR"
 
 DEBIAN_VERSION=$(head -n1 "$ORIG_DIR/debian/changelog" | sed 's/[^0-9]*\([0-9]*\.[0-9]\).*/\1/')
 sed -i "s/libdolfin$DEBIAN_VERSION/libdolfin$MAJOR.$MINOR/g" "$ORIG_DIR/debian/control"
@@ -51,7 +48,6 @@ rename "s/$DEBIAN_VERSION/$MAJOR.$MINOR/" ./*
 
 # No xenial:
 # Missing build dependencies: python-slepc4py
-#  --ubuntu-releases zesty artful bionic \
 launchpad-submit \
   --work-dir "$TMP_DIR" \
   --update-patches \

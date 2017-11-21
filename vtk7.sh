@@ -27,6 +27,8 @@ rsync -a "$CACHE/debian" "$ORIG_DIR"
 sed -i "s/Build-Depends:/Build-Depends: libqt5x11extras5-dev,/" "$ORIG_DIR/debian/control"
 # don't use system libproj4 yet
 sed -i "s/-DVTK_USE_SYSTEM_LIBPROJ4=ON/-DVTK_USE_SYSTEM_LIBPROJ4=OFF/" "$ORIG_DIR/debian/rules"
+# don't use system gl2ps
+sed -i "s/-DVTK_USE_SYSTEM_GL2PS=ON/-DVTK_USE_SYSTEM_GL2PS=OFF/" "$ORIG_DIR/debian/rules"
 # don't use system utf8
 sed -i "/50_use_system_utf8.patch/d" "$ORIG_DIR/debian/patches/series"
 
