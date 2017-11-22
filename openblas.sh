@@ -21,10 +21,11 @@ git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 # xenial: Missing build dependencies: debhelper (>= 10), liblapack-pic (>=
-# 3.7.0)
+# 3.7.0),
+# zesty liblapack-pic (>= 3.7.1)
 launchpad-submit \
   --work-dir "$TMP_DIR" \
-  --ubuntu-releases zesty artful bionic \
+  --ubuntu-releases artful bionic \
   --version-override "$UPSTREAM_VERSION" \
   --version-append-hash \
   --update-patches \
