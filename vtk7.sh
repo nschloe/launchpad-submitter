@@ -9,6 +9,7 @@ trap cleanup EXIT
 ORIG_DIR="$TMP_DIR/orig"
 CACHE="$HOME/.cache/repo/vtk"
 git -C "$CACHE" pull || git clone --recursive "https://github.com/Kitware/VTK.git" "$CACHE"
+cd "$CACHE" && git submodule update --init --recursive
 # Don't use local `git clone --shared` here since that doesn't consider the
 # submodules.
 rsync -a "$CACHE/" "$ORIG_DIR"
