@@ -40,6 +40,8 @@ sed -i "/50_use_system_utf8.patch/d" "$ORIG_DIR/debian/patches/series"
 
 #
 sed -i "s/vtk-$DEBIAN_MAJOR.$DEBIAN_MINOR/vtk-$MAJOR.$MINOR/" "$ORIG_DIR/debian/rules"
+sed -i "/vtk_netcdfcpp.h/d" "$ORIG_DIR/debian/rules"
+
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
