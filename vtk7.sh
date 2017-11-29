@@ -24,6 +24,11 @@ CACHE="$HOME/.cache/repo/vtk7-debian"
 git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/debian-science/packages/vtk7.git" "$CACHE"
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
+# get debian version
+DEBIAN_VERSION=$(head -n 1 "$ORIG_DIR/debian/changelog" | sed 's/vtk7 (\([0-9].[0-9].[0-9]\).*/\1/g')
+DEBIAN_MAJOR=$(echo "$DEBIAN_VERSION" | sed 's/\([0-9]\).*/\1/g')
+DEBIAN_MINOR=$(echo "$DEBIAN_VERSION" | sed 's/[0-9].\([0-9]\).*/\1/g')
+
 # add missing dependencies
 sed -i "s/Build-Depends:/Build-Depends: libqt5x11extras5-dev,/" "$ORIG_DIR/debian/control"
 # don't use system libproj4 yet
@@ -32,6 +37,9 @@ sed -i "s/-DVTK_USE_SYSTEM_LIBPROJ4=ON/-DVTK_USE_SYSTEM_LIBPROJ4=OFF/" "$ORIG_DI
 sed -i "s/-DVTK_USE_SYSTEM_GL2PS=ON/-DVTK_USE_SYSTEM_GL2PS=OFF/" "$ORIG_DIR/debian/rules"
 # don't use system utf8
 sed -i "/50_use_system_utf8.patch/d" "$ORIG_DIR/debian/patches/series"
+
+#
+sed -i "s/vtk-$DEBIAN_MAJOR.$DEBIAN_MINOR/vtk-$MAJOR.$MINOR/" "$ORIG_DIR/debian/rules"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
