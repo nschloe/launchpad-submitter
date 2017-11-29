@@ -39,8 +39,10 @@ sed -i "s/-DVTK_USE_SYSTEM_GL2PS=ON/-DVTK_USE_SYSTEM_GL2PS=OFF/" "$ORIG_DIR/debi
 sed -i "/50_use_system_utf8.patch/d" "$ORIG_DIR/debian/patches/series"
 
 #
-sed -i "s/vtk-$DEBIAN_MAJOR.$DEBIAN_MINOR/vtk-$MAJOR.$MINOR/" "$ORIG_DIR/debian/rules"
-sed -i "s/vtk-$DEBIAN_MAJOR.$DEBIAN_MINOR/vtk-$MAJOR.$MINOR/" "$ORIG_DIR/debian/libvtk$DEBIAN_MAJOR-dev.install"
+sed -i "s/vtk-$DEBIAN_MAJOR.$DEBIAN_MINOR/vtk-$MAJOR.$MINOR/g" "$ORIG_DIR/debian/rules"
+for file in "$ORIG_DIR"/debian/*.install; do
+  sed -i "s/$DEBIAN_MAJOR.$DEBIAN_MINOR/$MAJOR.$MINOR/g" "$file"
+done
 sed -i "/vtk_netcdfcpp.h/d" "$ORIG_DIR/debian/rules"
 sed -i "/vtk_netcdfcpp.h/d" "$ORIG_DIR/debian/libvtk$DEBIAN_MAJOR-dev.install"
 
