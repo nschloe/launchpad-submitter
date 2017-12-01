@@ -47,7 +47,8 @@ sed -i "/vtk_netcdfcpp.h/d" "$ORIG_DIR/debian/rules"
 sed -i "/vtk_netcdfcpp.h/d" "$ORIG_DIR/debian/libvtk$DEBIAN_MAJOR-dev.install"
 
 # fix python installation
-echo 'usr/lib/*/python*/site-packages' > "$ORIG_DIR/debian/python3-vtk7.install"
+sed -i 's/extra_flags +=/extra_flags += -DVTK_PYTHON_SITE_PACKAGES_SUFFIX=python3\/dist-packages/' "$ORIG_DIR/debian/rules"
+echo 'usr/lib/python*/dist-packages' > "$ORIG_DIR/debian/python3-vtk7.install"
 
 
 launchpad-submit \
