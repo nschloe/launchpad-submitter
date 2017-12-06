@@ -21,7 +21,7 @@ git -C "$CACHE" pull || git clone "https://anonscm.debian.org/git/pkg-grass/hdf5
 rsync -a "$CACHE/debian" "$ORIG_DIR"
 
 # some fixes
-sed -i "s/cpplus_RM/d" "$DEBIAN_DIR/rules"
+sed -i "/cpplus_RM/d" "$ORIG_DIR/debian/rules"
 
 launchpad-submit \
   --work-dir "$TMP_DIR" \
